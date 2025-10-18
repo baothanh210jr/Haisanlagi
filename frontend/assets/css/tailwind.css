@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens (simple palette). Replace with shadcn theme later */
+:root {
+  --radius: 0.5rem;
+}

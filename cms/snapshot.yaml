@@ -1,0 +1,429 @@
+version: 1
+collections:
+  - collection: categories
+    meta:
+      icon: folder
+      hidden: false
+      display_template: '{{name}}'
+    schema:
+      name: categories
+  - collection: products
+    meta:
+      icon: box
+      hidden: false
+      display_template: '{{name}}'
+    schema:
+      name: products
+  - collection: orders
+    meta:
+      icon: task_alt
+      hidden: false
+      display_template: 'Đơn #{{id}}'
+    schema:
+      name: orders
+  - collection: order_items
+    meta:
+      icon: list_alt
+      hidden: false
+      display_template: '{{product}} x {{quantity}}'
+    schema:
+      name: order_items
+  - collection: bank_accounts
+    meta:
+      icon: account_balance
+      hidden: false
+      display_template: '{{bank_name}} - {{account_number}}'
+    schema:
+      name: bank_accounts
+
+fields:
+  # categories
+  - collection: categories
+    field: id
+    type: integer
+    meta:
+      field: id
+      interface: input
+      hidden: true
+      readonly: true
+    schema:
+      data_type: integer
+      is_primary_key: true
+      has_auto_increment: true
+  - collection: categories
+    field: name
+    type: string
+    meta:
+      field: name
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: categories
+    field: slug
+    type: string
+    meta:
+      field: slug
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: categories
+    field: description
+    type: text
+    meta:
+      field: description
+      interface: textarea
+      required: false
+    schema:
+      data_type: text
+  - collection: categories
+    field: status
+    type: string
+    meta:
+      field: status
+      interface: select-dropdown
+      options:
+        choices:
+          - published
+          - draft
+      required: true
+    schema:
+      data_type: varchar
+      length: 50
+
+  # products
+  - collection: products
+    field: id
+    type: integer
+    meta:
+      field: id
+      interface: input
+      hidden: true
+      readonly: true
+    schema:
+      data_type: integer
+      is_primary_key: true
+      has_auto_increment: true
+  - collection: products
+    field: name
+    type: string
+    meta:
+      field: name
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: products
+    field: slug
+    type: string
+    meta:
+      field: slug
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: products
+    field: category
+    type: integer
+    meta:
+      field: category
+      interface: select-dropdown
+    schema:
+      data_type: integer
+  - collection: products
+    field: image_url
+    type: string
+    meta:
+      field: image_url
+      interface: input
+    schema:
+      data_type: varchar
+      length: 500
+  - collection: products
+    field: image
+    type: uuid
+    meta:
+      field: image
+      interface: file
+    schema:
+      data_type: uuid
+  - collection: products
+    field: price
+    type: decimal
+    meta:
+      field: price
+      interface: input
+      options:
+        format: 'currency'
+    schema:
+      data_type: numeric
+      precision: 12
+      scale: 0
+  - collection: products
+    field: status
+    type: string
+    meta:
+      field: status
+      interface: select-dropdown
+      options:
+        choices:
+          - published
+          - draft
+      required: true
+    schema:
+      data_type: varchar
+      length: 50
+
+  # orders
+  - collection: orders
+    field: id
+    type: integer
+    meta:
+      field: id
+      interface: input
+      hidden: true
+      readonly: true
+    schema:
+      data_type: integer
+      is_primary_key: true
+      has_auto_increment: true
+  - collection: orders
+    field: customer_name
+    type: string
+    meta:
+      field: customer_name
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: orders
+    field: customer_phone
+    type: string
+    meta:
+      field: customer_phone
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 50
+  - collection: orders
+    field: customer_address
+    type: text
+    meta:
+      field: customer_address
+      interface: textarea
+      required: true
+    schema:
+      data_type: text
+  - collection: orders
+    field: total_amount
+    type: decimal
+    meta:
+      field: total_amount
+      interface: input
+    schema:
+      data_type: numeric
+      precision: 12
+      scale: 0
+  - collection: orders
+    field: status
+    type: string
+    meta:
+      field: status
+      interface: select-dropdown
+      options:
+        choices:
+          - pending
+          - paid
+          - cancelled
+      required: true
+    schema:
+      data_type: varchar
+      length: 50
+
+  # order_items
+  - collection: order_items
+    field: id
+    type: integer
+    meta:
+      field: id
+      interface: input
+      hidden: true
+      readonly: true
+    schema:
+      data_type: integer
+      is_primary_key: true
+      has_auto_increment: true
+  - collection: order_items
+    field: order
+    type: integer
+    meta:
+      field: order
+      interface: select-dropdown
+    schema:
+      data_type: integer
+  - collection: order_items
+    field: product
+    type: integer
+    meta:
+      field: product
+      interface: select-dropdown
+    schema:
+      data_type: integer
+  - collection: order_items
+    field: quantity
+    type: integer
+    meta:
+      field: quantity
+      interface: input
+      required: true
+    schema:
+      data_type: integer
+  - collection: order_items
+    field: unit_price
+    type: decimal
+    meta:
+      field: unit_price
+      interface: input
+    schema:
+      data_type: numeric
+      precision: 12
+      scale: 0
+  - collection: order_items
+    field: subtotal
+    type: decimal
+    meta:
+      field: subtotal
+      interface: input
+    schema:
+      data_type: numeric
+      precision: 12
+      scale: 0
+
+  # bank_accounts
+  - collection: bank_accounts
+    field: id
+    type: integer
+    meta:
+      field: id
+      interface: input
+      hidden: true
+      readonly: true
+    schema:
+      data_type: integer
+      is_primary_key: true
+      has_auto_increment: true
+  - collection: bank_accounts
+    field: bank_name
+    type: string
+    meta:
+      field: bank_name
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: bank_accounts
+    field: account_number
+    type: string
+    meta:
+      field: account_number
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 50
+  - collection: bank_accounts
+    field: account_holder
+    type: string
+    meta:
+      field: account_holder
+      interface: input
+      required: true
+    schema:
+      data_type: varchar
+      length: 255
+  - collection: bank_accounts
+    field: description
+    type: text
+    meta:
+      field: description
+      interface: textarea
+    schema:
+      data_type: text
+
+relations:
+  # products.category -> categories.id (M:1)
+  - collection: products
+    field: category
+    related_collection: categories
+  # products.image -> directus_files.id (M:1)
+  - collection: products
+    field: image
+    related_collection: directus_files
+  # order_items.order -> orders.id (M:1)
+  - collection: order_items
+    field: order
+    related_collection: orders
+  # order_items.product -> products.id (M:1)
+  - collection: order_items
+    field: product
+    related_collection: products
+permissions:
+  # Grant full access to Admin role's policy for main collections
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: categories
+    action: read
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: categories
+    action: create
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: products
+    action: read
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: products
+    action: create
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: bank_accounts
+    action: read
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: bank_accounts
+    action: create
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: orders
+    action: read
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: orders
+    action: create
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: order_items
+    action: read
+    permissions: {}
+    validation: {}
+  - policy: 342f43d0-7e7b-451e-a891-7a2e6a4861a3
+    collection: order_items
+    action: create
+    permissions: {}
+    validation: {}
