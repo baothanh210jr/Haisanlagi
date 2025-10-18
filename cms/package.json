@@ -6,10 +6,14 @@
   "scripts": {
     "seed": "node ./seed.js",
     "setup:slides": "node ./setup-slides.js",
-    "grant:public": "node ./grant-public-perms.js"
+    "grant:public": "node ./grant-public-perms.js",
+    "snapshot:export": "node ./export-snapshot.js",
+    "schema:apply": "node ./filter-snapshot.js && npx directus schema apply ./snapshot.apply.yaml --yes",
+    "cms:start": "npx directus start"
   },
   "dependencies": {
     "@directus/sdk": "^15.1.0",
-    "dotenv": "^16.6.1"
+    "dotenv": "^16.6.1",
+    "yaml": "^2.5.0"
   }
 }

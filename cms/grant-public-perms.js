@@ -1,10 +1,12 @@
 import 'dotenv/config'
 
-const url = process.env.PUBLIC_URL || 'http://localhost:8055'
+const url = process.env.DIRECTUS_URL || process.env.PUBLIC_URL || 'http://localhost:8055'
 const email = process.env.ADMIN_EMAIL
 const password = process.env.ADMIN_PASSWORD
+const adminToken = process.env.ADMIN_TOKEN
 
-async function login() {
+async function getToken() {
+  if (adminToken) return adminToken
   const res = await fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -16,7 +18,7 @@ async function login() {
 }
 
 async function grantPublic() {
-  const token = await login()
+  const token = await getToken()
   const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
 
   const polRes = await fetch(`${url}/policies?limit=-1`, { headers })
