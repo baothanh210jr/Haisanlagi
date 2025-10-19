@@ -657,12 +657,11 @@ collections:
       versioning: false
     schema:
       name: home_slides
-      sql: CREATE TABLE "home_slides" (`id` integer PRIMARY KEY AUTOINCREMENT NOT
-        NULL, `title` varchar(255) NULL, `product` integer NULL, `image_url`
-        varchar(255) NULL, `cta_text` varchar(255) NULL, `sort` integer NULL,
-        `status` varchar(255) NULL, `image` char(36) NULL, CONSTRAINT
-        `home_slides_image_foreign` FOREIGN KEY (`image`) REFERENCES
-        `directus_files` (`id`) ON DELETE SET NULL)
+      sql: CREATE TABLE "home_slides" (`cta_text` varchar(255) NULL DEFAULT null, `id`
+        integer PRIMARY KEY AUTOINCREMENT NOT NULL, `image` char(36) NULL
+        DEFAULT null, `image_url` varchar(255) NULL DEFAULT null, `product`
+        integer NULL DEFAULT null, `sort` integer NULL DEFAULT null, `status`
+        varchar(255) NULL DEFAULT null, `title` varchar(255) NULL DEFAULT null)
   - collection: order_items
     meta:
       collection: order_items
@@ -747,19 +746,17 @@ collections:
       name: products
       sql: CREATE TABLE "products" (`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
         `name` varchar(255) NULL, `slug` varchar(255) NULL, `category` integer
-        NULL, `price` float NULL, `status` varchar(255) NULL, `image` char(36)
-        NULL, `image_default` char(36) NULL, CONSTRAINT
+        NULL, `image` char(36) NULL, `price` float NULL, `status` varchar(255)
+        NULL, `image_default` char(36) NULL DEFAULT null, CONSTRAINT
         `products_category_foreign` FOREIGN KEY (`category`) REFERENCES
         `categories` (`id`), CONSTRAINT `products_image_foreign` FOREIGN KEY
-        (`image`) REFERENCES `directus_files` (`id`) ON DELETE SET NULL,
-        CONSTRAINT `products_image_default_foreign` FOREIGN KEY
-        (`image_default`) REFERENCES `directus_files` (`id`) ON DELETE SET NULL)
+        (`image`) REFERENCES `directus_files` (`id`))
 fields:
   - collection: bank_accounts
     field: account_holder
     type: string
     meta:
-      id: 57
+      id: 29
       collection: bank_accounts
       field: account_holder
       special: null
@@ -799,7 +796,7 @@ fields:
     field: account_number
     type: string
     meta:
-      id: 56
+      id: 28
       collection: bank_accounts
       field: account_number
       special: null
@@ -839,7 +836,7 @@ fields:
     field: bank_name
     type: string
     meta:
-      id: 55
+      id: 27
       collection: bank_accounts
       field: bank_name
       special: null
@@ -879,7 +876,7 @@ fields:
     field: description
     type: text
     meta:
-      id: 58
+      id: 30
       collection: bank_accounts
       field: description
       special: null
@@ -919,7 +916,7 @@ fields:
     field: id
     type: integer
     meta:
-      id: 54
+      id: 26
       collection: bank_accounts
       field: id
       special: null
@@ -959,7 +956,7 @@ fields:
     field: description
     type: text
     meta:
-      id: 33
+      id: 4
       collection: categories
       field: description
       special: null
@@ -999,7 +996,7 @@ fields:
     field: id
     type: integer
     meta:
-      id: 30
+      id: 1
       collection: categories
       field: id
       special: null
@@ -1039,7 +1036,7 @@ fields:
     field: name
     type: string
     meta:
-      id: 31
+      id: 2
       collection: categories
       field: name
       special: null
@@ -1079,7 +1076,7 @@ fields:
     field: slug
     type: string
     meta:
-      id: 32
+      id: 3
       collection: categories
       field: slug
       special: null
@@ -1119,7 +1116,7 @@ fields:
     field: status
     type: string
     meta:
-      id: 34
+      id: 5
       collection: categories
       field: status
       special: null
@@ -15272,8 +15269,8 @@ fields:
       is_indexed: false
       is_primary_key: false
       has_auto_increment: false
-      foreign_key_column: id
-      foreign_key_table: directus_files
+      foreign_key_column: null
+      foreign_key_table: null
   - collection: home_slides
     field: image_url
     type: string
@@ -15481,7 +15478,7 @@ fields:
     field: id
     type: integer
     meta:
-      id: 48
+      id: 20
       collection: order_items
       field: id
       special: null
@@ -15521,7 +15518,7 @@ fields:
     field: order
     type: integer
     meta:
-      id: 49
+      id: 21
       collection: order_items
       field: order
       special: null
@@ -15561,7 +15558,7 @@ fields:
     field: product
     type: integer
     meta:
-      id: 50
+      id: 22
       collection: order_items
       field: product
       special: null
@@ -15601,7 +15598,7 @@ fields:
     field: quantity
     type: integer
     meta:
-      id: 51
+      id: 23
       collection: order_items
       field: quantity
       special: null
@@ -15641,7 +15638,7 @@ fields:
     field: subtotal
     type: float
     meta:
-      id: 53
+      id: 25
       collection: order_items
       field: subtotal
       special: null
@@ -15681,7 +15678,7 @@ fields:
     field: unit_price
     type: float
     meta:
-      id: 52
+      id: 24
       collection: order_items
       field: unit_price
       special: null
@@ -15721,7 +15718,7 @@ fields:
     field: customer_address
     type: text
     meta:
-      id: 45
+      id: 17
       collection: orders
       field: customer_address
       special: null
@@ -15761,7 +15758,7 @@ fields:
     field: customer_name
     type: string
     meta:
-      id: 43
+      id: 15
       collection: orders
       field: customer_name
       special: null
@@ -15801,7 +15798,7 @@ fields:
     field: customer_phone
     type: string
     meta:
-      id: 44
+      id: 16
       collection: orders
       field: customer_phone
       special: null
@@ -15841,7 +15838,7 @@ fields:
     field: id
     type: integer
     meta:
-      id: 42
+      id: 14
       collection: orders
       field: id
       special: null
@@ -15881,7 +15878,7 @@ fields:
     field: status
     type: string
     meta:
-      id: 47
+      id: 19
       collection: orders
       field: status
       special: null
@@ -15925,7 +15922,7 @@ fields:
     field: total_amount
     type: float
     meta:
-      id: 46
+      id: 18
       collection: orders
       field: total_amount
       special: null
@@ -15965,11 +15962,12 @@ fields:
     field: category
     type: integer
     meta:
-      id: 38
+      id: 9
       collection: products
       field: category
-      special: m2o
-      interface: select-dropdown
+      special:
+        - m2o
+      interface: select-dropdown-m2o
       options: null
       display: null
       display_options: null
@@ -16005,7 +16003,7 @@ fields:
     field: id
     type: integer
     meta:
-      id: 35
+      id: 6
       collection: products
       field: id
       special: null
@@ -16045,7 +16043,7 @@ fields:
     field: image
     type: uuid
     meta:
-      id: 60
+      id: 11
       collection: products
       field: image
       special:
@@ -16121,13 +16119,13 @@ fields:
       is_indexed: false
       is_primary_key: false
       has_auto_increment: false
-      foreign_key_column: id
-      foreign_key_table: directus_files
+      foreign_key_column: null
+      foreign_key_table: null
   - collection: products
     field: name
     type: string
     meta:
-      id: 36
+      id: 7
       collection: products
       field: name
       special: null
@@ -16167,7 +16165,7 @@ fields:
     field: price
     type: float
     meta:
-      id: 40
+      id: 12
       collection: products
       field: price
       special: null
@@ -16208,7 +16206,7 @@ fields:
     field: slug
     type: string
     meta:
-      id: 37
+      id: 8
       collection: products
       field: slug
       special: null
@@ -16248,7 +16246,7 @@ fields:
     field: status
     type: string
     meta:
-      id: 41
+      id: 13
       collection: products
       field: status
       special: null
@@ -16438,9 +16436,6 @@ relations:
   - collection: directus_webhooks
     field: migrated_flow
     related_collection: directus_flows
-  - collection: home_slides
-    field: image
-    related_collection: directus_files
   - collection: order_items
     field: order
     related_collection: orders
@@ -16450,42 +16445,10 @@ relations:
   - collection: products
     field: category
     related_collection: categories
-    one_field: id
-    one_collection_field: name
   - collection: products
     field: image
     related_collection: directus_files
-  - collection: products
-    field: image_default
-    related_collection: directus_files
 permissions:
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
-    collection: bank_accounts
-    action: create
-    permissions: {}
-    validation: {}
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
-    collection: bank_accounts
-    action: read
-    permissions: {}
-    validation: {}
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: bank_accounts
-    action: read
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
-    collection: categories
-    action: create
-    permissions: {}
-    validation: {}
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
-    collection: categories
-    action: read
-    permissions: {}
-    validation: {}
   - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
     collection: categories
     action: read
@@ -16707,66 +16670,8 @@ permissions:
     fields:
       - "*"
   - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: order_items
-    action: create
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: order_items
-    action: delete
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: order_items
-    action: read
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: orders
-    action: create
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: orders
-    action: read
-    permissions: {}
-    validation: {}
-    fields:
-      - id
-      - customer_name
-      - customer_phone
-      - customer_address
-      - total_amount
-      - status
-      - date_created
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
-    collection: products
-    action: create
-    permissions: {}
-    validation: {}
-  - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
     collection: products
     action: read
-    permissions: {}
-    validation: {}
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: products
-    action: read
-    permissions: {}
-    validation: {}
-    fields:
-      - "*"
-  - policy: abf8a154-5b1c-4a46-ac9c-7300570f4f17
-    collection: products
-    action: update
     permissions: {}
     validation: {}
     fields:

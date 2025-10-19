@@ -24,6 +24,7 @@ export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 60_000) {
       qs.set('filter[status][_eq]', 'published')
       const res = await fetch(`${runtime.public.directusUrl}/items/products?${qs.toString()}`)
       const json = await res.json()
+      console.log('🚀 ~ useHomeProducts.ts:27 ~ ensureProducts ~ json:', json);
       productsRespMap.value[p] = (json || { data: [], meta: { filter_count: 0 } }) as ProductsResp
       timestamps.value[p] = Date.now()
     } catch {
@@ -35,5 +36,6 @@ export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 60_000) {
   const products = computed(() => (productsRespMap.value[page.value]?.data || []) as Product[])
   const pageCount = computed(() => Math.max(1, Math.ceil(((productsRespMap.value[page.value]?.meta?.filter_count || 0) as number) / limit)))
 
+  console.log('🚀 ~ useHomeProducts.ts:39 ~ useHomeProducts ~ products:', products.value);
   return { products, pageCount, ensureProducts }
 }
