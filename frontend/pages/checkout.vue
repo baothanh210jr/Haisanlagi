@@ -1,10 +1,18 @@
 <template>
   <div class="container">
     <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Thanh toán' }]" />
-    <div v-if="items.length === 0" class="empty">Giỏ hàng trống. Vui lòng thêm sản phẩm trước.</div>
+    <div
+      v-if="items.length === 0"
+      class="empty"
+    >
+      Giỏ hàng trống. Vui lòng thêm sản phẩm trước.
+    </div>
     <div v-else>
       <h2>Thông tin chuyển khoản</h2>
-      <div class="bank" v-if="bank">
+      <div
+        v-if="bank"
+        class="bank"
+      >
         <p><strong>Ngân hàng:</strong> {{ bank.bank_name }}</p>
         <p><strong>Số tài khoản:</strong> {{ bank.account_number }}</p>
         <p><strong>Chủ tài khoản:</strong> {{ bank.account_holder }}</p>
@@ -12,26 +20,43 @@
       </div>
 
       <h2>Thông tin khách hàng</h2>
-      <form class="form" @submit.prevent="submit">
+      <form
+        class="form"
+        @submit.prevent="submit"
+      >
         <label>
           Họ và tên
-          <Input v-model="name" required />
+          <Input
+            v-model="name"
+            required
+          />
         </label>
         <label>
           Số điện thoại
-          <Input v-model="phone" required />
+          <Input
+            v-model="phone"
+            required
+          />
         </label>
         <label>
           Địa chỉ
-          <Input v-model="address" required />
+          <Input
+            v-model="address"
+            required
+          />
         </label>
         <div class="summary">
           Tổng tiền: <strong>{{ formatPrice(totalPrice) }}</strong>
         </div>
-        <Button type="submit">Tạo đơn hàng</Button>
+        <Button type="submit">
+          Tạo đơn hàng
+        </Button>
       </form>
 
-      <div v-if="orderId" class="success">
+      <div
+        v-if="orderId"
+        class="success"
+      >
         Đã tạo đơn hàng #{{ orderId }}. Vui lòng chuyển khoản theo thông tin trên và ghi chú mã đơn hàng.
       </div>
     </div>
@@ -119,7 +144,7 @@ function formatPrice(n: number) {
 </script>
 
 <style scoped>
-.container { max-width: 700px; margin: 0 auto; padding: 24px; }
+/* Dùng Tailwind container, bỏ CSS container cứng */
 .topbar { display: flex; justify-content: flex-start; margin-bottom: 10px; }
 .backlink { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; text-decoration: none; color: #374151; background: #fff; transition: all .15s ease; }
 .backlink:hover { background: #f9fafb; transform: translateY(-1px); box-shadow: 0 6px 12px rgba(0,0,0,0.06); }

@@ -6,11 +6,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   shadcn: {
     prefix: '',
-    componentDir: './components/ui'
+    componentDir: './components/ui',
   },
   runtimeConfig: {
     public: {
-      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055'
-    }
-  }
+      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055',
+    },
+  },
 })

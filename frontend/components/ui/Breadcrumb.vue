@@ -1,18 +1,33 @@
 <template>
-  <nav class="breadcrumb" aria-label="Breadcrumb">
+  <nav
+    class="breadcrumb"
+    aria-label="Breadcrumb"
+  >
     <ol>
-      <li v-for="(item, idx) in items" :key="idx" class="crumb">
+      <li
+        v-for="(item, idx) in items"
+        :key="idx"
+        class="crumb"
+      >
         <template v-if="item.to && idx < items.length - 1">
-          <NuxtLink :to="item.to" class="link">{{ item.label }}</NuxtLink>
+          <NuxtLink
+            :to="item.to"
+            class="link"
+          >
+            {{ item.label }}
+          </NuxtLink>
         </template>
         <template v-else>
           <span class="current">{{ item.label }}</span>
         </template>
-        <span v-if="idx < items.length - 1" class="sep">›</span>
+        <span
+          v-if="idx < items.length - 1"
+          class="sep"
+        >›</span>
       </li>
     </ol>
   </nav>
- </template>
+</template>
 
  <script setup lang="ts">
  const props = defineProps<{ items: { label: string; to?: string }[] }>()

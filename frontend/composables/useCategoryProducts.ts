@@ -1,12 +1,25 @@
-type Product = { id: number | string, name: string, price: number, image_default?: any, image?: any, image_url?: string, slug: string }
+type Product = {
+  id: number | string
+  name: string
+  price: number
+  image_default?: any
+  image?: any
+  image_url?: string
+  slug: string
+}
 
 type ProductsResp = { data: Product[]; meta: { filter_count: number } }
 
-type Category = { id: number | string, name: string, slug: string }
+type Category = { id: number | string; name: string; slug: string }
 
 import type { Ref } from 'vue'
 
-export function useCategoryProducts(category: Ref<Category | null>, page: Ref<number>, limit = 24, ttlMs = 60_000) {
+export function useCategoryProducts(
+  category: Ref<Category | null>,
+  page: Ref<number>,
+  limit = 24,
+  ttlMs = 60_000
+) {
   const respMap = useState<Record<string, ProductsResp>>('category_products_resp', () => ({}))
   const loadedKeys = useState<Record<string, boolean>>('category_products_loaded', () => ({}))
   const timestamps = useState<Record<string, number>>('category_products_ts', () => ({}))

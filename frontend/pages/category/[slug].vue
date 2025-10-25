@@ -4,11 +4,18 @@
 
     <div class="grid">
       <!-- Use ProductCard for nicer product UI -->
-      <ProductCard v-for="p in products" :key="p.id" :product="p" />
+      <ProductCard
+        v-for="p in products"
+        :key="p.id"
+        :product="p"
+      />
     </div>
-    <Pagination :page="page" :page-count="pageCount" @update:page="val => page = val" />
+    <Pagination
+      :page="page"
+      :page-count="pageCount"
+      @update:page="val => page = val"
+    />
   </div>
-  
 </template>
 
 <script setup lang="ts">
@@ -45,7 +52,7 @@ watch(page, () => { ensureProducts() })
 
 
 <style scoped>
-.container { max-width: 1060px; margin: 0 auto; padding: 24px; }
+/* Dùng Tailwind container, bỏ CSS container cứng */
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media (max-width: 768px) {
   .grid { grid-template-columns: repeat(2, 1fr); }

@@ -1,16 +1,41 @@
 <template>
-  <nav class="mt-6 flex items-center justify-center gap-2 select-none" aria-label="Pagination">
-    <Button variant="outline" size="sm" :disabled="page <= 1" @click="prev">Trước</Button>
-    <template v-for="p in pages" :key="p.key">
-      <span v-if="p.type === 'ellipsis'" class="px-2 text-gray-500">…</span>
+  <nav
+    class="mt-6 flex items-center justify-center gap-2 select-none"
+    aria-label="Pagination"
+  >
+    <Button
+      variant="outline"
+      size="sm"
+      :disabled="page <= 1"
+      @click="prev"
+    >
+      Trước
+    </Button>
+    <template
+      v-for="p in pages"
+      :key="p.key"
+    >
+      <span
+        v-if="p.type === 'ellipsis'"
+        class="px-2 text-gray-500"
+      >…</span>
       <button
         v-else
         class="min-w-[34px] h-8 px-2 rounded-md border text-sm transition-colors"
-        :class="p.value === page ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-gray-700 hover:bg-gray-50'"
+        :class="p.value === page ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 hover:bg-gray-50'"
         @click="go(p.value)"
-      >{{ p.value }}</button>
+      >
+        {{ p.value }}
+      </button>
     </template>
-    <Button variant="outline" size="sm" :disabled="page >= pageCount" @click="next">Sau</Button>
+    <Button
+      variant="outline"
+      size="sm"
+      :disabled="page >= pageCount"
+      @click="next"
+    >
+      Sau
+    </Button>
   </nav>
 </template>
 

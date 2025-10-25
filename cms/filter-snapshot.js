@@ -17,14 +17,8 @@ function run() {
 
   const fields = (data.fields || []).filter((f) => !isSystemCollection(f.collection, null));
 
-  const relations = (data.relations || []).filter((r) => {
-    const c1 = r.collection || r.many_collection;
-    const c2 = r.related_collection || r.one_collection;
-    return !(
-      isSystemCollection(c1, null) ||
-      isSystemCollection(c2, null)
-    );
-  });
+  // Skip relations on re-apply to avoid duplicate relation errors
+  const relations = [];
 
   const permissions = (data.permissions || []).filter((p) => !isSystemCollection(p.collection, null));
 

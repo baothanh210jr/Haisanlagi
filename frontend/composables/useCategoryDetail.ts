@@ -1,6 +1,6 @@
 import { readItems } from '@directus/sdk'
 
-type Category = { id: number | string, name: string, slug: string }
+type Category = { id: number | string; name: string; slug: string }
 
 export function useCategoryDetail(slug: string, ttlMs = 300_000) {
   const category = useState<Category | null>(`category-${slug}`, () => null)
@@ -14,7 +14,12 @@ export function useCategoryDetail(slug: string, ttlMs = 300_000) {
     loaded.value = true
     try {
       // @ts-ignore
-      const cats = await $directus.request(readItems('categories', { filter: { slug: { _eq: slug }, status: { _eq: 'published' } }, limit: 1 }))
+      const cats = await $directus.request(
+        readItems('categories', {
+          filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
+          limit: 1,
+        })
+      )
       category.value = (cats[0] || null) as any
       lastTs.value = Date.now()
     } catch {

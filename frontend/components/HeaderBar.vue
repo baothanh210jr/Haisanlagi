@@ -1,27 +1,38 @@
 <template>
-  <header class="bg-gradient-to-r from-amber-500 to-yellow-500 text-white">
-    <div class="max-w-[1060px] mx-auto px-5 py-3 flex items-center justify-between">
-      <NuxtLink to="/" class="font-bold tracking-wide text-xl">Hải Sản 86</NuxtLink>
-      <div class="flex items-center gap-4">
-        <NuxtLink to="/orders" class="hover:opacity-90 transition-opacity text-sm font-semibold">Đơn hàng của tôi</NuxtLink>
-        <NuxtLink to="/cart" class="relative flex items-center gap-2 hover:opacity-90 transition-opacity">
-          <span class="relative inline-flex">
-            <span class="text-lg">🛒</span>
-            <ClientOnly>
-              <span class="absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full bg-white text-amber-700 text-xs px-1 min-w-[18px] h-[18px] leading-none font-semibold">{{ totalItems }}</span>
-              <template #fallback>
-                <span class="absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full bg-white text-amber-700 text-xs px-1 min-w-[18px] h-[18px] leading-none">0</span>
-              </template>
-            </ClientOnly>
-          </span>
-          <span>Giỏ hàng</span>
+  <header class="bg-primary text-white">
+    <div class="container py-3 flex items-center justify-between">
+      <NuxtLink
+        to="/"
+        class="flex items-center gap-3"
+      >
+        <!-- <img src="/logo.svg" alt="Haisan Lagi" class="h-8 w-8" /> -->
+        <span class="font-semibold">Hải Sản Lagi</span>
+      </NuxtLink>
+      <nav class="flex items-center gap-4">
+        <span>Giỏ hàng</span>
+        <NuxtLink
+          to="/cart"
+          class="relative"
+        >
+          <Icon
+            icon="mdi:cart"
+            width="24"
+            height="24"
+          />
+          <span
+            v-if="cartCount > 0"
+            class="absolute -top-2 -right-3 bg-yellow-400 text-primary text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
+          >{{ cartCount }}</span>
         </NuxtLink>
-      </div>
+      </nav>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
 import { useCart } from '~/composables/useCart'
-const { totalItems } = useCart()
+
+const { items } = useCart()
+const cartCount = computed(() => items.value.reduce((acc, i) => acc + i.quantity, 0))
 </script>

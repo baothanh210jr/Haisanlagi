@@ -1,6 +1,14 @@
 import { readItems } from '@directus/sdk'
 
-type Product = { id: number | string, name: string, slug: string, price: number, image?: any, description?: string, category?: number | string }
+type Product = {
+  id: number | string
+  name: string
+  slug: string
+  price: number
+  image?: any
+  description?: string
+  category?: number | string
+}
 
 export function useProductDetail(slug: string) {
   const product = useState<Product | null>(`product-${slug}`, () => null)
@@ -12,7 +20,12 @@ export function useProductDetail(slug: string) {
     loaded.value = true
     try {
       // @ts-ignore
-      const items = await $directus.request(readItems('products', { filter: { slug: { _eq: slug }, status: { _eq: 'published' } }, limit: 1 }))
+      const items = await $directus.request(
+        readItems('products', {
+          filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
+          limit: 1,
+        })
+      )
       product.value = (items[0] || null) as any
     } catch {
       product.value = null

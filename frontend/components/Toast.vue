@@ -1,11 +1,31 @@
 <template>
-  <div class="toast-container" aria-live="polite" aria-atomic="true">
-    <div v-for="t in toasts" :key="t.id" class="toast" :class="t.type">
+  <div
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <div
+      v-for="t in toasts"
+      :key="t.id"
+      class="toast"
+      :class="t.type"
+    >
       <div class="content">
         <span class="message">{{ t.text }}</span>
         <div class="actions">
-          <NuxtLink v-if="t.actionTo && t.actionText" :to="t.actionTo" class="btn">{{ t.actionText }}</NuxtLink>
-          <button class="close" @click="remove(t.id)">×</button>
+          <NuxtLink
+            v-if="t.actionTo && t.actionText"
+            :to="t.actionTo"
+            class="btn"
+          >
+            {{ t.actionText }}
+          </NuxtLink>
+          <button
+            class="close"
+            @click="remove(t.id)"
+          >
+            ×
+          </button>
         </div>
       </div>
     </div>

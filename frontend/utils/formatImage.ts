@@ -15,7 +15,7 @@ function toId(val: FileRef): string | null {
 }
 
 export function formatImage(
-  source: { image?: FileRef, image_default?: FileRef, image_url?: string } | null,
+  source: { image?: FileRef; image_default?: FileRef; image_url?: string } | null,
   opts: ImageOptions = {}
 ): string {
   if (!source) return ''
@@ -33,7 +33,7 @@ export function formatImage(
     fit: String(fit),
     width: String(width),
     height: String(height),
-    quality: String(quality)
+    quality: String(quality),
   })
   return `${baseUrl}/assets/${id}?${params.toString()}`
 }

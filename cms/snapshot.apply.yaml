@@ -1714,12 +1714,7 @@ fields:
       has_auto_increment: false
       foreign_key_column: null
       foreign_key_table: null
-relations:
-  - collection: products
-    field: category
-    related_collection: categories
-    one_field: id
-    one_collection_field: name
+relations: []
 permissions:
   - policy: 711fc958-ce11-4b85-a1e8-f2d700343854
     collection: bank_accounts

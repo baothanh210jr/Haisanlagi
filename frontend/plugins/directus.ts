@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      directus: client
-    }
+      directus: client,
+    },
   }
 })

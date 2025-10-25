@@ -1,13 +1,30 @@
 import { readItems } from '@directus/sdk'
 
-type Product = { id: number | string, name: string, price: number, image_default?: any, image?: any, image_url?: string, slug: string }
+type Product = {
+  id: number | string
+  name: string
+  price: number
+  image_default?: any
+  image?: any
+  image_url?: string
+  slug: string
+}
 
-type Slide = { id: number | string, title?: string, product?: number | string, image?: any, image_url?: string }
+type Slide = {
+  id: number | string
+  title?: string
+  product?: number | string
+  image?: any
+  image_url?: string
+}
 
 // Khôi phục chữ ký: limit trước, TTL sau; trả về heroProducts để tương thích index.vue
 export function useHomeSlides(limit = 5, ttlMs = 300_000) {
   const slides = useState<Slide[]>('home_slides', () => [])
-  const productsById = useState<Record<string | number, Product>>('home_slides_products', () => ({}))
+  const productsById = useState<Record<string | number, Product>>(
+    'home_slides_products',
+    () => ({})
+  )
   const loaded = useState<boolean>('home_slides_loaded', () => false)
   const lastTs = useState<number>('home_slides_ts', () => 0)
   const runtime = useRuntimeConfig()
@@ -21,10 +38,10 @@ export function useHomeSlides(limit = 5, ttlMs = 300_000) {
       qs.set('limit', String(limit))
       const res = await fetch(`${runtime.public.directusUrl}/items/home_slides?${qs.toString()}`)
       const json = await res.json()
-      slides.value = ((json?.data || []) as Slide[])
+      slides.value = (json?.data || []) as Slide[]
 
       const ids = slides.value
-        .map(s => (s as any).product)
+        .map((s) => (s as any).product)
         .filter((x): x is string | number => x != null)
       if (ids.length) {
         const qsp = new URLSearchParams()
@@ -49,7 +66,7 @@ export function useHomeSlides(limit = 5, ttlMs = 300_000) {
 
   // Tạo danh sách sản phẩm cho HeroSlider theo props cũ
   const heroProducts = computed(() => {
-    return (slides.value || []).map(s => {
+    return (slides.value || []).map((s) => {
       const p = productsById.value[(s as any).product]
       return {
         id: p?.id ?? s.id,
@@ -58,7 +75,7 @@ export function useHomeSlides(limit = 5, ttlMs = 300_000) {
         price: p?.price || 0,
         image: s?.image || p?.image || null,
         image_default: null,
-        image_url: s?.image_url || p?.image_url || ''
+        image_url: s?.image_url || p?.image_url || '',
       } as Product
     })
   })

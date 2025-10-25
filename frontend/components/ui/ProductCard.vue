@@ -1,24 +1,44 @@
 <template>
   <Card padding="none">
     <div class="group relative overflow-hidden rounded-xl">
-      <NuxtLink :to="`/product/${product.slug}`" class="block">
+      <NuxtLink
+        :to="`/product/${product.slug}`"
+        class="block"
+      >
         <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100">
-          <img v-if="img" :src="img" :alt="product.name" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-          <div v-else class="h-full w-full flex items-center justify-center text-gray-400">Không có ảnh</div>
+          <img
+            v-if="img"
+            :src="img"
+            :alt="product.name"
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          >
+          <div
+            v-else
+            class="h-full w-full flex items-center justify-center text-gray-400"
+          >
+            Không có ảnh
+          </div>
         </div>
       </NuxtLink>
       <!-- Hiển thị thông tin trên ảnh -->
       <!-- <div class="absolute top-3 left-3">
-        <span class="inline-flex items-center rounded-md bg-amber-500/90 px-3 py-1 text-white text-xs shadow-md">
+        <span class="inline-flex items-center rounded-md bg-primary/90 px-3 py-1 text-white text-xs shadow-md">
           {{ formatPrice(product.price) }}
         </span>
       </div> -->
     </div>
     <div class="p-4">
-      <h3 class="name font-semibold text-gray-900">{{ product.name }}</h3>
+      <h3 class="name font-semibold text-gray-900">
+        {{ product.name }}
+      </h3>
       <div class="mt-3 flex items-center justify-between">
-        <span class="text-amber-500 font-bold">{{ formatPrice(product.price) }}</span>
-        <Button size="sm" @click="add">Thêm vào giỏ</Button>
+        <span class="text-primary font-bold">{{ formatPrice(product.price) }}</span>
+        <Button
+          size="sm"
+          @click="add"
+        >
+          Thêm vào giỏ
+        </Button>
       </div>
     </div>
   </Card>

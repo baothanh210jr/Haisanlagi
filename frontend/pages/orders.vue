@@ -3,58 +3,126 @@
     <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Đơn hàng của tôi' }]" />
     <h1>Đơn hàng của tôi</h1>
 
-    <form class="lookup" @submit.prevent="lookup">
+    <form
+      class="lookup"
+      @submit.prevent="lookup"
+    >
       <div className="grid w-full max-w-sm items-center gap-3">
-      <Label htmlFor="phone">Số điện thoại</Label>
-      <Input v-model="phone" id="phone" placeholder="Nhập SĐT đặt hàng" required class="text-xs " />
-    </div>
-      <Button type="submit">Tra cứu</Button>
+        <Label html-for="phone">Số điện thoại</Label>
+        <Input
+          id="phone"
+          v-model="phone"
+          placeholder="Nhập SĐT đặt hàng"
+          required
+          class="text-xs "
+        />
+      </div>
+      <Button type="submit">
+        Tra cứu
+      </Button>
     </form>
 
-    <div v-if="orders.length" class="orders">
+    <div
+      v-if="orders.length"
+      class="orders"
+    >
       <h2>Danh sách đơn hàng</h2>
       <ul>
-        <li v-for="o in orders" :key="o.id" @click="select(o)" :class="['order', selected?.id === o.id ? 'active' : '']">
+        <li
+          v-for="o in orders"
+          :key="o.id"
+          :class="['order', selected?.id === o.id ? 'active' : '']"
+          @click="select(o)"
+        >
           <div>
             <strong>#{{ o.id }}</strong>
-            <span class="badge" :class="o.status">{{ o.status }}</span>
+            <span
+              class="badge"
+              :class="o.status"
+            >{{ o.status }}</span>
           </div>
-          <div class="muted">{{ o.customer_name }} • {{ o.customer_address }}</div>
+          <div class="muted">
+            {{ o.customer_name }} • {{ o.customer_address }}
+          </div>
         </li>
       </ul>
     </div>
 
-    <div v-if="selected" class="items">
+    <div
+      v-if="selected"
+      class="items"
+    >
       <h2>Sản phẩm trong đơn #{{ selected.id }}</h2>
-      <div v-if="orderItems.length === 0" class="empty">Chưa có sản phẩm nào.</div>
-      <div v-else class="table">
-        <div v-for="i in orderItems" :key="i.id" class="row">
-          <img v-if="imageSrc(i.product, 80, 80)" :src="imageSrc(i.product, 80, 80)" :alt="i.product?.name || 'Sản phẩm'" />
+      <div
+        v-if="orderItems.length === 0"
+        class="empty"
+      >
+        Chưa có sản phẩm nào.
+      </div>
+      <div
+        v-else
+        class="table"
+      >
+        <div
+          v-for="i in orderItems"
+          :key="i.id"
+          class="row"
+        >
+          <img
+            v-if="imageSrc(i.product, 80, 80)"
+            :src="imageSrc(i.product, 80, 80)"
+            :alt="i.product?.name || 'Sản phẩm'"
+          >
           <div class="info">
             <strong>{{ i.product?.name || 'Sản phẩm' }}</strong>
             <div>Giá: {{ formatPrice(i.unit_price) }}</div>
             <div>Số lượng: {{ i.quantity }}</div>
             <div>Tạm tính: {{ formatPrice(i.subtotal) }}</div>
           </div>
-          <Button variant="destructive" size="sm" @click="removeItem(i.id)">Xóa</Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            @click="removeItem(i.id)"
+          >
+            Xóa
+          </Button>
         </div>
-        <div class="summary">Tổng tiền (tính theo items): <strong>{{ formatPrice(itemsTotal) }}</strong></div>
+        <div class="summary">
+          Tổng tiền (tính theo items): <strong>{{ formatPrice(itemsTotal) }}</strong>
+        </div>
       </div>
 
       <div class="add">
         <h3>Thêm sản phẩm vào đơn</h3>
-        <form class="add-form" @submit.prevent="addProduct">
+        <form
+          class="add-form"
+          @submit.prevent="addProduct"
+        >
           <label class="field">
             <span>Chọn sản phẩm</span>
-            <select v-model="selectedProductId" required>
-              <option v-for="p in allProducts" :key="p.id" :value="p.id">{{ p.name }} ({{ formatPrice(p.price) }})</option>
+            <select
+              v-model="selectedProductId"
+              required
+            >
+              <option
+                v-for="p in allProducts"
+                :key="p.id"
+                :value="p.id"
+              >{{ p.name }} ({{ formatPrice(p.price) }})</option>
             </select>
           </label>
           <label class="field">
             <span>Số lượng</span>
-            <Input type="number" v-model.number="qty" min="1" required />
+            <Input
+              v-model.number="qty"
+              type="number"
+              min="1"
+              required
+            />
           </label>
-          <Button type="submit">Thêm vào đơn</Button>
+          <Button type="submit">
+            Thêm vào đơn
+          </Button>
         </form>
       </div>
     </div>
@@ -154,7 +222,7 @@ function imageSrc(p: { image?: any, image_default?: any } | null, width = 80, he
 </script>
 
 <style scoped>
-.container { max-width: 1060px; margin: 0 auto; padding: 24px; }
+/* Dùng Tailwind container, bỏ CSS container cứng */
 .topbar { display: flex; justify-content: flex-start; margin-bottom: 10px; }
 .backlink { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; text-decoration: none; color: #374151; background: #fff; transition: all .15s ease; }
 .backlink:hover { background: #f9fafb; transform: translateY(-1px); box-shadow: 0 6px 12px rgba(0,0,0,0.06); }

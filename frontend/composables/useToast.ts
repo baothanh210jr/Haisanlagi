@@ -13,7 +13,7 @@ export function useToast() {
   const toasts = useState<ToastItem[]>('toasts', () => [])
 
   function remove(id: number) {
-    const idx = toasts.value.findIndex(t => t.id === id)
+    const idx = toasts.value.findIndex((t) => t.id === id)
     if (idx !== -1) toasts.value.splice(idx, 1)
   }
 

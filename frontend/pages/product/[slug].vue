@@ -1,34 +1,66 @@
 <template>
   <div class="container">
     <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Sản phẩm' }, { label: product?.name || slug }]" />
-    <div v-if="product" class="detail">
+    <div
+      v-if="product"
+      class="detail"
+    >
       <div class="media">
-        <img :src="formatImage(
-          product, { width: 1200, height: 800 })" 
+        <img
+          :src="formatImage(
+            product, { width: 1200, height: 800 })" 
           :alt="product.name" 
           class="transition-transform duration-200 ease-out hover:scale-105"
-        />
+        >
       </div>
       <div class="info">
         <h1>{{ product.name }}</h1>
-        <p class="price">{{ formatPrice(displayPrice) }}</p>
+        <p class="price">
+          {{ formatPrice(displayPrice) }}
+        </p>
         <div class="capacity">
           <label>Khối lượng:</label>
           <div class="options">
-            <label v-for="opt in capacityOptions" :key="opt" class="opt">
-              <input type="radio" name="capacity" :value="opt" v-model.number="selectedCapacity" />
+            <label
+              v-for="opt in capacityOptions"
+              :key="opt"
+              class="opt"
+            >
+              <input
+                v-model.number="selectedCapacity"
+                type="radio"
+                name="capacity"
+                :value="opt"
+              >
               <span>{{ opt }}kg</span>
             </label>
           </div>
         </div>
-        <p v-if="product.description" class="desc">{{ product.description }}</p>
+        <p
+          v-if="product.description"
+          class="desc"
+        >
+          {{ product.description }}
+        </p>
         <div class="actions">
-          <Button @click="add(product)">Thêm vào giỏ</Button>
-          <NuxtLink class="secondary" :to="categoryLink">Xem danh mục</NuxtLink>
+          <Button @click="add(product)">
+            Thêm vào giỏ
+          </Button>
+          <NuxtLink
+            class="secondary"
+            :to="categoryLink"
+          >
+            Xem danh mục
+          </NuxtLink>
         </div>
       </div>
     </div>
-    <div v-else class="empty">Sản phẩm không tồn tại hoặc đã ẩn.</div>
+    <div
+      v-else
+      class="empty"
+    >
+      Sản phẩm không tồn tại hoặc đã ẩn.
+    </div>
   </div>
 </template>
 
@@ -71,7 +103,7 @@ function formatPrice(n: number) {
 </script>
 
 <style scoped>
-.container { max-width: 1060px; margin: 0 auto; padding: 24px; }
+/* Dùng Tailwind container, bỏ CSS container cứng */
 .detail { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
 .media img { width: 100%; height: 420px; object-fit: cover; border-radius: 12px; }
 .info h1 { margin: 0 0 8px; }

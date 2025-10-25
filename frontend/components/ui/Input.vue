@@ -3,9 +3,9 @@
     :type="type"
     :value="modelValueComputed"
     :class="classes"
-    @input="onInput"
     v-bind="$attrs"
-  />
+    @input="onInput"
+  >
 </template>
 
 <script setup lang="ts">
@@ -39,7 +39,7 @@ const classes = computed(() => {
   return [
     'w-full rounded-md border border-gray-300 bg-white',
     'px-3 py-2 text-gray-900 placeholder-gray-400',
-    'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500',
+    'focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary',
     'disabled:cursor-not-allowed disabled:opacity-50',
     sizeClasses[props.size],
   ].join(' ')

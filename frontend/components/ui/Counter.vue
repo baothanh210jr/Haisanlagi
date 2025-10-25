@@ -15,11 +15,11 @@
     </button>
     <input
       :value="current"
+      class="w-14 text-center appearance-none outline-none border border-transparent focus:border-gray-300 rounded-md py-2"
       @input="onInput"
       @keydown.up.prevent="increase"
       @keydown.down.prevent="decrease"
-      class="w-14 text-center appearance-none outline-none border border-transparent focus:border-gray-300 rounded-md py-2"
-    />
+    >
     <button
       type="button"
       class="w-9 h-9 inline-flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
