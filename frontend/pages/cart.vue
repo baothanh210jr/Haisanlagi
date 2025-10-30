@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h1>Giỏ hàng</h1>
     <div
       v-if="items.length === 0"
       class="empty"
@@ -11,10 +10,10 @@
       <div
         v-for="i in items"
         :key="i.id + ':' + (i.capacity ?? 'base')"
-        class="row"
+        class="row my-15"
       >
         <!-- <img v-if="i.image" :src="i.image" :alt="i.name" /> -->
-        <div class="overflow-hidden">
+        <div class="overflow-hidden rounded">
           <img
             :src="formatImage(
               i, { width: 1200, height: 800 })" 

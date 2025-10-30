@@ -3,6 +3,7 @@ import vue from 'eslint-plugin-vue'
 import tsParser from '@typescript-eslint/parser'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import prettier from 'eslint-plugin-prettier'
+import importPlugin from 'eslint-plugin-import'
 
 export default [
   // Base JS and Vue rules
@@ -61,12 +62,21 @@ export default [
     plugins: {
       '@typescript-eslint': tsPlugin,
       prettier,
+      import: importPlugin,
     },
     rules: {
       'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       // Allow Nuxt aliases and virtual modules
       'import/no-unresolved': 'off',
+      'import/no-extraneous-dependencies': ['error', { peerDependencies: true }],
+    },
+  },
+  // Allow dev-only imports in config file
+  {
+    files: ['eslint.config.js'],
+    rules: {
+      'import/no-extraneous-dependencies': 'off',
     },
   },
   // Ignore built output and external folders
