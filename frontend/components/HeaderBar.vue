@@ -6,14 +6,14 @@
         class="flex items-center gap-3"
       >
         <!-- <img src="/logo.svg" alt="Haisan Lagi" class="h-8 w-8" /> -->
-        <span class="font-semibold">Hải Sản Lagi</span>
+        <span class="font-semibold">Làng chài 86</span>
       </NuxtLink>
       <nav class="flex items-center gap-4">
-        <span>Giỏ hàng</span>
         <NuxtLink
           to="/cart"
-          class="relative"
+          class="relative flex items-center gap-4"
         >
+          <span>Giỏ hàng</span>
           <Icon
             icon="mdi:cart"
             width="24"
