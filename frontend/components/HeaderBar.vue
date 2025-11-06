@@ -12,50 +12,72 @@
     <div class="container py-3 flex items-center justify-between">
       <NuxtLink
         to="/"
-        class="flex items-center gap-3"
+        class="flex items-center gap-3 flex-shrink-0"
       >
-        <!-- <img src="/logo.svg" alt="Haisan Lagi" class="h-8 w-8" /> -->
-        <span
-          :class="atTop ? 'text-white' : 'text-black'" 
-          class="font-semibold"
-        >Làng chài 86</span>
+        <div class="w-auto h-10">
+          <img
+            src="/logo-01.png"
+            alt="Haisan Lagi"
+            class="h-10 w-full object-cover scale-150"
+          >
+        </div>
       </NuxtLink>
-      <nav
-        ref="navRef"
-        class="hidden md:flex items-center gap-6 relative"
-      >
-        <button
-          v-for="(item, index) in menuItems"
-          :key="item.id"
-          :ref="el => setMenuRef(el as HTMLElement | null, index)"
-          class="uppercase tracking-wide text-sm px-2 pb-1 transition-colors"
-          :class="[
-            activeSection === item.id
-              ? atTop
-                ? 'text-white font-medium'
-                : 'text-black font-medium'
-              : atTop
-                ? 'text-white'
-                : 'text-black/90',
-            'hover:text-white'
-          ]"
-          @click.prevent="scrollTo(item.id)"
-        >
-          {{ item.label }}
-        </button>
-        <div
-          class="absolute bottom-0 h-[2px] transition-all duration-300 ease-out"
-          :style="{ left: indicatorLeft + 'px', width: indicatorWidth + 'px', backgroundColor: atTop ? 'white' : 'orange' }"
-        />
-        <NuxtLink
-          to="/cart"
-          class="relative"
-        >
-          <div class="w-7 h-7 relative rounded-full bg-white text-primary flex items-center justify-center shadow-lg">
+
+      <!-- Search bar -->
+      <div class="flex-1 max-w-md mx-4">
+        <div class="relative">
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Tìm kiếm..."
+            class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+          <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white p-1 rounded">
             <Icon
-              icon="mdi:cart"
+              icon="mdi:magnify"
               width="18"
               height="18"
+            />
+          </button>
+        </div>
+      </div>
+      <div class="flex items-center gap-8">
+        <!-- Hotline -->
+        <div class="flex items-center gap-4">
+          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-primary">
+            <Icon
+              icon="mdi:phone"
+              width="20"
+              height="20"
+            />
+          </div>
+          <div
+            :class="[
+              atTop
+                ? 'text-white font-medium'
+                : 'text-black font-medium'
+            ]"
+          >
+            <span
+              class="text-sm font-medium "
+            >Hỗ trợ khách hàng</span>
+            <div class="">
+              <span class="text-sm font-medium ">0367497642</span>
+            </div>
+          </div>
+        </div>
+        <!-- Cart -->
+        <NuxtLink
+          :to="{
+            name: 'cart',
+          }"
+          class="relative"
+        >
+          <div class="w-10 h-10 relative rounded-full bg-white text-primary flex items-center justify-center shadow-lg">
+            <Icon
+              icon="mdi:cart"
+              width="25"
+              height="25"
             />
             <span
               v-if="cartCount > 0"
@@ -63,18 +85,105 @@
             >{{ cartCount }}</span>
           </div>
         </NuxtLink>
-      </nav>
+      </div>
     </div>
+    <nav
+      ref="navRef"
+      class="hidden md:flex items-center gap-6 relative flex-shrink-0 bg-white "
+    >
+      <div class="container grid grid-cols-12 gap-8 ">
+        <div class="col-span-3 relative w-full">
+          <button
+            ref="categoryBtnRef"
+            class="flex items-center gap-2 mr-10 py-3 bg-white w-full"
+            @click="toggleCategoryPanel"
+          >
+            <Icon
+              icon="mdi:menu"
+              width="25"
+              height="25"
+            />
+            <span class="uppercase tracking-wide text-sm transition-colors font-medium">Danh mục sản phẩm</span>
+          </button>
+          <Transition name="fade">
+            <div
+              v-if="showCategoryPanel"
+              class="absolute left-0 top-full mt-1 border border-gray-200 shadow-lg bg-white z-40 w-full"
+            >
+              <NuxtLink
+                v-for="(cat, idx) in categories"
+                :key="cat.id"
+                :class="[idx % 2 === 1 ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-white hover:bg-gray-200', 'flex items-center gap-3 px-4 py-3']"
+                :to="{
+                  name: 'category-slug',
+                  params: {
+                    slug: cat.slug,
+                  },
+                }"
+              >
+                <Icon
+                  :icon="cat.icon"
+                  width="22"
+                  height="22"
+                />
+                <span class="text-base">{{ cat.name }}</span>
+              </NuxtLink>
+            </div>
+          </Transition>
+        </div>
+        <div class="col-span-8 flex items-center gap-6">
+          <button
+            v-for="(item, index) in menuItems"
+            :key="item.id"
+            :ref="el => setMenuRef(el as HTMLElement | null, index)"
+            class="uppercase tracking-wide text-sm px-2 pb-1 transition-colors"
+            :class="[
+              activeSection === item.id
+                ? atTop
+                  ? 'text-black font-medium'
+                  : 'text-black font-medium'
+                : atTop
+                  ? 'text-black'
+                  : 'text-black/90',
+            ]"
+            @click.prevent="scrollTo(item.id)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
+        <div
+          class="absolute bottom-0 h-[2px] transition-all duration-300 ease-out"
+          :style="{ left: indicatorLeft + 'px', width: indicatorWidth + 'px', backgroundColor: atTop ? 'white' : 'orange' }"
+        />
+      </div>
+    </nav>
   </header>
 </template>
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { useCart } from '~/composables/useCart'
+import { useCategories } from '~/composables/useCategories'
+import { useState } from '#app'
 import { onMounted, onUnmounted, ref, computed, watch, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
 
 const { items } = useCart()
 const cartCount = computed(() => items.value.reduce((acc, i) => acc + i.quantity, 0))
+
+// Search functionality
+const searchQuery = ref('')
+
+// Categories dropdown state
+const { categories, ensureCategories } = useCategories(12)
+const categoryBtnRef = ref<HTMLElement | null>(null)
+const catPanelWidth = ref<number>(280)
+const showCategoryPanel = ref<boolean>(false)
+const manualCategoryOpen = ref<boolean>(false)
+const heroInView = ref<boolean>(true)
+const catBtnWidthState = useState<number>('category_btn_width', () => 280)
+const route = useRoute()
+const isHomeRoute = computed(() => route.path === '/' || (route.name as any) === 'index')
 
 // Scroll-based header behavior
 const headerRef = ref<HTMLElement | null>(null)
@@ -152,6 +261,12 @@ function onScroll() {
       }
     }
     if (current) activeSection.value = current
+    // Update category visibility based on hero section, with fallback near top on first load
+    const nearTop = y <= ((headerRef.value?.offsetHeight || 0) + 12)
+    // Chỉ coi là đang trong hero khi đang ở trang Home
+    heroInView.value = isHomeRoute.value && (activeSection.value === 'home' || nearTop)
+    // Show header categories while hero is visible; hide outside hero until clicked
+    showCategoryPanel.value = heroInView.value ? true : manualCategoryOpen.value
   } catch {}
 }
 
@@ -165,8 +280,16 @@ onMounted(() => {
   nextTick(() => {
     onScroll()
     updateIndicator()
+    // Ensure categories loaded and measure button width
+    ensureCategories()
+    const w = categoryBtnRef.value?.offsetWidth || 0
+    if (w > 0) { catPanelWidth.value = w; catBtnWidthState.value = w }
   })
-  window.addEventListener('resize', updateIndicator)
+  window.addEventListener('resize', () => {
+    updateIndicator()
+    const w = categoryBtnRef.value?.offsetWidth || 0
+    if (w > 0) { catPanelWidth.value = w; catBtnWidthState.value = w }
+  })
 })
 
 onUnmounted(() => {
@@ -206,9 +329,22 @@ function scrollTo(id: string) {
 watch(activeSection, () => {
   updateIndicator()
 })
+
+function toggleCategoryPanel() {
+  // In hero, keep categories open by default and ignore toggle
+  if (heroInView.value) {
+    showCategoryPanel.value = true
+    manualCategoryOpen.value = false
+    return
+  }
+  manualCategoryOpen.value = !manualCategoryOpen.value
+  showCategoryPanel.value = manualCategoryOpen.value
+}
 </script>
 
 <style scoped>
 /* Improve performance for transform animations */
 header { backface-visibility: hidden; }
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>

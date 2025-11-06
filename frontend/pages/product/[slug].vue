@@ -93,7 +93,7 @@ const displayPrice = computed(() => (product.value?.price || 0) * selectedCapaci
 
 function add(p: Product) {
   addToCart({ id: p.id, name: p.name, price: displayPrice.value, image: p.image, capacity: selectedCapacity.value })
-  success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/cart' })
+  success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/gio-hang' })
 }
 
 function formatPrice(n: number) {

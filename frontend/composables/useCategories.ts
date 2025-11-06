@@ -1,6 +1,6 @@
 import { readItems } from '@directus/sdk'
 
-type Category = { id: number | string; name: string; slug: string }
+type Category = { id: number | string; name: string; slug: string; icon: string }
 
 export function useCategories(limit = 8, ttlMs = 300_000) {
   const categories = useState<Category[]>('categories', () => [])
@@ -18,6 +18,7 @@ export function useCategories(limit = 8, ttlMs = 300_000) {
         readItems('categories', { filter: { status: { _eq: 'published' } }, limit })
       )
       categories.value = data as any
+      console.log('Categories loaded:', categories.value)
       lastTs.value = Date.now()
     } catch {
       categories.value = []

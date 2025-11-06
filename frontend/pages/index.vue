@@ -3,65 +3,16 @@
     <!-- Hero Section -->
     <section
       id="home"
-      class=" min-h-screen flex items-center"
+      class=" min-h-screen my-10"
     >
-      <div class="container mx-auto px-6">
-        <div class="grid lg:grid-cols-12 gap-8 items-center">
-          <!-- Left Side - Promotional Banner -->
-          <div class="col-span-4 relative bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-            <!-- Background Image -->
-            <div class="absolute inset-0">
-              <img 
-                src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800&auto=format&fit=crop" 
-                alt="Fresh steak" 
-                class="w-full h-full object-cover opacity-60"
-              >
-              <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
-            </div>
-            
-            <!-- Content -->
-            <div class="relative z-10 p-8 lg:p-12 text-white min-h-[800px] flex flex-col justify-between">
-              <div>
-                <p class="text-red-400 font-medium mb-2 text-sm uppercase tracking-wide">
-                  Natural Prime Beef
-                </p>
-                <h1 class="text-3xl lg:text-4xl font-bold leading-tight mb-6">
-                  Fresh Meat Perfect<br>
-                  Done Steak
-                </h1>
-                <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center gap-2">
-                  Shop Now
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-              </div>
-              
-              <!-- Discount Badge -->
-              <div class="absolute top-6 right-6">
-                <div class="bg-orange-500 text-white rounded-full w-16 h-16 flex flex-col items-center justify-center text-center">
-                  <span class="text-lg font-bold">25%</span>
-                  <span class="text-xs">Save OFF</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Side - On-Sale Products -->
-          <div class="relative col-span-8 bg-white rounded-lg overflow-hidden shadow-2xl px-6 py-8">
+      <div class="container">
+        <div class="grid lg:grid-cols-12 gap-8 ">
+          <div class="col-span-3" />
+          <!-- On-Sale Products (expanded full width while header shows categories) -->
+          <div class="relative col-span-9 bg-white rounded-lg overflow-hidden shadow-2xl px-6 py-8">
             <div class="flex items-center justify-between mb-6">
               <h2 class="text-2xl font-bold text-gray-900">
-                On-Sale Products
+                Sản phẩm bán chạy
               </h2>
               <div class="flex gap-2">
                 <button class="products-prev w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors">
@@ -110,7 +61,8 @@
                 :breakpoints="{
                   640: { slidesPerView: 2, slidesPerGroup: 2, grid: { rows: 2, fill: 'row' }, spaceBetween: 12 },
                   768: { slidesPerView: 2, slidesPerGroup: 2, grid: { rows: 3, fill: 'row' }, spaceBetween: 16 },
-                  1024: { slidesPerView: 2, slidesPerGroup: 3, grid: { rows: 3, fill: 'row' }, spaceBetween: 16 }
+                  1024: { slidesPerView: 2, slidesPerGroup: 2, grid: { rows: 2, fill: 'row' }, spaceBetween: 16 },
+                  1536: { slidesPerView: 3, slidesPerGroup: 3, grid: { rows: 3, fill: 'row' }, spaceBetween: 16 },
                 }"
                 class="products-swiper"
               >
@@ -422,38 +374,6 @@
             <p class="text-gray-600 italic">
               "Reliable supplier with consistent quality. Perfect for our high-end restaurant needs."
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Big Fresh Catch CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-red-500 to-orange-500 text-white">
-      <div class="container mx-auto px-6">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 class="text-5xl font-bold mb-6">
-              Big Fresh Catch
-            </h2>
-            <p class="text-xl mb-8 text-white/90">
-              Don't miss out on our weekly special catches. Subscribe to get notified 
-              about premium selections and exclusive deals.
-            </p>
-            <div class="flex gap-4">
-              <button class="bg-white text-red-500 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors">
-                Subscribe Now
-              </button>
-              <button class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-red-500 transition-colors">
-                Learn More
-              </button>
-            </div>
-          </div>
-          <div>
-            <img 
-              src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?q=80&w=600&auto=format&fit=crop" 
-              alt="Big fresh catch" 
-              class="rounded-2xl shadow-2xl"
-            >
           </div>
         </div>
       </div>

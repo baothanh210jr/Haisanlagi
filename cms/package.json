@@ -8,8 +8,9 @@
     "setup:slides": "node ./setup-slides.js",
     "grant:public": "node ./grant-public-perms.js",
     "snapshot:export": "node ./export-snapshot.js",
-    "schema:apply": "node ./filter-snapshot.js && npx directus schema apply ./snapshot.apply.yaml --yes",
-    "cms:start": "npx directus start"
+    "schema:apply": "node ./filter-snapshot.js && node ./apply-schema.js",
+    "cms:start": "node ./start.js",
+    "cms:migrate": "node ./migrate.js"
   },
   "dependencies": {
     "@directus/sdk": "^15.1.0",

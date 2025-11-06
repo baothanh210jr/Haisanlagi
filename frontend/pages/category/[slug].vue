@@ -2,7 +2,7 @@
   <div class="container">
     <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Danh mục' }, { label: category?.name || slug }]" />
 
-    <div class="grid">
+    <div class="grid grid-cols-4 gap-4">
       <!-- Use ProductCard for nicer product UI -->
       <ProductCard
         v-for="p in products"
@@ -50,11 +50,3 @@ watch(page, () => { ensureProducts() })
 
 </script>
 
-
-<style scoped>
-/* Dùng Tailwind container, bỏ CSS container cứng */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 768px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-</style>

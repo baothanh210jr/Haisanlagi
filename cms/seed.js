@@ -8,6 +8,7 @@ const email = process.env.ADMIN_EMAIL
 const password = process.env.ADMIN_PASSWORD
 
 async function login() {
+  console.log(`Logging in with ${password}...`)
   const res = await fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
