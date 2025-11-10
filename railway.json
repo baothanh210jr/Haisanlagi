@@ -1,8 +1,0 @@
-{
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "mkdir -p $EXTENSIONS_PATH && mkdir -p $STORAGE_LOCAL_ROOT && npx directus start"
-  }
-}
