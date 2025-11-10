@@ -1,5 +1,17 @@
 {
+  "$schema": "https://railway.com/railway.schema.json",
   "build": {
-    "root": "cms"
+    "builder": "RAILPACK",
+    "root": "cms",
+    "watchPatterns": ["/cms/**"]
+  },
+  "deploy": {
+    "runtime": "V2",
+    "numReplicas": 1,
+    "startCommand": "/bin/sh -c 'cd cms && npx directus start'",
+    "healthcheckPath": "/",
+    "sleepApplication": false,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   }
 }
