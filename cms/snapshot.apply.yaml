@@ -1,6 +1,5 @@
 version: 1
 collections:
-      unarchive_value: null
     - collection: bank_accounts
       meta:
           collection: bank_accounts
