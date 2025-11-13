@@ -115,7 +115,7 @@ async function ensureSeed(token) {
   }
 
   // Upload and assign a few sample images for main seeded products
-  const currentProductsRes = await fetch(`${url}/items/products?limit=-1&fields=id,slug,name,image,image_url`, { headers })
+  const currentProductsRes = await fetch(`${url}/items/products?limit=-1&fields=id,slug,name,image`, { headers })
   if (!currentProductsRes.ok) throw new Error(`GET /items/products (id,slug) failed: ${currentProductsRes.status} ${await currentProductsRes.text()}`)
   const currentProducts = (await currentProductsRes.json()).data || []
   const seedBySlug = new Map(productsSeed.map(p => [p.slug, p]))
