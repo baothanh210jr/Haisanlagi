@@ -1,5 +1,3 @@
-import { readItems } from '@directus/sdk'
-
 type Product = {
   id: number | string
   name: string
@@ -7,25 +5,25 @@ type Product = {
   price: number
   image?: any
   description?: string
-  category?: number | string
+  category?: any
 }
 
 export function useProductDetail(slug: string) {
   const product = useState<Product | null>(`product-${slug}`, () => null)
   const loaded = useState<boolean>(`product-${slug}-loaded`, () => false)
-  const { $directus } = useNuxtApp()
 
   async function ensureProduct() {
     if (loaded.value) return
     loaded.value = true
     try {
-      // @ts-ignore
-      const items = await $directus.request(
-        readItems('products', {
-          filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
-          limit: 1,
-        })
-      )
+      const qs = new URLSearchParams()
+      qs.set('limit', '1')
+      qs.set('filter[slug][_eq]', slug)
+      // Expand relational category to include slug for linking
+      qs.set('fields', '*,category.slug')
+      const res = await fetch(`/api/directus/items/products?${qs.toString()}`)
+      const json = await res.json()
+      const items = (json?.data || []) as any[]
       product.value = (items[0] || null) as any
     } catch {
       product.value = null

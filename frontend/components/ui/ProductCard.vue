@@ -61,7 +61,7 @@ const { success } = useToast()
 function add() {
   const p = props.product
   addToCart({ id: p.id, name: p.name, price: p.price, image: p.image || p.image_default, capacity: 1 })
-  success(`Đã thêm "${p.name}" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/cart' })
+  success(`Đã thêm "${p.name}" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/gio-hang' })
 }
 
 function formatPrice(n: number) {

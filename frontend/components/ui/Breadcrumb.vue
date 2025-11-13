@@ -38,8 +38,8 @@
  .breadcrumb { margin: 8px 0 16px; }
  ol { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 0; margin: 0; list-style: none; }
  .crumb { display: inline-flex; align-items: center; gap: 6px; color: #6b7280; }
- .link { color: #6b7280; text-decoration: none; }
- .link:hover { color: #111827; }
- .current { color: #111827; font-weight: 600; }
+ .link { color: white; text-decoration: none; }
+ .link:hover { color: #ddd; }
+ .current { color: white; font-weight: 600; }
  .sep { color: #d1d5db; }
  </style>

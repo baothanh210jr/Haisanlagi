@@ -1,183 +1,374 @@
 <template>
-  <div class="container">
-    <HeroSlider
-      v-if="heroProducts?.length"
-      :products="heroProducts"
-      class="mt-5 rounded-2xl max-h-[500px]"
-    />
-    <section class="mt-5">
-      <h2>Danh mục</h2>
-      <div class="relative">
-        <Swiper
-          :modules="[FreeMode, Mousewheel, Navigation]"
-          :slides-per-view="2"
-          :space-between="10"
-          :free-mode="true"
-          :mousewheel="{ forceToAxis: true }"
-          :breakpoints="{ 640: { slidesPerView: 3 }, 768: { slidesPerView: 4 }, 1024: { slidesPerView: 6 } }"
-          :navigation="{ nextEl: '.categories-next', prevEl: '.categories-prev' }"
-          class="category-swiper"
-          @swiper="onSwiper"
-          @progress="onProgress"
-          @slide-change="onSlideChange"
-        >
-          <SwiperSlide
-            v-for="cat in categories"
-            :key="cat.id"
-          >
-            <NuxtLink
-              :to="`/category/${cat.slug}`"
-              class="category-card"
-            >
-              <span>{{ cat.name }}</span>
-            </NuxtLink>
-          </SwiperSlide>
-        </Swiper>
-        <div class="flex items-center mt-4 gap-4">
-          <div class="flex items-center gap-2">
-            <button
-              class="categories-prev inline-flex items-center justify-center  text-secondary-100 w-10 h-10 hover:bg-gray-100 focus:outline-none"
-              :class="{ 'opacity-50 pointer-events-none': isBeginning }"
-              aria-label="Previous categories"
-            >
-              <Icon
-                icon="lucide:move-left"
-                width="22"
-                height="22"
-              />
-            </button>
-            <button
-              class="categories-next inline-flex items-center justify-center text-secondary-100 w-10 h-10 hover:bg-gray-100 focus:outline-none"
-              :class="{ 'opacity-50 pointer-events-none': isEnd }"
-              aria-label="Next categories"
-            >
-              <Icon
-                icon="lucide:move-right"
-                width="22"
-                height="22"
-              />
-            </button>
-          </div>
-          <div class=" w-full ">
-            <div class="h-1 bg-gray-200/10 rounded">
-              <div
-                class="h-1 bg-primary/50 rounded transition-all"
-                :style="{ width: `${Math.round(progress * 100)}%` }"
-              />
+  <div>
+    <!-- Hero Section -->
+    <section id="home" class="hero-screen flex items-center justify-center">
+      <div class="container">
+        <div class="grid lg:grid-cols-12 gap-8">
+          <div class="col-span-3" />
+          <!-- On-Sale Products (expanded full width while header shows categories) -->
+          <div class="relative col-span-9 bg-white rounded-lg overflow-hidden shadow-2xl px-6 py-8">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-gray-900">Sản phẩm bán chạy</h2>
+              <div class="flex gap-2">
+                <button
+                  class="products-prev w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                >
+                  <svg
+                    class="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="products-next w-10 h-10 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            <!-- Products Swiper -->
+            <ClientOnly>
+              <Swiper
+                :modules="[Navigation, Grid]"
+                :slides-per-view="3"
+                :slides-per-group="3"
+                :space-between="16"
+                :loop="false"
+                :grid="{ rows: 3, fill: 'row' }"
+                :navigation="{ nextEl: '.products-next', prevEl: '.products-prev' }"
+                :breakpoints="{
+                  640: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                    grid: { rows: 2, fill: 'row' },
+                    spaceBetween: 12,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                    grid: { rows: 3, fill: 'row' },
+                    spaceBetween: 16,
+                  },
+                  1024: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                    grid: { rows: 2, fill: 'row' },
+                    spaceBetween: 16,
+                  },
+                  1536: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 3,
+                    grid: { rows: 3, fill: 'row' },
+                    spaceBetween: 16,
+                  },
+                }"
+                class="products-swiper"
+              >
+                <SwiperSlide v-for="(product, index) in sampleProducts" :key="index">
+                  <div
+                    class="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow overflow-hidden h-[180px] flex"
+                  >
+                    <div class="flex gap-4 p-4 w-full">
+                      <!-- Left Content -->
+                      <div class="w-1/2 flex flex-col justify-between h-full">
+                        <div>
+                          <h3
+                            class="font-bold text-gray-900 text-base mb-1 line-clamp-2 leading-tight"
+                          >
+                            {{ product.name }}
+                          </h3>
+                          <p class="text-gray-600 text-xs mb-2 line-clamp-2">
+                            Carefully Sourced, Kept Chilled, And Delivered The Same.
+                          </p>
+                          <!-- Price -->
+                          <div class="mb-2">
+                            <span class="text-xl font-bold text-gray-900"
+                              >${{ product.salePrice }}</span
+                            >
+                          </div>
+                        </div>
+
+                        <!-- Add Button -->
+                        <button
+                          class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-1 text-sm"
+                        >
+                          <Icon icon="mdi:cart-plus" class="w-4 h-4" />
+                          Thêm vào giỏ hàng
+                        </button>
+                      </div>
+
+                      <!-- Right Image -->
+                      <div class="w-1/2 relative">
+                        <img
+                          :src="product.image"
+                          :alt="product.name"
+                          class="w-full h-full object-cover rounded-lg"
+                        />
+                        <button
+                          class="absolute top-1 right-1 w-6 h-6 bg-white/80 hover:bg-white rounded-full flex items-center justify-center transition-colors"
+                        >
+                          <Icon
+                            icon="mdi:heart-outline"
+                            class="w-4 h-4 text-gray-600 hover:text-red-500"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+            </ClientOnly>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- How We Ship Section -->
+    <section id="how-we-ship" class="py-20 bg-orange-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">How We Ship</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <img
+              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=300&auto=format&fit=crop"
+              alt="Packaging"
+              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
+            />
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Expert Packaging</h3>
+            <p class="text-gray-600">Temperature-controlled packaging ensures freshness</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=300&auto=format&fit=crop"
+              alt="Delivery"
+              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
+            />
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Fast Delivery</h3>
+            <p class="text-gray-600">Next-day delivery to maintain peak freshness</p>
+          </div>
+          <div class="text-center">
+            <img
+              src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=300&auto=format&fit=crop"
+              alt="Quality"
+              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
+            />
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Quality Guarantee</h3>
+            <p class="text-gray-600">100% satisfaction or your money back</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Sản phẩm mới</h2>
-      <div class="grid">
-        <!-- Use ProductCard for nicer product UI -->
-        <ProductCard
-          v-for="p in products"
-          :key="p.id"
-          :product="p"
-        />
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Testimonials</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+              >
+                J
+              </div>
+              <div class="ml-4">
+                <h4 class="font-semibold text-gray-800">John Smith</h4>
+                <p class="text-gray-600 text-sm">Chef</p>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "The quality is exceptional. My restaurant customers always compliment the freshness
+              of the seafood."
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+              >
+                M
+              </div>
+              <div class="ml-4">
+                <h4 class="font-semibold text-gray-800">Maria Garcia</h4>
+                <p class="text-gray-600 text-sm">Home Cook</p>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "Fast delivery and amazing quality. My family loves the fresh salmon we order every
+              week."
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+            <div class="flex items-center mb-4">
+              <div
+                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+              >
+                D
+              </div>
+              <div class="ml-4">
+                <h4 class="font-semibold text-gray-800">David Chen</h4>
+                <p class="text-gray-600 text-sm">Restaurant Owner</p>
+              </div>
+            </div>
+            <p class="text-gray-600 italic">
+              "Reliable supplier with consistent quality. Perfect for our high-end restaurant
+              needs."
+            </p>
+          </div>
+        </div>
       </div>
-      <Pagination
-        :page="page"
-        :page-count="pageCount"
-        @update:page="val => page = val"
-      />
     </section>
   </div>
 </template>
 
-<script setup lang="ts">
-import Pagination from '~/components/ui/Pagination.vue'
-import ProductCard from '~/components/ui/ProductCard.vue'
-import HeroSlider from '~/components/ui/HeroSlider.vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { FreeMode, Mousewheel, Navigation } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import { Icon } from '@iconify/vue'
+<script setup>
+  import { Icon } from '@iconify/vue'
+  import 'swiper/css'
+  import 'swiper/css/grid'
+  import 'swiper/css/navigation'
+  import { Grid, Navigation } from 'swiper/modules'
+  import { Swiper, SwiperSlide } from 'swiper/vue'
+  import { onMounted } from 'vue'
 
+  // Sample products data
+  const sampleProducts = [
+    {
+      name: 'Boneless Chicken Breasts',
+      category: 'Poultry',
+      image:
+        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '96.00',
+      salePrice: '55.00',
+    },
+    {
+      name: 'Aged Pork Steak Beef',
+      category: 'Beef Meat',
+      image:
+        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '96.00',
+      salePrice: '55.00',
+    },
+    {
+      name: 'Premium Ribeye Steak',
+      category: 'Beef Meat',
+      image:
+        'https://images.unsplash.com/photo-1603048297172-c92544798d5a?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '120.00',
+      salePrice: '89.00',
+    },
+    {
+      name: 'Fresh Ground Beef',
+      category: 'Beef Meat',
+      image:
+        'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '45.00',
+      salePrice: '32.00',
+    },
+    {
+      name: 'Lamb Chops',
+      category: 'Lamb Meat',
+      image:
+        'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '150.00',
+      salePrice: '110.00',
+    },
+    {
+      name: 'Pork Tenderloin',
+      category: 'Pork Meat',
+      image:
+        'https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '75.00',
+      salePrice: '58.00',
+    },
+    {
+      name: 'Fresh Salmon Fillet',
+      category: 'Seafood',
+      image:
+        'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '85.00',
+      salePrice: '65.00',
+    },
+    {
+      name: 'Jumbo Shrimp',
+      category: 'Seafood',
+      image:
+        'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '95.00',
+      salePrice: '72.00',
+    },
+    {
+      name: 'Organic Turkey Breast',
+      category: 'Poultry',
+      image:
+        'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '68.00',
+      salePrice: '49.00',
+    },
+    {
+      name: 'Wagyu Beef Strips',
+      category: 'Premium Beef',
+      image:
+        'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '200.00',
+      salePrice: '155.00',
+    },
+    {
+      name: 'Fresh Cod Fillet',
+      category: 'Seafood',
+      image:
+        'https://images.unsplash.com/photo-1544943910-4c1dc44aab44?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '55.00',
+      salePrice: '42.00',
+    },
+    {
+      name: 'Duck Breast',
+      category: 'Poultry',
+      image:
+        'https://images.unsplash.com/photo-1574781330855-d0db2706b3d0?q=80&w=800&auto=format&fit=crop',
+      originalPrice: '88.00',
+      salePrice: '67.00',
+    },
+  ]
 
-import { useCategories } from '~/composables/useCategories'
-import { useHomeProducts } from '~/composables/useHomeProducts'
-import { useHomeSlides } from '~/composables/useHomeSlides'
-import { watch } from 'vue'
+  // Page metadata
+  useHead({
+    title: 'Fresh Seafood - From Boat to Your Home',
+    meta: [
+      {
+        name: 'description',
+        content:
+          "Premium quality seafood delivered fresh to your doorstep. Experience the ocean's finest catch with our sustainable fishing practices.",
+      },
+    ],
+  })
 
-const limit = 12
-let page = ref(1)
-
-const { categories, ensureCategories } = useCategories()
-await ensureCategories()
-
-const { products, pageCount, ensureProducts } = useHomeProducts(page, limit)
-await ensureProducts()
-
-// Refetch when page changes (use cache if already loaded)
-watch(page, () => { ensureProducts() })
-
-const { heroProducts, ensureSlides } = useHomeSlides(5)
-await ensureSlides()
-
-const progress = ref(0)
-const isBeginning = ref(true)
-const isEnd = ref(false)
-let catSwiper: any
-function onSwiper(swiper: any) {
-  catSwiper = swiper
-  updateCoverage(swiper)
-}
-function onProgress(swiper: any) {
-  // Use coverage instead of translate progress
-  updateCoverage(swiper)
-}
-function onSlideChange(swiper: any) {
-  updateCoverage(swiper)
-}
-function updateCoverage(swiper: any) {
-  const total: number = swiper?.slides?.length || 0
-  if (!total) {
-    progress.value = 0
-    isBeginning.value = true
-    isEnd.value = true
-    return
-  }
-  const firstIndex: number = swiper?.activeIndex || 0
-  // Try to get the actual visible slides count (respect breakpoints)
-  let visible = 1
-  try {
-    if (typeof swiper?.params?.slidesPerView === 'number') {
-      visible = swiper.params.slidesPerView
-    } else if (typeof swiper?.slidesPerView === 'number') {
-      visible = swiper.slidesPerView
-    } else if (typeof swiper?.slidesPerViewDynamic === 'function') {
-      visible = swiper.slidesPerViewDynamic('current', true)
-    }
-  } catch {}
-
-  const lastShown = Math.min(firstIndex + visible, total)
-  progress.value = lastShown / total
-  isBeginning.value = !!swiper?.isBeginning
-  isEnd.value = !!swiper?.isEnd
-}
-
+  // Đo chiều cao header và gán vào biến CSS để tính hero = 100dvh - header
+  onMounted(() => {
+    const headerEl = document.querySelector('header')
+    const h =
+      headerEl && headerEl instanceof HTMLElement ? headerEl.getBoundingClientRect().height : 0
+    document.documentElement.style.setProperty('--header-h', `${h}px`)
+  })
 </script>
 
 <style scoped>
-/* Dùng Tailwind container, bỏ CSS container cứng */
-.hero {
-  padding: 24px;
-  text-align: center;
-}
-
-.category-card {
-  @apply bg-primary text-white inline-flex w-full items-center justify-center p-3 border border-gray-200 rounded-xl no-underline text-gray-900 hover:bg-primary/80 transition-colors duration-300 text-white;
-}
-.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 768px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-section { margin-bottom: 24px; }
-h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+  .hero-screen {
+    /* Chiều cao toàn màn hình trừ phần header (dùng dvh để tránh thanh trình duyệt di động) */
+    min-height: calc(100dvh - var(--header-h, 64px));
+  }
 </style>

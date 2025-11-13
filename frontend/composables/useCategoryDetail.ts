@@ -1,25 +1,21 @@
-import { readItems } from '@directus/sdk'
-
 type Category = { id: number | string; name: string; slug: string }
 
-export function useCategoryDetail(slug: string, ttlMs = 300_000) {
+export function useCategoryDetail(slug: string, ttlMs = 1) {
   const category = useState<Category | null>(`category-${slug}`, () => null)
   const loaded = useState<boolean>(`category-${slug}-loaded`, () => false)
   const lastTs = useState<number>(`category-${slug}-ts`, () => 0)
-  const { $directus } = useNuxtApp()
 
   async function ensureCategory(force = false) {
     const fresh = Date.now() - (lastTs.value || 0) < ttlMs
     if (!force && loaded.value && fresh) return
     loaded.value = true
     try {
-      // @ts-ignore
-      const cats = await $directus.request(
-        readItems('categories', {
-          filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
-          limit: 1,
-        })
-      )
+      const qs = new URLSearchParams()
+      qs.set('limit', '1')
+      qs.set('filter[slug][_eq]', slug)
+      const res = await fetch(`/api/directus/items/categories?${qs.toString()}`)
+      const data = await res.json()
+      const cats = (data?.data || []) as any[]
       category.value = (cats[0] || null) as any
       lastTs.value = Date.now()
     } catch {

@@ -20,11 +20,19 @@ export function formatImage(
 ): string {
   if (!source) return ''
   const config = useRuntimeConfig()
-  const baseUrl = config.public.directusUrl
+
+  function normalizeBaseUrl(url?: string): string {
+    const raw = (url || '').trim()
+    if (!raw) return ''
+    const withProto = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
+    return withProto.replace(/\/$/, '')
+  }
+
+  const baseUrl = normalizeBaseUrl(config.public.directusUrl)
   const id = toId(source.image) || toId(source.image_default)
   const url = (source as any).image_url as string | undefined
   if (!id && url) return url
-  if (!id) return ''
+  if (!id || !baseUrl) return ''
   const width = opts.width ?? 800
   const height = opts.height ?? 600
   const quality = opts.quality ?? 80
