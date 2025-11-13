@@ -68,9 +68,11 @@
   const { product, ensureProduct } = useProductDetail(slug)
   await ensureProduct()
 
-  const categoryLink = computed(() =>
-    product.value?.category ? `/category/${product.value.category}` : '/'
-  )
+  const categoryLink = computed(() => {
+    const cat = (product.value as any)?.category
+    const slug = typeof cat === 'object' ? cat?.slug : typeof cat === 'string' ? cat : null
+    return slug ? `/category/${slug}` : '/'
+  })
 
   const capacityOptions = computed(() => {
     const opts = (product.value as any)?.capacity_options

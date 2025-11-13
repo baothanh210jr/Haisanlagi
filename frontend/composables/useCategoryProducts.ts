@@ -18,12 +18,11 @@ export function useCategoryProducts(
   category: Ref<Category | null>,
   page: Ref<number>,
   limit = 24,
-  ttlMs = 60_000
+  ttlMs = 1
 ) {
   const respMap = useState<Record<string, ProductsResp>>('category_products_resp', () => ({}))
   const loadedKeys = useState<Record<string, boolean>>('category_products_loaded', () => ({}))
   const timestamps = useState<Record<string, number>>('category_products_ts', () => ({}))
-  const runtime = useRuntimeConfig()
 
   async function ensureProducts(force = false) {
     const cat = category.value
@@ -38,14 +37,18 @@ export function useCategoryProducts(
       qs.set('meta', 'filter_count')
       qs.set('limit', String(limit))
       qs.set('page', String(page.value))
-      qs.set('filter[status][_eq]', 'published')
+      // Tránh filter theo status để không bị lỗi quyền đọc field "status" trên public role
       qs.set('filter[category][_eq]', String(cat.id))
-      const res = await fetch(`${runtime.public.directusUrl}/items/products?${qs.toString()}`)
+      const res = await fetch(`/api/directus/items/products?${qs.toString()}`)
       const json = await res.json()
       respMap.value[key] = (json || { data: [], meta: { filter_count: 0 } }) as ProductsResp
       timestamps.value[key] = Date.now()
     } catch {
       respMap.value[key] = { data: [], meta: { filter_count: 0 } }
+      console.log(
+        '🚀 ~ useCategoryProducts.ts:48 ~ ensureProducts ~ respMap.value[key]:',
+        respMap.value[key]
+      )
       timestamps.value[key] = Date.now()
     }
   }
