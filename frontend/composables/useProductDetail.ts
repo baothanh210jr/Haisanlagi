@@ -12,9 +12,8 @@ export function useProductDetail(slug: string) {
   const product = useState<Product | null>(`product-${slug}`, () => null)
   const loaded = useState<boolean>(`product-${slug}-loaded`, () => false)
 
-  async function ensureProduct() {
-    if (loaded.value) return
-    loaded.value = true
+  async function ensureProduct(force = false) {
+    if (loaded.value && !force) return
     try {
       const qs = new URLSearchParams()
       qs.set('limit', '1')
@@ -25,8 +24,10 @@ export function useProductDetail(slug: string) {
       const json = await res.json()
       const items = (json?.data || []) as any[]
       product.value = (items[0] || null) as any
+      loaded.value = true
     } catch {
       product.value = null
+      loaded.value = false
     }
   }
 

@@ -7,22 +7,26 @@
         { label: product?.name || slug },
       ]"
     />
-    <div v-if="product" class="detail">
-      <div class="media">
-        <img
-          :src="formatImage(product, { width: 1200, height: 800 })"
-          :alt="product.name"
-          class="transition-transform duration-200 ease-out hover:scale-105"
-        />
+    <div v-if="product" class="flex gap-8 text-white">
+      <div class="w-1/2 pb-10">
+        <div class="w-full h-auto overflow-hidden rounded">
+          <img
+            :src="formatImage(product, { width: 1200, height: 800 })"
+            :alt="product.name"
+            class="transition-transform duration-200 ease-out hover:scale-105 w-full h-full object-cover"
+          />
+        </div>
       </div>
       <div class="info">
-        <h1>{{ product.name }}</h1>
-        <p class="price">
+        <h1 class="text-3xl font-bold">
+          {{ product.name }}
+        </h1>
+        <p class="text-xl font-semibold mt-2">
           {{ formatPrice(displayPrice) }}
         </p>
-        <div class="capacity">
+        <div class="capacity flex items-center gap-5">
           <label>Khối lượng:</label>
-          <div class="options">
+          <div class="options mt-2">
             <label v-for="opt in capacityOptions" :key="opt" class="opt">
               <input v-model.number="selectedCapacity" type="radio" name="capacity" :value="opt" />
               <span>{{ opt }}kg</span>
@@ -32,10 +36,13 @@
         <p v-if="product.description" class="desc">
           {{ product.description }}
         </p>
-        <div class="actions">
-          <Button @click="add(product)"> Thêm vào giỏ </Button>
-          <NuxtLink class="secondary" :to="categoryLink"> Xem danh mục </NuxtLink>
-        </div>
+        <button
+          class="bg-white text-red-600 py-3 px-9 rounded-lg font-medium flex items-center justify-center gap-1 text-md"
+          @click="add(product)"
+        >
+          <Icon icon="mdi:cart-plus" class="w-6 h-6" />
+          <span>Thêm giỏ hàng</span>
+        </button>
       </div>
     </div>
     <div v-else class="empty">Sản phẩm không tồn tại hoặc đã ẩn.</div>
@@ -43,22 +50,13 @@
 </template>
 
 <script setup lang="ts">
+  import { Icon } from '@iconify/vue'
   import { computed, ref } from 'vue'
   import Breadcrumb from '~/components/ui/Breadcrumb.vue'
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
-
-  type Product = {
-    id: number | string
-    name: string
-    slug: string
-    price: number
-    image?: any
-    description?: string
-    category?: number | string
-    capacity_options?: number[]
-  }
+  import type { ProductItem } from '~/types/Product'
 
   const route = useRoute()
   const slug = route.params.slug as string
@@ -66,12 +64,8 @@
   const { success } = useToast()
 
   const { product, ensureProduct } = useProductDetail(slug)
-  await ensureProduct()
-
-  const categoryLink = computed(() => {
-    const cat = (product.value as any)?.category
-    const slug = typeof cat === 'object' ? cat?.slug : typeof cat === 'string' ? cat : null
-    return slug ? `/category/${slug}` : '/'
+  onMounted(() => {
+    ensureProduct(true)
   })
 
   const capacityOptions = computed(() => {
@@ -82,7 +76,7 @@
   const selectedCapacity = ref<number>(1)
   const displayPrice = computed(() => (product.value?.price || 0) * selectedCapacity.value)
 
-  function add(p: Product) {
+  function add(p: ProductItem) {
     addToCart({
       id: p.id,
       name: p.name,
@@ -102,70 +96,12 @@
 </script>
 
 <style scoped>
-  /* Dùng Tailwind container, bỏ CSS container cứng */
-  .detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-  .media img {
-    width: 100%;
-    height: 420px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-  .info h1 {
-    margin: 0 0 8px;
-  }
-  .price {
-    font-weight: 700;
-    margin: 8px 0 12px;
-    color: #111827;
-    font-size: 20px;
-  }
-  .desc {
-    color: #374151;
-    line-height: 1.6;
-  }
   .actions {
     display: flex;
     gap: 10px;
     margin-top: 16px;
   }
-  button {
-    padding: 10px 14px;
-    background: #0ea5e9;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0284c7;
-  }
-  .secondary {
-    padding: 10px 14px;
-    background: #f3f4f6;
-    color: #111827;
-    border-radius: 8px;
-    text-decoration: none;
-  }
-  .secondary:hover {
-    background: #e5e7eb;
-  }
-  .empty {
-    padding: 24px;
-    color: #6b7280;
-  }
-  @media (max-width: 768px) {
-    .detail {
-      grid-template-columns: 1fr;
-    }
-    .media img {
-      height: 280px;
-    }
-  }
+
   .capacity {
     margin: 12px 0;
   }

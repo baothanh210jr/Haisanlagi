@@ -1,5 +1,3 @@
-import { readItems } from '@directus/sdk'
-
 type Product = {
   id: number | string
   name: string

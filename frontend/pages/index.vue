@@ -80,57 +80,8 @@
                 }"
                 class="products-swiper"
               >
-                <SwiperSlide v-for="(product, index) in sampleProducts" :key="index">
-                  <div
-                    class="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow overflow-hidden h-[180px] flex"
-                  >
-                    <div class="flex gap-4 p-4 w-full">
-                      <!-- Left Content -->
-                      <div class="w-1/2 flex flex-col justify-between h-full">
-                        <div>
-                          <h3
-                            class="font-bold text-gray-900 text-base mb-1 line-clamp-2 leading-tight"
-                          >
-                            {{ product.name }}
-                          </h3>
-                          <p class="text-gray-600 text-xs mb-2 line-clamp-2">
-                            Carefully Sourced, Kept Chilled, And Delivered The Same.
-                          </p>
-                          <!-- Price -->
-                          <div class="mb-2">
-                            <span class="text-xl font-bold text-gray-900"
-                              >${{ product.salePrice }}</span
-                            >
-                          </div>
-                        </div>
-
-                        <!-- Add Button -->
-                        <button
-                          class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-1 text-sm"
-                        >
-                          <Icon icon="mdi:cart-plus" class="w-4 h-4" />
-                          Thêm vào giỏ hàng
-                        </button>
-                      </div>
-
-                      <!-- Right Image -->
-                      <div class="w-1/2 relative">
-                        <img
-                          :src="product.image"
-                          :alt="product.name"
-                          class="w-full h-full object-cover rounded-lg"
-                        />
-                        <button
-                          class="absolute top-1 right-1 w-6 h-6 bg-white/80 hover:bg-white rounded-full flex items-center justify-center transition-colors"
-                        >
-                          <Icon
-                            icon="mdi:heart-outline"
-                            class="w-4 h-4 text-gray-600 hover:text-red-500"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                <SwiperSlide v-for="(product, index) in hotProducts" :key="index">
+                  <CardIndex :product="product" />
                 </SwiperSlide>
               </Swiper>
             </ClientOnly>
@@ -236,114 +187,16 @@
   </div>
 </template>
 
-<script setup>
-  import { Icon } from '@iconify/vue'
+<script setup lang="ts">
   import 'swiper/css'
   import 'swiper/css/grid'
   import 'swiper/css/navigation'
   import { Grid, Navigation } from 'swiper/modules'
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import { onMounted } from 'vue'
-
-  // Sample products data
-  const sampleProducts = [
-    {
-      name: 'Boneless Chicken Breasts',
-      category: 'Poultry',
-      image:
-        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '96.00',
-      salePrice: '55.00',
-    },
-    {
-      name: 'Aged Pork Steak Beef',
-      category: 'Beef Meat',
-      image:
-        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '96.00',
-      salePrice: '55.00',
-    },
-    {
-      name: 'Premium Ribeye Steak',
-      category: 'Beef Meat',
-      image:
-        'https://images.unsplash.com/photo-1603048297172-c92544798d5a?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '120.00',
-      salePrice: '89.00',
-    },
-    {
-      name: 'Fresh Ground Beef',
-      category: 'Beef Meat',
-      image:
-        'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '45.00',
-      salePrice: '32.00',
-    },
-    {
-      name: 'Lamb Chops',
-      category: 'Lamb Meat',
-      image:
-        'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '150.00',
-      salePrice: '110.00',
-    },
-    {
-      name: 'Pork Tenderloin',
-      category: 'Pork Meat',
-      image:
-        'https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '75.00',
-      salePrice: '58.00',
-    },
-    {
-      name: 'Fresh Salmon Fillet',
-      category: 'Seafood',
-      image:
-        'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '85.00',
-      salePrice: '65.00',
-    },
-    {
-      name: 'Jumbo Shrimp',
-      category: 'Seafood',
-      image:
-        'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '95.00',
-      salePrice: '72.00',
-    },
-    {
-      name: 'Organic Turkey Breast',
-      category: 'Poultry',
-      image:
-        'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '68.00',
-      salePrice: '49.00',
-    },
-    {
-      name: 'Wagyu Beef Strips',
-      category: 'Premium Beef',
-      image:
-        'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '200.00',
-      salePrice: '155.00',
-    },
-    {
-      name: 'Fresh Cod Fillet',
-      category: 'Seafood',
-      image:
-        'https://images.unsplash.com/photo-1544943910-4c1dc44aab44?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '55.00',
-      salePrice: '42.00',
-    },
-    {
-      name: 'Duck Breast',
-      category: 'Poultry',
-      image:
-        'https://images.unsplash.com/photo-1574781330855-d0db2706b3d0?q=80&w=800&auto=format&fit=crop',
-      originalPrice: '88.00',
-      salePrice: '67.00',
-    },
-  ]
+  import CardIndex from '~/components/ui/CardIndex.vue'
+  import { useHotProducts } from '~/composables/useHotProducts'
+  const { hotProducts, ensureHotProducts } = useHotProducts()
 
   // Page metadata
   useHead({
@@ -363,6 +216,8 @@
     const h =
       headerEl && headerEl instanceof HTMLElement ? headerEl.getBoundingClientRect().height : 0
     document.documentElement.style.setProperty('--header-h', `${h}px`)
+    // Load hot products
+    ensureHotProducts(true)
   })
 </script>
 

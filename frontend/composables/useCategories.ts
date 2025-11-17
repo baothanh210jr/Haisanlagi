@@ -14,7 +14,9 @@ export function useCategories(limit = 8, ttlMs = 300_000) {
       qs.set('limit', String(limit))
       const res = await fetch(`/api/directus/items/categories?${qs.toString()}`)
       const data = await res.json()
-      categories.value = (data.data || []) as any
+      categories.value = ((data.data || []) as any).sort(
+        (a: any, b: any) => (a.sort ?? 0) - (b.sort ?? 0)
+      )
       lastTs.value = Date.now()
     } catch {
       categories.value = []
