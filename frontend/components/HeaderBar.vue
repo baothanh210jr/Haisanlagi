@@ -3,7 +3,7 @@
     ref="headerRef"
     class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform"
     :class="[
-      atTop ? 'bg-transparent' : ' bg-white/80 backdrop-blur-sm shadow-md',
+      atTop ? 'bg-red-500' : ' bg-white/80 backdrop-blur-sm shadow-md',
       showHeader ? 'translate-y-0' : '-translate-y-full',
     ]"
     @mouseenter="onMouseEnter"
@@ -53,7 +53,7 @@
           class="relative"
         >
           <div
-            class="w-10 h-10 relative rounded-full bg-white text-primary flex items-center justify-center shadow-lg"
+            class="w-10 h-10 relative rounded-full bg-white text-primary flex items-center justify-center"
           >
             <Icon icon="mdi:cart" width="25" height="25" />
             <span
@@ -65,76 +65,6 @@
         </NuxtLink>
       </div>
     </div>
-    <nav ref="navRef" class="hidden md:flex items-center gap-6 relative flex-shrink-0 bg-white">
-      <div class="container grid grid-cols-12 gap-8">
-        <div class="col-span-3 relative w-full">
-          <button
-            ref="categoryBtnRef"
-            class="flex items-center gap-2 mr-10 py-3 bg-white w-full"
-            @click="toggleCategoryPanel"
-          >
-            <Icon icon="mdi:menu" width="25" height="25" />
-            <span class="uppercase tracking-wide text-sm transition-colors font-medium"
-              >Danh mục sản phẩm</span
-            >
-          </button>
-          <Transition name="fade">
-            <div
-              v-if="showCategoryPanel"
-              class="absolute left-0 top-full mt-1 border border-gray-200 shadow-lg bg-white z-40 w-full"
-            >
-              <NuxtLink
-                v-for="(cat, idx) in categories"
-                :key="cat.id"
-                :class="[
-                  idx % 2 === 1
-                    ? 'bg-red-500 hover:bg-red-600 text-white'
-                    : 'bg-white hover:bg-gray-200',
-                  'flex items-center gap-3 px-4 py-3',
-                ]"
-                :to="{
-                  name: 'category-slug',
-                  params: {
-                    slug: cat.slug,
-                  },
-                }"
-              >
-                <Icon :icon="cat.icon" width="22" height="22" />
-                <span class="text-base">{{ cat.name }}</span>
-              </NuxtLink>
-            </div>
-          </Transition>
-        </div>
-        <div class="col-span-8 flex items-center gap-6">
-          <button
-            v-for="(item, index) in menuItems"
-            :key="item.id"
-            :ref="(el) => setMenuRef(el as HTMLElement | null, index)"
-            class="uppercase tracking-wide text-sm px-2 pb-1 transition-colors"
-            :class="[
-              activeSection === item.id
-                ? atTop
-                  ? 'text-black font-medium'
-                  : 'text-black font-medium'
-                : atTop
-                  ? 'text-black'
-                  : 'text-black/90',
-            ]"
-            @click.prevent="scrollTo(item.id)"
-          >
-            {{ item.label }}
-          </button>
-        </div>
-        <div
-          class="absolute bottom-0 h-[2px] transition-all duration-300 ease-out"
-          :style="{
-            left: indicatorLeft + 'px',
-            width: indicatorWidth + 'px',
-            backgroundColor: atTop ? 'white' : 'orange',
-          }"
-        />
-      </div>
-    </nav>
   </header>
 </template>
 

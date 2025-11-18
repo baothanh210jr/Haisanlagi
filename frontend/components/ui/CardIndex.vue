@@ -20,11 +20,11 @@
 
         <!-- Add Button -->
         <button
-          class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-1 text-xs"
+          class="bg-red-500 hover:bg-red-600 text-white py-2.5 px-2 rounded-lg transition-colors flex items-center justify-center gap-1 font-medium"
           @click="add(product)"
         >
-          <Icon icon="mdi:cart-plus" class="w-4 h-4" />
-          Thêm giỏ hàng
+          <Icon icon="mdi:cart-plus" class="w-6 h-6" />
+          <span class="text-sm">Thêm giỏ hàng</span>
         </button>
       </div>
 

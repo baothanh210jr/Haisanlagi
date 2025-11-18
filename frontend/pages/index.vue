@@ -1,13 +1,43 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section id="home" class="hero-screen flex items-center justify-center">
+    <section id="home" class="hero-screen">
       <div class="container">
         <div class="grid lg:grid-cols-12 gap-8">
-          <div class="col-span-3" />
-          <!-- On-Sale Products (expanded full width while header shows categories) -->
-          <div class="relative col-span-9 bg-white rounded-lg overflow-hidden shadow-2xl px-6 py-8">
-            <div class="flex items-center justify-between mb-6">
+          <div class="col-span-3">
+            <button ref="categoryBtnRef" class="flex items-center gap-2 py-3 bg-gray-200 w-full">
+              <Icon icon="mdi:menu" width="25" height="25" />
+              <span class="uppercase tracking-wide text-sm transition-colors font-medium"
+                >Danh mục sản phẩm</span
+              >
+            </button>
+            <div class="border">
+              <NuxtLink
+                v-for="(cat, idx) in categories"
+                :key="cat.id"
+                :class="[
+                  idx % 2 === 1
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : 'bg-white hover:bg-gray-200',
+                  'flex items-center gap-3 px-4 py-3',
+                ]"
+                :to="{
+                  name: 'category-slug',
+                  params: {
+                    slug: cat.slug,
+                  },
+                }"
+              >
+                <Icon :icon="cat.icon" width="22" height="22" />
+                <span class="text-base">{{ cat.name }}</span>
+              </NuxtLink>
+            </div>
+          </div>
+
+          <div
+            class="relative col-span-9 bg-white rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] px-6 pt-6 mt-20"
+          >
+            <div class="flex items-center justify-between">
               <h2 class="text-2xl font-bold text-gray-900">Sản phẩm bán chạy</h2>
               <div class="flex gap-2">
                 <button
@@ -78,7 +108,7 @@
                     spaceBetween: 16,
                   },
                 }"
-                class="products-swiper"
+                class="products-swiper !py-6"
               >
                 <SwiperSlide v-for="(product, index) in hotProducts" :key="index">
                   <CardIndex :product="product" />
@@ -92,8 +122,11 @@
     <!-- How We Ship Section -->
     <section id="how-we-ship" class="py-20 bg-orange-50">
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">How We Ship</h2>
-        <div class="grid md:grid-cols-3 gap-8">
+        <h2 class="text-2xl font-bold text-center text-gray-800">ẢNH HẢI SẢN TƯƠI SỐNG</h2>
+        <h3 class="text-xs text-center text-gray-800 mb-2">
+          Hãy để chúng tôi giúp bạn tìm kiếm những sản phẩm hải sản tốt nhất
+        </h3>
+        <div class="grid md:grid-cols-3 gap-8 mt-16">
           <div class="text-center">
             <img
               src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=300&auto=format&fit=crop"
@@ -128,7 +161,7 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-20 bg-white">
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Testimonials</h2>
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Ý kiến của khách hàng</h2>
         <div class="grid md:grid-cols-3 gap-8">
           <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
             <div class="flex items-center mb-4">
@@ -196,7 +229,11 @@
   import { onMounted } from 'vue'
   import CardIndex from '~/components/ui/CardIndex.vue'
   import { useHotProducts } from '~/composables/useHotProducts'
+  import { Icon } from '@iconify/vue'
   const { hotProducts, ensureHotProducts } = useHotProducts()
+  // Categories dropdown state
+  const { categories, ensureCategories } = useCategories(12)
+  const categoryBtnRef = ref<HTMLElement | null>(null)
 
   // Page metadata
   useHead({
