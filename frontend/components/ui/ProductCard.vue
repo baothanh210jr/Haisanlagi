@@ -88,6 +88,7 @@
     success(`Đã thêm "${p.name}" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
+      image: formatImage(p, { width: 120, height: 120 }),
     })
   }
 

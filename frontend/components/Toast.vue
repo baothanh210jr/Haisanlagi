@@ -11,12 +11,13 @@
       :class="t.type"
     >
       <div class="content">
+        <img v-if="t.image" :src="t.image" alt="" class="thumb" />
         <span class="message">{{ t.text }}</span>
         <div class="actions">
           <NuxtLink
             v-if="t.actionTo && t.actionText"
             :to="t.actionTo"
-            class="btn"
+            class="bg-blue-600 text-white rounded text-sm px-2 py-1 hover:bg-blue-600 transition-colors text-center"
           >
             {{ t.actionText }}
           </NuxtLink>
@@ -49,19 +50,20 @@ const { toasts, remove } = useToast()
 }
 .toast {
   min-width: 260px;
-  max-width: 360px;
+  max-width: 500px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   padding: 10px 12px;
 }
-.toast.success { border-color: #10b981; }
+.toast.success { border-color: #1B98E0; }
 .toast.error { border-color: #ef4444; }
 .content { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.message { font-size: 14px; color: #111827; }
+.thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 1px solid #e5e7eb; }
+.message { font-size: 14px; color: #111827; font-weight: 500; }
 .actions { display: flex; align-items: center; gap: 8px; }
-.btn { background: #f59e0b; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 13px; text-decoration: none; }
+.btn { background:; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 13px; text-decoration: none; }
 .btn:hover { background: #d97706; }
 .close { background: transparent; border: none; font-size: 18px; cursor: pointer; color: #6b7280; }
 .close:hover { color: #111827; }

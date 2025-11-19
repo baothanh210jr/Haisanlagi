@@ -56,6 +56,7 @@
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
+  import { formatImage } from '~/utils/formatImage'
   import type { ProductItem } from '~/types/Product'
 
   const route = useRoute()
@@ -87,6 +88,7 @@
     success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
+      image: formatImage(p as any, { width: 120, height: 120 }),
     })
   }
 

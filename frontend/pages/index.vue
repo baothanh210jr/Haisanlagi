@@ -2,17 +2,44 @@
   <div>
     <!-- Hero Slider -->
     <section class="">
-      <HeroSlider
-        v-if="heroProducts?.length"
-        :products="heroProducts"
-        class="hero-screen relative z-1"
-      />
+      <div class="bg-gradient-to-r from-primary/5 to-secondary/5">
+        <div>
+          <video
+            id="isc_two-banner-media-1"
+            class="hero-screen w-full h-full object-cover"
+            autoplay=""
+            muted=""
+            loop=""
+            playsinline=""
+          >
+            <source
+              src="https://file.hstatic.net/200000971532/file/7020525_market_iced_1280x720.mp4"
+              type="video/mp4"
+            >
+            <source
+              src="https://file.hstatic.net/200000971532/file/7020525_market_iced_1280x720.mp4"
+              type="video/mov"
+            >
+          </video>
+        </div>
+        <!-- <div class="container mx-auto px-6 py-4">
+          <div class="rounded-2xl overflow-hidden">
+            <HeroSlider
+              v-if="heroProducts?.length"
+              :products="heroProducts"
+              class="hero-screen relative"
+            />
+          </div>
+        </div> -->
+      </div>
       <!-- Category Grid -->
       <div
         class="container bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-4 md:p-6 mt-10"
       >
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-bold">Danh mục nổi bật</h2>
+          <h2 class="text-2xl font-bold">
+            Danh mục nổi bật
+          </h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
           <NuxtLink
@@ -24,7 +51,11 @@
             <div
               class="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mb-2"
             >
-              <Icon :icon="cat.icon" width="24" height="24" />
+              <Icon
+                :icon="cat.icon"
+                width="24"
+                height="24"
+              />
             </div>
             <span class="text-sm font-medium text-center line-clamp-2">
               {{ cat.name }}
@@ -37,7 +68,9 @@
     <section class="mt-10 bg-gray-50 pt-10">
       <div class="container mx-auto px-6">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-2xl font-bold">Sản phẩm bán chạy</h2>
+          <h2 class="text-2xl font-bold">
+            Sản phẩm bán chạy
+          </h2>
           <div class="flex gap-2">
             <button
               class="products-prev w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center transition-colors"
@@ -59,7 +92,12 @@
             <button
               class="products-next w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center transition-colors"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -101,7 +139,10 @@
             }"
             class="products-swiper !py-4"
           >
-            <SwiperSlide v-for="(product, index) in hotProducts" :key="index">
+            <SwiperSlide
+              v-for="(product, index) in hotProducts"
+              :key="index"
+            >
               <ProductCard :product="product as any" />
             </SwiperSlide>
           </Swiper>
@@ -109,9 +150,14 @@
       </div>
     </section>
 
-    <section id="testimonials" class="py-16 bg-gray-50">
+    <section
+      id="testimonials"
+      class="py-16 bg-gray-50"
+    >
       <div class="container mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Ý kiến của khách hàng</h2>
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+          Ý kiến của khách hàng
+        </h2>
         <div class="grid md:grid-cols-3 gap-8">
           <div class="bg-gray-50 p-8 rounded-xl shadow">
             <div class="flex items-center mb-4">
@@ -121,11 +167,17 @@
                 J
               </div>
               <div class="ml-4">
-                <h4 class="font-semibold text-gray-800">John Smith</h4>
-                <p class="text-gray-600 text-sm">Chef</p>
+                <h4 class="font-semibold text-gray-800">
+                  John Smith
+                </h4>
+                <p class="text-gray-600 text-sm">
+                  Chef
+                </p>
               </div>
             </div>
-            <p class="text-gray-600 italic">"Chất lượng tuyệt vời, hải sản luôn tươi ngon."</p>
+            <p class="text-gray-600 italic">
+              "Chất lượng tuyệt vời, hải sản luôn tươi ngon."
+            </p>
           </div>
           <div class="bg-gray-50 p-8 rounded-xl shadow">
             <div class="flex items-center mb-4">
@@ -135,8 +187,12 @@
                 M
               </div>
               <div class="ml-4">
-                <h4 class="font-semibold text-gray-800">Maria Garcia</h4>
-                <p class="text-gray-600 text-sm">Home Cook</p>
+                <h4 class="font-semibold text-gray-800">
+                  Maria Garcia
+                </h4>
+                <p class="text-gray-600 text-sm">
+                  Home Cook
+                </p>
               </div>
             </div>
             <p class="text-gray-600 italic">
@@ -151,11 +207,17 @@
                 D
               </div>
               <div class="ml-4">
-                <h4 class="font-semibold text-gray-800">David Chen</h4>
-                <p class="text-gray-600 text-sm">Restaurant Owner</p>
+                <h4 class="font-semibold text-gray-800">
+                  David Chen
+                </h4>
+                <p class="text-gray-600 text-sm">
+                  Restaurant Owner
+                </p>
               </div>
             </div>
-            <p class="text-gray-600 italic">"Nhà cung cấp tin cậy, rất phù hợp cho nhà hàng."</p>
+            <p class="text-gray-600 italic">
+              "Nhà cung cấp tin cậy, rất phù hợp cho nhà hàng."
+            </p>
           </div>
         </div>
       </div>

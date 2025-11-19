@@ -19,8 +19,14 @@
         </div>
 
         <!-- Add Button -->
-        <Button class="flex gap-2" @click="add(product)">
-          <Icon icon="mdi:cart-plus" class="w-4 h-4" />
+        <Button
+          class="flex gap-2"
+          @click="add(product)"
+        >
+          <Icon
+            icon="mdi:cart-plus"
+            class="w-4 h-4"
+          />
           <span class="text-xs font-medium">Thêm giỏ hàng</span>
         </Button>
       </div>
@@ -31,11 +37,14 @@
           :src="formatImage(product, { width: 200, height: 200 })"
           :alt="product.name"
           class="w-full h-full object-cover rounded-lg"
-        />
+        >
         <button
           class="absolute top-1 right-1 w-6 h-6 bg-white/80 hover:bg-white rounded-full flex items-center justify-center transition-colors"
         >
-          <Icon icon="mdi:heart-outline" class="w-4 h-4 text-gray-600 hover:text-red-500" />
+          <Icon
+            icon="mdi:heart-outline"
+            class="w-4 h-4 text-gray-600 hover:text-red-500"
+          />
         </button>
       </div>
     </div>
@@ -62,6 +71,7 @@
   const displayPrice = computed(() => (props.product?.price || 0) * selectedCapacity.value)
 
   function add(p: ProductItem) {
+    console.log("🚀 ~ file: CardIndex.vue:65 ~ ProductItem:", p)
     addToCart({
       id: p.id,
       name: p.name,
@@ -72,6 +82,7 @@
     success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
+      image: formatImage(p, { width: 120, height: 120 }),
     })
   }
 </script>

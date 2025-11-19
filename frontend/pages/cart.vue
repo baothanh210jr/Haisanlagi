@@ -63,7 +63,7 @@
           </div>
           <NuxtLink
             to="/checkout"
-            class="checkout block mt-6 text-center"
+            class="bg-blue-600 text-white rounded text-sm px-4 py-2 hover:bg-blue-600 transition-colors block mt-6 text-center"
             :class="{disabled: items.length === 0}"
           >
             Thanh toán
@@ -104,7 +104,6 @@ function formatPrice(n: number) {
 .qty :deep(.inline-flex) { width: 100%; justify-content: center; }
 .summary { text-align: right; padding: 12px 0; }
 .actions { margin-top: 16px; display: flex; justify-content: flex-end; }
-.checkout { padding: 10px 16px; background: #16a34a; color: white; border-radius: 8px; text-decoration: none; }
 .checkout.disabled { pointer-events: none; opacity: 0.6; }
 .remove { background: #ef4444; color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; }
 </style>

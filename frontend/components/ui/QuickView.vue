@@ -84,10 +84,10 @@ const unitPrice = computed(() => Number(p.value?.price ?? 0))
 const priceForCapacity = computed(() => unitPrice.value * capacity.value)
 const totalPrice = computed(() => priceForCapacity.value * quantity.value)
 
-function add() {
-  addToCart({ id: p.value.id, name: p.value.name, price: priceForCapacity.value, image: p.value.image || p.value.image_default, capacity: capacity.value }, quantity.value)
-  success(`Đã thêm ${quantity.value} x ${capacity.value}kg "${p.value.name}" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/gio-hang' })
-}
+  function add() {
+    addToCart({ id: p.value.id, name: p.value.name, price: priceForCapacity.value, image: p.value.image || p.value.image_default, capacity: capacity.value }, quantity.value)
+    success(`Đã thêm ${quantity.value} x ${capacity.value}kg "${p.value.name}" vào giỏ hàng`, { actionText: 'Xem giỏ hàng', actionTo: '/gio-hang', image: formatImage(p.value, { width: 120, height: 120 }) })
+  }
 
 function formatPrice(n: number) {
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n)

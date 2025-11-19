@@ -7,6 +7,7 @@ export type ToastItem = {
   actionText?: string
   actionTo?: string
   timeout?: number
+  image?: string
 }
 
 export function useToast() {
