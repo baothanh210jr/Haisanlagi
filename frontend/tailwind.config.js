@@ -30,7 +30,8 @@ module.exports = {
         lg: 'var(--radius)',
       },
       colors: {
-        primary: '#fd4d34',
+        primary: '#1B98E0',
+        secondary: '#FF7A45',
       },
     },
   },

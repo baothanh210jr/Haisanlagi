@@ -19,13 +19,10 @@
         </div>
 
         <!-- Add Button -->
-        <button
-          class="bg-red-500 hover:bg-red-600 text-white py-2.5 px-2 rounded-lg transition-colors flex items-center justify-center gap-1 font-medium"
-          @click="add(product)"
-        >
-          <Icon icon="mdi:cart-plus" class="w-6 h-6" />
-          <span class="text-sm">Thêm giỏ hàng</span>
-        </button>
+        <Button class="flex gap-2" @click="add(product)">
+          <Icon icon="mdi:cart-plus" class="w-4 h-4" />
+          <span class="text-xs font-medium">Thêm giỏ hàng</span>
+        </Button>
       </div>
 
       <!-- Right Image -->
@@ -50,6 +47,7 @@
   import type { ProductItem } from '~/types/Product'
   import { formatImage } from '~/utils/formatImage'
   import { formatPrice } from '~/utils/formatPrice'
+  import Button from './Button.vue'
   const { addToCart } = useCart()
   const { success } = useToast()
 

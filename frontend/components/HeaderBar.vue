@@ -1,15 +1,12 @@
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform"
-    :class="[
-      atTop ? 'bg-red-500' : ' bg-white/80 backdrop-blur-sm shadow-md',
-      showHeader ? 'translate-y-0' : '-translate-y-full',
-    ]"
+    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 bg-white backdrop-blur-sm shadow-md"
+    :class="[showHeader ? 'translate-y-0' : '-translate-y-full']"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <div class="container py-3 flex items-center justify-between">
+    <div class="container flex items-center justify-between">
       <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0">
         <div class="w-auto h-10">
           <img src="/logo-01.png" alt="Haisan Lagi" class="h-10 w-full object-cover scale-150" />
@@ -26,7 +23,7 @@
             class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
           <button
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white p-1 rounded"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-black p-1 rounded"
           >
             <Icon icon="mdi:magnify" width="18" height="18" />
           </button>
@@ -35,10 +32,10 @@
       <div class="flex items-center gap-8">
         <!-- Hotline -->
         <div class="flex items-center gap-4">
-          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-primary">
+          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white">
             <Icon icon="mdi:phone" width="20" height="20" />
           </div>
-          <div :class="[atTop ? 'text-white font-medium' : 'text-black font-medium']">
+          <div :class="[atTop ? 'text-black font-medium' : 'text-black font-medium']">
             <span class="text-sm font-medium">Hỗ trợ khách hàng</span>
             <div class="">
               <span class="text-sm font-medium">0367497642</span>
@@ -53,12 +50,12 @@
           class="relative"
         >
           <div
-            class="w-10 h-10 relative rounded-full bg-white text-primary flex items-center justify-center"
+            class="w-10 h-10 relative rounded-full bg-blue-500 text-white flex items-center justify-center"
           >
             <Icon icon="mdi:cart" width="25" height="25" />
             <span
               v-if="cartCount > 0"
-              class="absolute -top-2 -right-3 bg-yellow-400 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
+              class="absolute -top-2 -right-3 bg-secondary text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
               >{{ cartCount }}</span
             >
           </div>
@@ -74,7 +71,6 @@
   import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
   import { useCart } from '~/composables/useCart'
-  import { useCategories } from '~/composables/useCategories'
 
   const { items } = useCart()
   const cartCount = computed(() => items.value.reduce((acc, i) => acc + i.quantity, 0))
@@ -83,7 +79,6 @@
   const searchQuery = ref('')
 
   // Categories dropdown state
-  const { categories, ensureCategories } = useCategories(12)
   const categoryBtnRef = ref<HTMLElement | null>(null)
   const catPanelWidth = ref<number>(280)
   const showCategoryPanel = ref<boolean>(false)
@@ -110,10 +105,6 @@
   const menuRefs = ref<HTMLElement[]>([])
   const indicatorLeft = ref(0)
   const indicatorWidth = ref(0)
-
-  function setMenuRef(el: HTMLElement | null, index: number) {
-    if (el) menuRefs.value[index] = el
-  }
 
   function updateIndicator() {
     let idx = menuItems.findIndex((m) => m.id === activeSection.value)
@@ -189,7 +180,6 @@
       onScroll()
       updateIndicator()
       // Ensure categories loaded and measure button width
-      ensureCategories()
       const w = categoryBtnRef.value?.offsetWidth || 0
       if (w > 0) {
         catPanelWidth.value = w
@@ -229,17 +219,6 @@
     }
   }
 
-  function scrollTo(id: string) {
-    const el = document.getElementById(id)
-    const headerH = (headerRef.value?.offsetHeight || 0) + 8
-    if (el) {
-      const top = el.offsetTop - headerH
-      window.scrollTo({ top, behavior: 'smooth' })
-      // ensure header stays visible during scroll
-      showHeader.value = true
-    }
-  }
-
   watch(activeSection, () => {
     updateIndicator()
   })
@@ -260,6 +239,7 @@
   /* Improve performance for transform animations */
   header {
     backface-visibility: hidden;
+    height: var(--header-h);
   }
   .fade-enter-active,
   .fade-leave-active {

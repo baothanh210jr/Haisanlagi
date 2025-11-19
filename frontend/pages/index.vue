@@ -1,172 +1,122 @@
 <template>
   <div>
-    <!-- Hero Section -->
-    <section id="home" class="hero-screen">
-      <div class="container">
-        <div class="grid lg:grid-cols-12 gap-8">
-          <div class="col-span-3">
-            <button ref="categoryBtnRef" class="flex items-center gap-2 py-3 bg-gray-200 w-full">
-              <Icon icon="mdi:menu" width="25" height="25" />
-              <span class="uppercase tracking-wide text-sm transition-colors font-medium"
-                >Danh mục sản phẩm</span
-              >
-            </button>
-            <div class="border">
-              <NuxtLink
-                v-for="(cat, idx) in categories"
-                :key="cat.id"
-                :class="[
-                  idx % 2 === 1
-                    ? 'bg-red-500 hover:bg-red-600 text-white'
-                    : 'bg-white hover:bg-gray-200',
-                  'flex items-center gap-3 px-4 py-3',
-                ]"
-                :to="{
-                  name: 'category-slug',
-                  params: {
-                    slug: cat.slug,
-                  },
-                }"
-              >
-                <Icon :icon="cat.icon" width="22" height="22" />
-                <span class="text-base">{{ cat.name }}</span>
-              </NuxtLink>
-            </div>
-          </div>
-
-          <div
-            class="relative col-span-9 bg-white rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.1)] px-6 pt-6 mt-20"
+    <!-- Hero Slider -->
+    <section class="">
+      <HeroSlider
+        v-if="heroProducts?.length"
+        :products="heroProducts"
+        class="hero-screen relative z-1"
+      />
+      <!-- Category Grid -->
+      <div
+        class="container bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-4 md:p-6 mt-10"
+      >
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold">Danh mục nổi bật</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+          <NuxtLink
+            v-for="cat in categories"
+            :key="cat.id"
+            :to="{ name: 'category-slug', params: { slug: cat.slug } }"
+            class="group bg-white transition-all border rounded-xl p-4 flex flex-col items-center hover:shadow-lg"
           >
-            <div class="flex items-center justify-between">
-              <h2 class="text-2xl font-bold text-gray-900">Sản phẩm bán chạy</h2>
-              <div class="flex gap-2">
-                <button
-                  class="products-prev w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                >
-                  <svg
-                    class="w-5 h-5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-                <button
-                  class="products-next w-10 h-10 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
+            <div
+              class="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mb-2"
+            >
+              <Icon :icon="cat.icon" width="24" height="24" />
             </div>
-
-            <!-- Products Swiper -->
-            <ClientOnly>
-              <Swiper
-                :modules="[Navigation, Grid]"
-                :slides-per-view="3"
-                :slides-per-group="3"
-                :space-between="16"
-                :loop="false"
-                :grid="{ rows: 3, fill: 'row' }"
-                :navigation="{ nextEl: '.products-next', prevEl: '.products-prev' }"
-                :breakpoints="{
-                  640: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                    grid: { rows: 2, fill: 'row' },
-                    spaceBetween: 12,
-                  },
-                  768: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                    grid: { rows: 3, fill: 'row' },
-                    spaceBetween: 16,
-                  },
-                  1024: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                    grid: { rows: 2, fill: 'row' },
-                    spaceBetween: 16,
-                  },
-                  1536: {
-                    slidesPerView: 3,
-                    slidesPerGroup: 3,
-                    grid: { rows: 3, fill: 'row' },
-                    spaceBetween: 16,
-                  },
-                }"
-                class="products-swiper !py-6"
+            <span class="text-sm font-medium text-center line-clamp-2">
+              {{ cat.name }}
+            </span>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+    <!-- Hot Products Grid -->
+    <section class="mt-10 bg-gray-50 pt-10">
+      <div class="container mx-auto px-6">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-bold">Sản phẩm bán chạy</h2>
+          <div class="flex gap-2">
+            <button
+              class="products-prev w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center transition-colors"
+            >
+              <svg
+                class="w-5 h-5 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <SwiperSlide v-for="(product, index) in hotProducts" :key="index">
-                  <CardIndex :product="product" />
-                </SwiperSlide>
-              </Swiper>
-            </ClientOnly>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              class="products-next w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- How We Ship Section -->
-    <section id="how-we-ship" class="py-20 bg-orange-50">
-      <div class="container mx-auto px-6">
-        <h2 class="text-2xl font-bold text-center text-gray-800">ẢNH HẢI SẢN TƯƠI SỐNG</h2>
-        <h3 class="text-xs text-center text-gray-800 mb-2">
-          Hãy để chúng tôi giúp bạn tìm kiếm những sản phẩm hải sản tốt nhất
-        </h3>
-        <div class="grid md:grid-cols-3 gap-8 mt-16">
-          <div class="text-center">
-            <img
-              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=300&auto=format&fit=crop"
-              alt="Packaging"
-              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
-            />
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">Expert Packaging</h3>
-            <p class="text-gray-600">Temperature-controlled packaging ensures freshness</p>
-          </div>
-          <div class="text-center">
-            <img
-              src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=300&auto=format&fit=crop"
-              alt="Delivery"
-              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
-            />
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">Fast Delivery</h3>
-            <p class="text-gray-600">Next-day delivery to maintain peak freshness</p>
-          </div>
-          <div class="text-center">
-            <img
-              src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=300&auto=format&fit=crop"
-              alt="Quality"
-              class="w-full h-48 object-cover rounded-xl shadow-lg mb-6"
-            />
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">Quality Guarantee</h3>
-            <p class="text-gray-600">100% satisfaction or your money back</p>
-          </div>
-        </div>
+        <ClientOnly>
+          <Swiper
+            :modules="[Navigation, Grid]"
+            :slides-per-view="2"
+            :slides-per-group="2"
+            :space-between="16"
+            :loop="false"
+            :grid="{ rows: 2, fill: 'row' }"
+            :navigation="{ nextEl: '.products-next', prevEl: '.products-prev' }"
+            :breakpoints="{
+              640: {
+                slidesPerView: 2,
+                slidesPerGroup: 2,
+                grid: { rows: 2, fill: 'row' },
+                spaceBetween: 12,
+              },
+              768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                grid: { rows: 2, fill: 'row' },
+                spaceBetween: 16,
+              },
+              1024: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+                grid: { rows: 2, fill: 'row' },
+                spaceBetween: 16,
+              },
+            }"
+            class="products-swiper !py-4"
+          >
+            <SwiperSlide v-for="(product, index) in hotProducts" :key="index">
+              <ProductCard :product="product as any" />
+            </SwiperSlide>
+          </Swiper>
+        </ClientOnly>
       </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-20 bg-white">
+    <section id="testimonials" class="py-16 bg-gray-50">
       <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Ý kiến của khách hàng</h2>
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Ý kiến của khách hàng</h2>
         <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+          <div class="bg-gray-50 p-8 rounded-xl shadow">
             <div class="flex items-center mb-4">
               <div
-                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold"
               >
                 J
               </div>
@@ -175,15 +125,12 @@
                 <p class="text-gray-600 text-sm">Chef</p>
               </div>
             </div>
-            <p class="text-gray-600 italic">
-              "The quality is exceptional. My restaurant customers always compliment the freshness
-              of the seafood."
-            </p>
+            <p class="text-gray-600 italic">"Chất lượng tuyệt vời, hải sản luôn tươi ngon."</p>
           </div>
-          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+          <div class="bg-gray-50 p-8 rounded-xl shadow">
             <div class="flex items-center mb-4">
               <div
-                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold"
               >
                 M
               </div>
@@ -193,14 +140,13 @@
               </div>
             </div>
             <p class="text-gray-600 italic">
-              "Fast delivery and amazing quality. My family loves the fresh salmon we order every
-              week."
+              "Giao nhanh, chất lượng ổn định, gia đình rất thích."
             </p>
           </div>
-          <div class="bg-gray-50 p-8 rounded-xl shadow-lg">
+          <div class="bg-gray-50 p-8 rounded-xl shadow">
             <div class="flex items-center mb-4">
               <div
-                class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+                class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold"
               >
                 D
               </div>
@@ -209,10 +155,7 @@
                 <p class="text-gray-600 text-sm">Restaurant Owner</p>
               </div>
             </div>
-            <p class="text-gray-600 italic">
-              "Reliable supplier with consistent quality. Perfect for our high-end restaurant
-              needs."
-            </p>
+            <p class="text-gray-600 italic">"Nhà cung cấp tin cậy, rất phù hợp cho nhà hàng."</p>
           </div>
         </div>
       </div>
@@ -221,19 +164,29 @@
 </template>
 
 <script setup lang="ts">
+  import { Icon } from '@iconify/vue'
   import 'swiper/css'
   import 'swiper/css/grid'
   import 'swiper/css/navigation'
+  import 'swiper/css/pagination'
   import { Grid, Navigation } from 'swiper/modules'
   import { Swiper, SwiperSlide } from 'swiper/vue'
-  import { onMounted } from 'vue'
-  import CardIndex from '~/components/ui/CardIndex.vue'
+  import { onMounted, ref } from 'vue'
+  import ProductCard from '~/components/ui/CardIndex.vue'
+  import HeroSlider from '~/components/ui/HeroSlider.vue'
+  import { useHomeProducts } from '~/composables/useHomeProducts'
+  import { useHomeSlides } from '~/composables/useHomeSlides'
   import { useHotProducts } from '~/composables/useHotProducts'
-  import { Icon } from '@iconify/vue'
   const { hotProducts, ensureHotProducts } = useHotProducts()
-  // Categories dropdown state
-  const { categories, ensureCategories } = useCategories(12)
-  const categoryBtnRef = ref<HTMLElement | null>(null)
+  const { heroProducts, ensureSlides } = useHomeSlides(5)
+  const pageHome = ref(1)
+  const {
+    products: homeProducts,
+    pageCount: pageCountHome,
+    ensureProducts,
+  } = useHomeProducts(pageHome, 12)
+  // Categories
+  const { categories, ensureCategories } = useCategories(8)
 
   // Page metadata
   useHead({
@@ -253,14 +206,16 @@
     const h =
       headerEl && headerEl instanceof HTMLElement ? headerEl.getBoundingClientRect().height : 0
     document.documentElement.style.setProperty('--header-h', `${h}px`)
-    // Load hot products
+    ensureCategories(true)
+    ensureSlides(true)
+    ensureProducts(true)
     ensureHotProducts(true)
   })
 </script>
 
-<style scoped>
+<style>
   .hero-screen {
     /* Chiều cao toàn màn hình trừ phần header (dùng dvh để tránh thanh trình duyệt di động) */
-    min-height: calc(100dvh - var(--header-h, 64px));
+    max-height: calc(100vh - var(--header-h));
   }
 </style>
