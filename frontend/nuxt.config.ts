@@ -5,6 +5,16 @@ export default defineNuxtConfig({
   pages: true,
   modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt'],
   css: ['~/assets/css/tailwind.css'],
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap',
+        },
+      ],
+    },
+  },
   shadcn: {
     prefix: '',
     componentDir: './components/ui',

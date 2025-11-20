@@ -12,7 +12,7 @@ type ProductsResp = { data: Product[]; meta: { filter_count: number } }
 
 import type { Ref } from 'vue'
 
-export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 1) {
+export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 300_000) {
   const productsRespMap = useState<Record<number, ProductsResp>>('home_products_resp', () => ({}))
   const loadedPages = useState<Record<number, boolean>>('home_products_loaded', () => ({}))
   const timestamps = useState<Record<number, number>>('home_products_ts', () => ({}))
@@ -32,10 +32,6 @@ export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 1) {
       const res = await fetch(`/api/directus/items/products?${qs.toString()}`)
       const json = await res.json()
       productsRespMap.value[p] = (json || { data: [], meta: { filter_count: 0 } }) as ProductsResp
-      console.log(
-        '🚀 ~ useHomeProducts.ts:46 ~ ensureProducts ~ productsRespMap.value[p]:',
-        productsRespMap.value[p]
-      )
       timestamps.value[p] = Date.now()
     } catch {
       productsRespMap.value[p] = { data: [], meta: { filter_count: 0 } }
@@ -51,6 +47,5 @@ export function useHomeProducts(page: Ref<number>, limit = 12, ttlMs = 1) {
     )
   )
 
-  console.log('🚀 ~ useHomeProducts.ts:39 ~ useHomeProducts ~ products:', products.value)
   return { products, pageCount, ensureProducts }
 }

@@ -24,8 +24,4 @@ export default {
     { name: 'orders', path: '/orders', component: () => import('~/pages/orders.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) return savedPosition
-    return { top: 0 }
-  },
 } satisfies RouterConfig

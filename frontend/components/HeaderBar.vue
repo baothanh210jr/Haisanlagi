@@ -1,8 +1,8 @@
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 bg-white backdrop-blur-sm shadow-md"
-    :class="[showHeader ? 'translate-y-0' : '-translate-y-full']"
+    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 bg-white backdrop-blur-sm shadow-sm"
+    :class="[showHeader ? 'translate-y-0 ' : '-translate-y-full']"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
@@ -23,7 +23,7 @@
             class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
           <button
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-black p-1 rounded"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-1 rounded"
           >
             <Icon icon="mdi:magnify" width="18" height="18" />
           </button>
@@ -32,8 +32,8 @@
       <div class="flex items-center gap-8">
         <!-- Hotline -->
         <div class="flex items-center gap-4">
-          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white">
-            <Icon icon="mdi:phone" width="20" height="20" />
+          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white">
+            <Icon icon="mdi-light:phone" width="20" height="20" />
           </div>
           <div :class="[atTop ? 'text-black font-medium' : 'text-black font-medium']">
             <span class="text-sm font-medium">Hỗ trợ khách hàng</span>
@@ -43,23 +43,26 @@
           </div>
         </div>
         <!-- Cart -->
-        <NuxtLink
-          :to="{
-            name: 'cart',
-          }"
-          class="relative"
-        >
-          <div
-            class="w-10 h-10 relative rounded-full bg-blue-500 text-white flex items-center justify-center"
+        <div class="flex items-center gap-4">
+          <NuxtLink
+            :to="{
+              name: 'cart',
+            }"
+            class="relative"
           >
-            <Icon icon="mdi:cart" width="25" height="25" />
-            <span
-              v-if="cartCount > 0"
-              class="absolute -top-2 -right-3 bg-secondary text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
-              >{{ cartCount }}</span
+            <div
+              class="w-10 h-10 relative rounded-full bg-blue-600 text-white flex items-center justify-center"
             >
-          </div>
-        </NuxtLink>
+              <Icon icon="famicons:cart-outline" width="25" height="25" />
+              <span
+                v-if="cartCount > 0"
+                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
+                >{{ cartCount }}</span
+              >
+            </div>
+          </NuxtLink>
+          <span>Giỏ hàng</span>
+        </div>
       </div>
     </div>
   </header>

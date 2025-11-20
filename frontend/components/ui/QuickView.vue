@@ -69,7 +69,9 @@ const props = defineProps<{ product: Product }>()
 defineEmits(['close'])
 
 const { product: detail, ensureProduct } = useProductDetail(props.product.slug || '')
-onMounted(() => { if (props.product.slug) ensureProduct(true) })
+onMounted(() => {
+  if (props.product.slug) ensureProduct()
+})
 
 const p = computed<Product>(() => (detail.value || props.product) as Product)
 const img = computed(() => formatImage(p.value, { width: 1200, height: 900 }))

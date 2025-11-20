@@ -18,7 +18,7 @@ export function useCategoryProducts(
   category: Ref<Category | null>,
   page: Ref<number>,
   limit = 24,
-  ttlMs = 1
+  ttlMs = 300_000
 ) {
   const respMap = useState<Record<string, ProductsResp>>('category_products_resp', () => ({}))
   const loadedKeys = useState<Record<string, boolean>>('category_products_loaded', () => ({}))

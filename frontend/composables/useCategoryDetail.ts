@@ -1,6 +1,6 @@
 type Category = { id: number | string; name: string; slug: string }
 
-export function useCategoryDetail(slug: string, ttlMs = 1) {
+export function useCategoryDetail(slug: string, ttlMs = 300_000) {
   const category = useState<Category | null>(`category-${slug}`, () => null)
   const loaded = useState<boolean>(`category-${slug}-loaded`, () => false)
   const lastTs = useState<number>(`category-${slug}-ts`, () => 0)

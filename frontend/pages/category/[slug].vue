@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, watch } from 'vue'
+  import { watch } from 'vue'
   import { useRoute } from 'vue-router'
   import Breadcrumb from '~/components/ui/Breadcrumb.vue'
   import Pagination from '~/components/ui/Pagination.vue'
@@ -39,11 +39,8 @@
   console.log('🚀 ~ [slug].vue:39 ~ products:', products)
   await ensureProducts()
 
-  onMounted(() => {
-    ensureProducts(true)
-  })
   watch(category, () => {
-    ensureProducts(true)
+    ensureProducts()
   })
   watch(page, () => {
     ensureProducts()

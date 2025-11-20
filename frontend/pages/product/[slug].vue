@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container py-5">
     <Breadcrumb
       :items="[
         { label: 'Trang chủ', to: '/' },
@@ -7,7 +7,7 @@
         { label: product?.name || slug },
       ]"
     />
-    <div v-if="product" class="flex gap-8 text-white">
+    <div v-if="product" class="flex gap-8 text-black">
       <div class="w-1/2 pb-10">
         <div class="w-full h-auto overflow-hidden rounded">
           <img
@@ -37,7 +37,7 @@
           {{ product.description }}
         </p>
         <button
-          class="bg-white text-red-600 py-3 px-9 rounded-lg font-medium flex items-center justify-center gap-1 text-md"
+          class="bg-blue-500 hover:bg-blue-700 text-white py-3 px-9 rounded-lg font-medium flex items-center justify-center gap-1 text-md"
           @click="add(product)"
         >
           <Icon icon="mdi:cart-plus" class="w-6 h-6" />
@@ -56,8 +56,8 @@
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
-  import { formatImage } from '~/utils/formatImage'
   import type { ProductItem } from '~/types/Product'
+  import { formatImage } from '~/utils/formatImage'
 
   const route = useRoute()
   const slug = route.params.slug as string
@@ -66,7 +66,7 @@
 
   const { product, ensureProduct } = useProductDetail(slug)
   onMounted(() => {
-    ensureProduct(true)
+    ensureProduct()
   })
 
   const capacityOptions = computed(() => {

@@ -26,6 +26,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Quicksand"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
       },

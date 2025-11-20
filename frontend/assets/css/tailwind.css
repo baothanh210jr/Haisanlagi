@@ -6,3 +6,12 @@
 :root {
   --radius: 0.5rem;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
