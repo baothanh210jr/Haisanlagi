@@ -8,8 +8,7 @@
       ]"
     />
 
-    <div class="grid grid-cols-4 gap-4">
-      <!-- Use ProductCard for nicer product UI -->
+    <div class="grid grid-cols-5 gap-4">
       <ProductCard v-for="p in products" :key="p.id" :product="p" />
     </div>
     <Pagination :page="page" :page-count="pageCount" @update:page="(val) => (page = val)" />
@@ -36,7 +35,6 @@
   await ensureCategory()
 
   const { products, pageCount, ensureProducts } = useCategoryProducts(category, page, 20, 60_000)
-  console.log('🚀 ~ [slug].vue:39 ~ products:', products)
   await ensureProducts()
 
   watch(category, () => {

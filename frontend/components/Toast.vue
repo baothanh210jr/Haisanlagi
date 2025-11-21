@@ -13,7 +13,7 @@
             {{ t.actionText }}
           </NuxtLink>
           <button class="close" @click="remove(t.id)">
-            <Icon icon="mdi:close" width="16" height="16" />
+            <Icon icon="mdi:close" width="20" height="20" />
           </button>
         </div>
       </div>
@@ -38,25 +38,42 @@
     z-index: 1000;
   }
   .toast {
-    min-width: 260px;
-    max-width: 500px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    padding: 20px 12px 12px 12px;
+    position: relative;
+    min-width: 280px;
+    max-width: 520px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    box-shadow: 0 20px 45px -20px rgba(24, 94, 224, 0.45);
+    padding: 18px 18px 18px 20px;
+    backdrop-filter: blur(12px);
+  }
+  .toast::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.95;
+    z-index: 0;
   }
   .toast.success {
-    border-color: #1b98e0;
+    border-color: rgba(30, 64, 175, 0.45);
+  }
+  .toast.success::before {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 35%, #bfdbfe 100%);
   }
   .toast.error {
-    border-color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.45);
+  }
+  .toast.error::before {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 40%, #fca5a5 100%);
   }
   .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    position: relative;
+    z-index: 1;
   }
   .thumb {
     width: 48px;
@@ -67,8 +84,9 @@
   }
   .message {
     font-size: 14px;
-    color: #111827;
-    font-weight: 500;
+    color: #0f172a;
+    font-weight: 600;
+    line-height: 1.4;
   }
   .actions {
     display: flex;
@@ -77,15 +95,16 @@
   }
   .close {
     position: absolute;
-    top: 6px;
-    right: 6px;
+    top: -14px;
+    right: -10px;
     background: transparent;
     border: none;
     font-size: 18px;
     cursor: pointer;
-    color: #6b7280;
+    color: rgba(232, 61, 61, 0.7);
+    z-index: 1;
   }
   .close:hover {
-    color: #111827;
+    color: rgba(255, 0, 0, 0.7);
   }
 </style>

@@ -10,7 +10,7 @@ export type CartItem = {
   image?: string
   image_default?: string
   quantity: number
-  capacity?: number // kg selected per item
+  capacity?: string // kg selected per item
 }
 
 const STORAGE_KEY = 'haisanlagi_cart'
@@ -57,14 +57,14 @@ export function useCart() {
     }
   }
 
-  function removeFromCart(id: CartItem['id'], capacity?: number) {
+  function removeFromCart(id: CartItem['id'], capacity?: string) {
     const targetId = String(id)
     items.value = items.value.filter(
       (i) => !(String(i.id) === targetId && (capacity === undefined || i.capacity === capacity))
     )
   }
 
-  function updateQuantity(id: CartItem['id'], quantity: number, capacity?: number) {
+  function updateQuantity(id: CartItem['id'], quantity: number, capacity?: string) {
     const q = Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1
     const targetId = String(id)
     const item = items.value.find(

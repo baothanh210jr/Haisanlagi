@@ -1,18 +1,9 @@
-type Product = {
-  id: number | string
-  name: string
-  price: number
-  image_default?: any
-  image?: any
-  image_url?: string
-  slug: string
-}
-
-type ProductsResp = { data: Product[]; meta: { filter_count: number } }
+type ProductsResp = { data: ProductItem[]; meta: { filter_count: number } }
 
 type Category = { id: number | string; name: string; slug: string }
 
 import type { Ref } from 'vue'
+import type { ProductItem } from '~/types/Product'
 
 export function useCategoryProducts(
   category: Ref<Category | null>,
@@ -37,6 +28,7 @@ export function useCategoryProducts(
       qs.set('meta', 'filter_count')
       qs.set('limit', String(limit))
       qs.set('page', String(page.value))
+      qs.set('fields', '*,variants.*')
       // Tránh filter theo status để không bị lỗi quyền đọc field "status" trên public role
       qs.set('filter[category][_eq]', String(cat.id))
       const res = await fetch(`/api/directus/items/products?${qs.toString()}`)
@@ -45,19 +37,16 @@ export function useCategoryProducts(
       timestamps.value[key] = Date.now()
     } catch {
       respMap.value[key] = { data: [], meta: { filter_count: 0 } }
-      console.log(
-        '🚀 ~ useCategoryProducts.ts:48 ~ ensureProducts ~ respMap.value[key]:',
-        respMap.value[key]
-      )
+
       timestamps.value[key] = Date.now()
     }
   }
 
   const products = computed(() => {
     const cat = category.value
-    if (!cat) return [] as Product[]
+    if (!cat) return [] as ProductItem[]
     const key = `${cat.id}:${page.value}`
-    return (respMap.value[key]?.data || []) as Product[]
+    return (respMap.value[key]?.data || []) as ProductItem[]
   })
 
   const pageCount = computed(() => {

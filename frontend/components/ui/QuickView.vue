@@ -1,22 +1,15 @@
 <template>
   <Teleport to="body">
     <div class="fixed inset-0 z-50 flex items-center justify-center">
-      <div class="absolute inset-0 bg-black/50" @click="$emit('close')"></div>
+      <div class="absolute inset-0 bg-black/50" @click="$emit('close')" />
       <div
         class="relative mx-auto max-w-3xl w-[92%] md:w-[860px] bg-white rounded-xl overflow-hidden shadow-lg"
       >
         <button
-          class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+          class="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-red-600 hover:text-white flex items-center justify-center"
           @click="$emit('close')"
         >
-          <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <Icon icon="mdi:close" class="w-5 h-5" />
         </button>
         <div class="grid md:grid-cols-2">
           <div class="p-4">
@@ -28,20 +21,26 @@
             </div>
           </div>
           <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-900">{{ p.name }}</h3>
-            <div class="mt-3 text-primary font-bold">{{ formatPrice(totalPrice) }}</div>
-            <p v-if="desc" class="mt-4 text-gray-600 text-sm leading-relaxed">{{ desc }}</p>
-            <div class="mt-6 space-y-4">
+            <h3 class="text-xl font-semibold text-gray-900">
+              {{ p.name }}
+            </h3>
+            <div class="mt-3 text-blue-700 font-bold">
+              {{ formatPrice(priceForCapacity) }}
+            </div>
+            <p v-if="desc" class="mt-4 text-gray-600 text-sm leading-relaxed">
+              {{ desc }}
+            </p>
+            <div class="mt-2 space-y-4">
               <div>
                 <div class="text-sm text-gray-700 mb-2">Chọn trọng lượng (kg)</div>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 font-medium">
                   <button
                     v-for="w in capacities"
                     :key="w"
                     class="px-3 py-2 rounded-md border transition-colors"
                     :class="
                       w === capacity
-                        ? 'bg-primary text-white border-primary'
+                        ? 'bg-blue-700 text-white border-blue-700'
                         : 'bg-white text-gray-800 hover:bg-gray-50 border-gray-300'
                     "
                     @click="capacity = w"
@@ -52,33 +51,18 @@
               </div>
               <div>
                 <div class="text-sm text-gray-700 mb-2">Số lượng</div>
-                <div class="inline-flex items-center gap-2">
-                  <button
-                    class="w-9 h-9 rounded-md border border-gray-300 hover:bg-gray-50"
-                    @click="decQty"
-                  >
-                    -
-                  </button>
-                  <input
-                    class="w-14 h-9 text-center border border-gray-300 rounded-md"
-                    type="number"
-                    min="1"
-                    v-model.number="quantity"
-                  />
-                  <button
-                    class="w-9 h-9 rounded-md border border-gray-300 hover:bg-gray-50"
-                    @click="incQty"
-                  >
-                    +
-                  </button>
-                </div>
+                <Counter :model-value="quantity" @update:model-value="(val) => (quantity = val)" />
               </div>
               <div class="text-sm text-gray-500">
-                Tổng: {{ formatPrice(totalPrice) }} ({{ quantity }} x {{ capacity }}kg)
+                Tổng:
+                <span class="text-blue-500 font-medium">{{ formatPrice(totalPrice) }}</span> ({{
+                  quantity
+                }}
+                x {{ capacity }}kg)
               </div>
               <div class="flex gap-3">
                 <button
-                  class="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary/90"
+                  class="px-4 py-2 rounded-md bg-blue-700 text-white hover:bg-blue-700/90"
                   @click="add"
                 >
                   Thêm vào giỏ
@@ -101,11 +85,13 @@
 </template>
 
 <script setup lang="ts">
+  import { Icon } from '@iconify/vue'
   import { computed, onMounted, ref } from 'vue'
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
   import { formatImage } from '~/utils/formatImage'
+  import Counter from './Counter.vue'
 
   type Product = {
     id: number | string

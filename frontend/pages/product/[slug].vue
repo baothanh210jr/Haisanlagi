@@ -22,14 +22,14 @@
           {{ product.name }}
         </h1>
         <p class="text-xl font-semibold mt-2">
-          {{ formatPrice(displayPrice) }}
+          {{ selectVariant?.price ? formatPrice(selectVariant?.price) : '' }}
         </p>
         <div class="capacity flex items-center gap-5">
           <label>Khối lượng:</label>
           <div class="options mt-2">
-            <label v-for="opt in capacityOptions" :key="opt" class="opt">
-              <input v-model.number="selectedCapacity" type="radio" name="capacity" :value="opt" />
-              <span>{{ opt }}kg</span>
+            <label v-for="opt in product.variants" :key="opt.id" class="opt">
+              <input v-model="selectVariant" type="radio" name="capacity" :value="opt" />
+              <span>{{ opt.label }}</span>
             </label>
           </div>
         </div>
@@ -51,12 +51,11 @@
 
 <script setup lang="ts">
   import { Icon } from '@iconify/vue'
-  import { computed, ref } from 'vue'
   import Breadcrumb from '~/components/ui/Breadcrumb.vue'
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
-  import type { ProductItem } from '~/types/Product'
+  import type { ProductItem, Variants } from '~/types/Product'
   import { formatImage } from '~/utils/formatImage'
 
   const route = useRoute()
@@ -69,23 +68,28 @@
     ensureProduct()
   })
 
-  const capacityOptions = computed(() => {
-    const opts = (product.value as any)?.capacity_options
-    if (Array.isArray(opts) && opts.length > 0) return opts as number[]
-    return [0.5, 1]
-  })
-  const selectedCapacity = ref<number>(1)
-  const displayPrice = computed(() => (product.value?.price || 0) * selectedCapacity.value)
+  const selectVariant = ref<Variants | null>(null)
+
+  watch(
+    () => product.value,
+    (val) => {
+      if (val && val.variants && val.variants.length > 0) {
+        selectVariant.value = val.variants[0] || null
+      }
+    },
+    { immediate: true }
+  )
 
   function add(p: ProductItem) {
+    console.log('🚀 ~ [slug].vue:84 ~ add ~ p:', p)
     addToCart({
       id: p.id,
       name: p.name,
-      price: displayPrice.value,
+      price: selectVariant.value?.price || p.price,
       image: p.image,
-      capacity: selectedCapacity.value,
+      capacity: selectVariant.value?.label || '',
     })
-    success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, {
+    success(`Đã thêm ${selectVariant.value?.label} \"${p.name}\" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
       image: formatImage(p as any, { width: 120, height: 120 }),

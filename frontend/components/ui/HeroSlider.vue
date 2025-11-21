@@ -36,19 +36,10 @@
   import 'swiper/css/pagination'
   import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
   import { Swiper, SwiperSlide } from 'swiper/vue'
+  import type { ProductItem } from '~/types/Product'
   import { formatImage } from '~/utils/formatImage'
 
-  export type Product = {
-    id: string | number
-    name: string
-    slug: string
-    price?: number
-    image?: any
-    image_default?: any
-    image_url?: string
-  }
-
-  const props = defineProps<{ products: Product[] }>()
+  const props = defineProps<{ products: ProductItem[] }>()
 
   const slides = computed(() => {
     return (props.products || []).map((p) => ({

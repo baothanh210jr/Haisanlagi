@@ -1,14 +1,10 @@
 type Category = { id: number | string; name: string; slug: string }
 
-export function useCategoryDetail(slug: string, ttlMs = 300_000) {
+export function useCategoryDetail(slug: string) {
   const category = useState<Category | null>(`category-${slug}`, () => null)
-  const loaded = useState<boolean>(`category-${slug}-loaded`, () => false)
   const lastTs = useState<number>(`category-${slug}-ts`, () => 0)
 
-  async function ensureCategory(force = false) {
-    const fresh = Date.now() - (lastTs.value || 0) < ttlMs
-    if (!force && loaded.value && fresh) return
-    loaded.value = true
+  async function ensureCategory() {
     try {
       const qs = new URLSearchParams()
       qs.set('limit', '1')
