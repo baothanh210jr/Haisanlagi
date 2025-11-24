@@ -21,11 +21,16 @@
         <h1 class="text-3xl font-bold">
           {{ product.name }}
         </h1>
-        <p class="text-xl font-semibold mt-2">
-          {{ selectVariant?.price ? formatPrice(selectVariant?.price) : '' }}
+        <p class="mt-2">
+          <span class="text-2xl font-bold text-secondary">{{ formatPrice(totalPrice) }}</span>
+          <span
+            v-if="selectVariant?.original_price"
+            class="text-lg font-medium text-gray-500 line-through ml-3"
+            >{{ formatPrice(selectVariant?.original_price) }}</span
+          >
         </p>
         <div class="capacity flex items-center gap-5">
-          <label>Khối lượng:</label>
+          <label class="font-bold text-sm">Chọn:</label>
           <div class="options mt-2">
             <label v-for="opt in product.variants" :key="opt.id" class="opt">
               <input v-model="selectVariant" type="radio" name="capacity" :value="opt" />
@@ -33,11 +38,15 @@
             </label>
           </div>
         </div>
+        <div class="flex items-center gap-4 my-6">
+          <div class="text-sm mb-2 font-bold">Số lượng:</div>
+          <Counter :model-value="quantity" @update:model-value="(val) => (quantity = val)" />
+        </div>
         <p v-if="product.description" class="desc">
           {{ product.description }}
         </p>
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white py-3 px-9 rounded-lg font-medium flex items-center justify-center gap-1 text-md"
+          class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-9 rounded-lg font-medium flex items-center justify-center gap-1 text-md"
           @click="add(product)"
         >
           <Icon icon="mdi:cart-plus" class="w-6 h-6" />
@@ -52,11 +61,11 @@
 <script setup lang="ts">
   import { Icon } from '@iconify/vue'
   import Breadcrumb from '~/components/ui/Breadcrumb.vue'
+  import Counter from '~/components/ui/Counter.vue'
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
   import type { ProductItem, Variants } from '~/types/Product'
-  import { formatImage } from '~/utils/formatImage'
 
   const route = useRoute()
   const slug = route.params.slug as string
@@ -69,6 +78,11 @@
   })
 
   const selectVariant = ref<Variants | null>(null)
+  const quantity = ref<number>(1)
+  const capacity = ref<number>(1)
+  const unitPrice = computed(() => Number(selectVariant.value?.price ?? 0))
+  const priceForCapacity = computed(() => unitPrice.value * capacity.value)
+  const totalPrice = computed(() => priceForCapacity.value * quantity.value)
 
   watch(
     () => product.value,
@@ -81,7 +95,6 @@
   )
 
   function add(p: ProductItem) {
-    console.log('🚀 ~ [slug].vue:84 ~ add ~ p:', p)
     addToCart({
       id: p.id,
       name: p.name,
@@ -94,10 +107,6 @@
       actionTo: '/gio-hang',
       image: formatImage(p as any, { width: 120, height: 120 }),
     })
-  }
-
-  function formatPrice(n: number) {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n)
   }
 </script>
 

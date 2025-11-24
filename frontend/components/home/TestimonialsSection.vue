@@ -5,7 +5,9 @@
       <div class="grid md:grid-cols-3 gap-8">
         <div v-for="item in feedback" :key="item.id" class="bg-gray-50 p-8 rounded-xl shadow">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+            <div
+              class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold"
+            >
               J
             </div>
             <div class="ml-4">

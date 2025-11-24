@@ -61,7 +61,7 @@
               >
             </div>
           </NuxtLink>
-          <span>Giỏ hàng</span>
+          <span class="text-sm font-medium">Giỏ hàng</span>
         </div>
       </div>
     </div>

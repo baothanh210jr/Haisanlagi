@@ -46,7 +46,9 @@
               <span class="text-lg font-semibold text-gray-900">{{
                 formatPrice(product?.variants[0]?.price || 0)
               }}</span>
-              <span class="text-gray-600 text-xs">/ {{ product?.variants[0]?.label || '' }}</span>
+              <span v-if="product?.variants[0]?.label" class="text-gray-600 text-xs"
+                >/ {{ product?.variants[0]?.label || '' }}</span
+              >
             </div>
           </div>
           <!-- Price Original -->
