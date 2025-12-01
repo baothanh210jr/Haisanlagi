@@ -1,6 +1,6 @@
 <template>
   <!-- Category Grid -->
-  <div class="container bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-4 md:p-6">
+  <div class="container bg-gradient-to-r from-secondary/20 to-accent rounded-2xl p-4 md:p-6">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold">Danh mục nổi bật</h2>
     </div>
@@ -12,9 +12,11 @@
         class="group bg-white transition-all border rounded-xl p-4 flex flex-col items-center hover:shadow-lg"
       >
         <div
-          class="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mb-2"
+          class="relative w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mb-2"
         >
-          <Icon :icon="cat.icon" width="24" height="24" />
+          <div class="text-xs absolute top-1 right-2">🫧</div>
+          <div class="text-xs absolute top-1/2 left-2">🫧</div>
+          <span class="text-xl">{{ cat.icon }}</span>
         </div>
         <span class="text-sm font-medium text-center line-clamp-2">
           {{ cat.name }}
@@ -25,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue'
   const { categories, ensureCategories } = useCategories(8)
   onMounted(() => {
     ensureCategories()

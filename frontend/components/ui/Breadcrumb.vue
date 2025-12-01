@@ -1,19 +1,21 @@
 <template>
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <ol>
-      <li v-for="(item, idx) in items" :key="idx" class="crumb">
-        <template v-if="item.to && idx < items.length - 1">
-          <NuxtLink :to="item.to" class="link">
-            {{ item.label }}
-          </NuxtLink>
-        </template>
-        <template v-else>
-          <span class="current">{{ item.label }}</span>
-        </template>
-        <span v-if="idx < items.length - 1" class="sep">›</span>
-      </li>
-    </ol>
-  </nav>
+  <div class="bg-gray-50 py-2 border-b border-gray-100">
+    <nav class="container" aria-label="Breadcrumb">
+      <ol>
+        <li v-for="(item, idx) in items" :key="idx" class="crumb">
+          <template v-if="item.to && idx < items.length - 1">
+            <NuxtLink :to="item.to" class="link">
+              {{ item.label }}
+            </NuxtLink>
+          </template>
+          <template v-else>
+            <span class="current">{{ item.label }}</span>
+          </template>
+          <span v-if="idx < items.length - 1" class="sep">›</span>
+        </li>
+      </ol>
+    </nav>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -22,9 +24,6 @@
 </script>
 
 <style scoped>
-  .breadcrumb {
-    margin: 8px 0 16px;
-  }
   ol {
     display: flex;
     flex-wrap: wrap;
@@ -48,7 +47,7 @@
     opacity: 0.5;
   }
   .current {
-    color: black;
+    @apply text-blue-600;
     font-weight: 600;
   }
   .sep {

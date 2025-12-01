@@ -1,13 +1,6 @@
 <template>
-  <div class="container">
-    <Breadcrumb
-      :items="[
-        { label: 'Trang chủ', to: '/' },
-        { label: 'Danh mục' },
-        { label: category?.name || slug },
-      ]"
-    />
-
+  <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: category?.name || slug }]" />
+  <div class="container py-10">
     <div class="grid grid-cols-5 gap-4">
       <ProductCard v-for="p in products" :key="p.id" :product="p" />
     </div>

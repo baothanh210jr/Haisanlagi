@@ -1,20 +1,20 @@
 <template>
   <section
     id="home"
-    class="relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-center overflow-hidden"
+    class="bg-gradient-to-br from-[#053C5E] via-[#1B98E0] to-[#F2C14E33] relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-center overflow-hidden"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div class="space-y-6 text-center md:text-left">
           <span
-            class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-sm font-semibold tracking-wide uppercase"
+            class="inline-block py-1 px-3 rounded-full bg-yellow-500 text-white text-sm font-bold tracking-wide uppercase"
             >Tươi ngon - Sạch sẽ - An toàn</span
           >
-          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+          <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
             Hải Sản Tươi Sống <br />
-            <span class="text-blue-600">Tươi Ngon Từ Nguồn</span>
+            <span class="text-black">Tươi Ngon Từ Nguồn</span>
           </h1>
-          <p class="text-lg text-gray-600 md:pr-10">
+          <p class="text-lg text-white md:pr-10">
             Chúng tôi cung cấp các loại hải sản cao cấp được đánh bắt trực tiếp từ biển, đảm bảo độ
             tươi ngon và chất lượng tuyệt hảo cho bữa ăn gia đình bạn.
           </p>
@@ -36,14 +36,14 @@
         </div>
         <div class="relative hidden md:block">
           <div
-            class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
           />
           <div
-            class="absolute top-0 right-40 w-96 h-96 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
+            class="absolute top-0 right-40 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
           />
 
           <img
-            src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            src="https://plus.unsplash.com/premium_photo-1757672144355-6660416a2a37?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=800&q=80"
             alt="Seafood Platter"
             class="relative w-full rounded-2xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 border-4 border-white"
           />

@@ -4,7 +4,7 @@
       <div class="content">
         <img v-if="t.image" :src="t.image" alt="" class="thumb" />
         <span class="message">{{ t.text }}</span>
-        <div class="actions">
+        <div class="flex items-center gap-8">
           <NuxtLink
             v-if="t.actionTo && t.actionText"
             :to="t.actionTo"
@@ -40,11 +40,9 @@
   .toast {
     position: relative;
     min-width: 280px;
-    max-width: 520px;
-    border-radius: 16px;
+    max-width: 700px;
     overflow: hidden;
     border: 1px solid transparent;
-    box-shadow: 0 20px 45px -20px rgba(24, 94, 224, 0.45);
     padding: 18px 18px 18px 20px;
     backdrop-filter: blur(12px);
   }
@@ -72,6 +70,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    padding: 0 10px;
     position: relative;
     z-index: 1;
   }
@@ -101,7 +100,7 @@
     border: none;
     font-size: 18px;
     cursor: pointer;
-    color: rgba(232, 61, 61, 0.7);
+    @apply text-red-600;
     z-index: 1;
   }
   .close:hover {
