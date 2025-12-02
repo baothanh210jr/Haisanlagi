@@ -16,6 +16,8 @@ module.exports = {
         lg: '1.5rem',
         xl: '2rem',
         '2xl': '2rem',
+        '2k': '2rem',
+        '4k': '2rem',
       },
       screens: {
         sm: '640px',
@@ -23,6 +25,8 @@ module.exports = {
         lg: '1024px',
         xl: '1290px',
         '2xl': '1536px',
+        '3xl': '2048px',
+        '4xl': '3000px',
       },
     },
     extend: {

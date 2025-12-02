@@ -3,7 +3,9 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-2">
         <div>
-          <h2 class="text-3xl font-bold">Sản phẩm bán chạy</h2>
+          <h2 class="text-3xl font-bold">
+            Sản phẩm bán chạy
+          </h2>
           <h4 class="text-gray-600 pt-2">
             Tuyển chọn những loại hải sản được khách hàng yêu thích nhất trong tuần qua.
           </h4>
@@ -29,7 +31,12 @@
           <button
             class="products-next w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center transition-colors"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -52,9 +59,16 @@
           :breakpoints="breakpoints"
           class="products-swiper !py-10"
         >
-          <SwiperSlide v-for="(product, index) in hotProducts" :key="index" class="!h-auto">
+          <SwiperSlide
+            v-for="(product, index) in hotProducts"
+            :key="index"
+            class="!h-auto"
+          >
             <div class="h-full flex">
-              <ProductCard :product="product as any" class="flex-1" />
+              <ProductCard
+                :product="product as any"
+                class="flex-1"
+              />
             </div>
           </SwiperSlide>
         </Swiper>
@@ -93,6 +107,12 @@
       slidesPerGroup: 3,
       grid: { rows: 2, fill: 'row' as const },
       spaceBetween: 16,
+    },
+    2000: {
+      slidesPerView: 4,
+      slidesPerGroup: 4,
+      grid: { rows: 2, fill: 'row' as const },
+      spaceBetween: 20,
     },
   }
 

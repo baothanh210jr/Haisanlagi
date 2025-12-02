@@ -1,19 +1,19 @@
 <template>
   <section
     id="home"
-    class="bg-gradient-to-br from-[#053C5E] via-[#1B98E0] to-[#F2C14E33] relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-center overflow-hidden"
+    class="bg-gradient-to-br from-[#053C5E] via-[#1B98E0] to-[#F2C14E33] relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-center overflow-hidden hero-screen"
   >
-    <div class="container relative z-10">
+    <div class="container relative z-10 ">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-        <div class="space-y-5 md:space-y-6 text-center lg:text-left lg:order-2">
+        <div class="space-y-5 md:space-y-6 text-center lg:text-left">
           <span
-            class="inline-block py-1 px-3 rounded-full bg-yellow-500 text-white text-sm font-bold tracking-wide uppercase"
+            class="inline-block py-1 px-3 xl:py-3 xl:px-5 rounded-full bg-yellow-500 text-white text-sm font-bold tracking-wide uppercase"
           >Tươi ngon - Sạch sẽ - An toàn</span>
-          <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+          <h1 class="text-4xl md:text-6xl 2xl:text-8xl font-bold text-white leading-tight">
             Hải Sản Tươi Sống <br>
             <span class="">Tươi Ngon Từ Nguồn</span>
           </h1>
-          <p class="text-base sm:text-lg text-white/80 md:pr-10">
+          <p class="text-base sm:text-lg 2xl:text-2xl text-white/80 md:pr-10">
             Chúng tôi cung cấp các loại hải sản cao cấp được đánh bắt trực tiếp từ biển, đảm bảo tươi
             ngon và chất lượng tuyệt hảo cho bữa ăn gia đình bạn.
           </p>
@@ -36,29 +36,15 @@
             </a>
           </div>
         </div>
-
-        <div class="relative hidden lg:block lg:order-1">
-          <div
-            class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-          />
-          <div
-            class="absolute top-0 right-40 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"
-          />
-
-          <img
-            src="/section-01.png"
-            alt="Seafood Platter"
-            class="relative w-full rounded-2xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 border-4 border-white"
-          >
-        </div>
-
-        <div class="block lg:hidden">
-          <img
-            src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Seafood Platter"
-            class="w-full rounded-2xl shadow-xl object-cover"
-          >
-        </div>
+      </div>
+    </div>
+    <div class="w-1/2 hidden lg:flex absolute right-0 top-0 h-full ">
+      <div class="flex-1 w-full h-full">
+        <img
+          src="/section-04.png"
+          alt="Seafood Platter"
+          class="relative w-full h-full object-center"
+        >
       </div>
     </div>
   </section>
@@ -70,7 +56,7 @@
 
 <style>
   .hero-screen {
-    max-height: calc(100vh - var(--header-h));
+    height: calc(85vh - var(--header-h));
   }
 
   .hover-move-down:hover .move-down-icon {
@@ -88,4 +74,12 @@
       transform: translateY(0);
     }
   }
+  
+  @media (min-width: 2600px) {
+    .hero-screen {
+      height: auto
+    }
+  }
+
+  
 </style>
