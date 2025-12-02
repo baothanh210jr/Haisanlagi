@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody, useRuntimeConfig } from '#imports'
-
+import { normalizeBaseUrl } from '~/utils/normalizeBaseUrl'
 // Dev-only TLS bypass to avoid local issuer certificate errors
 const isDev = (globalThis as any).process?.env?.NODE_ENV !== 'production'
 if (isDev && (globalThis as any).process) {
@@ -8,13 +8,6 @@ if (isDev && (globalThis as any).process) {
 
 export default defineEventHandler(async (event) => {
   const runtime = useRuntimeConfig()
-
-  function normalizeBaseUrl(url?: string): string {
-    const raw = (url || '').trim()
-    if (!raw) throw new Error('DIRECTUS_URL is missing. Set it in frontend .env')
-    const withProto = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
-    return withProto.replace(/\/$/, '')
-  }
 
   const baseUrl = normalizeBaseUrl(runtime.public.directusUrl)
 

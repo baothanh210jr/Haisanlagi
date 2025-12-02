@@ -11,7 +11,7 @@ export function useProductDetail(slug: string) {
       qs.set('limit', '1')
       qs.set('filter[slug][_eq]', slug)
       // Expand relational category to include slug for linking
-      qs.set('fields', '*,category.slug,variants.*')
+      qs.set('fields', '*,category.*,variants.*')
       const res = await fetch(`/api/directus/items/products?${qs.toString()}`)
       const json = await res.json()
       const items = (json?.data || []) as any[]

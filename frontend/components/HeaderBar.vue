@@ -1,7 +1,7 @@
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-3 md:py-4 bg-white backdrop-blur-sm shadow-sm"
+    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 text-black backdrop-blur-sm border-b border-gray-100"
     :class="[showHeader ? 'translate-y-0 ' : '-translate-y-full']"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
@@ -9,7 +9,7 @@
     <div class="container flex items-center justify-between">
       <NuxtLink
         to="/"
-        class="flex items-center gap-3 flex-shrink-0"
+        class="flex items-center gap-3 flex-shrink-0 w-1/3"
       >
         <div class="w-auto h-10">
           <img
@@ -22,37 +22,45 @@
 
       <!-- Search bar -->
       <div class="flex-1 max-w-md mx-4">
-        <div class="relative">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="Tìm kiếm..."
-            class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          >
-          <button
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-1 rounded"
+        <button
+          type="button"
+          class="w-full flex items-center gap-3 rounded-xl border border-gray-200 bg-white/60 px-4 py-2 text-left shadow-sm transition hover:border-gray-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          @click="openSearchPalette"
+        >
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary"
           >
             <Icon
               icon="mdi:magnify"
-              width="18"
-              height="18"
+              class="h-4 w-4"
             />
-          </button>
-        </div>
+          </span>
+          <div class="flex flex-1 flex-col">
+            <span class="text-sm font-medium text-gray-700">Tìm kiếm sản phẩm</span>
+            <span class="text-xs text-gray-400">Nhấn / hoặc Ctrl + K để mở nhanh</span>
+          </div>
+          <kbd
+            class="rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-xs uppercase tracking-widest text-gray-500"
+          >/</kbd>
+        </button>
       </div>
-      <div class="flex items-center gap-8">
+      <div class="flex items-center justify-end gap-8 w-1/3">
         <!-- Hotline -->
-        <div class="hidden sm:flex items-center gap-3">
-          <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white">
+        <div class="flex items-center gap-4">
+          <div
+            class="w-8 h-8 flex items-center justify-center rounded-full bg-secondary text-white"
+          >
             <Icon
               icon="mdi-light:phone"
               width="20"
               height="20"
             />
           </div>
-          <div class="text-black font-medium">
-            <span class="block text-xs text-gray-600">Hỗ trợ khách hàng</span>
-            <span class="text-sm font-semibold">0367 497 642</span>
+          <div>
+            <span class="text-sm font-medium">Hỗ trợ khách hàng</span>
+            <div class="">
+              <span class="text-sm font-medium">0367497642</span>
+            </div>
           </div>
         </div>
         <!-- Cart -->
@@ -64,7 +72,7 @@
             class="relative"
           >
             <div
-              class="w-10 h-10 relative rounded-full bg-blue-600 text-white flex items-center justify-center"
+              class="w-10 h-10 relative rounded-full bg-secondary text-white flex items-center justify-center"
             >
               <Icon
                 icon="famicons:cart-outline"
@@ -73,7 +81,7 @@
               />
               <span
                 v-if="cartCount > 0"
-                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
+                class="absolute -top-1 -right-1 bg-red-500 black text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
               >{{ cartCount }}</span>
             </div>
           </NuxtLink>
@@ -82,6 +90,185 @@
       </div>
     </div>
   </header>
+
+  <Teleport to="body">
+    <transition name="fade">
+      <div
+        v-if="searchOpen"
+        class="fixed inset-0 z-[70] flex items-start justify-center bg-black/40 px-4 pb-10 pt-24"
+        @click.self="closeSearchPalette"
+      >
+        <div
+          class="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-black/10"
+        >
+          <div class="flex items-center gap-3 border-b border-gray-100 px-6 py-4">
+            <Icon
+              icon="mdi:magnify"
+              class="h-5 w-5 text-gray-400"
+            />
+            <input
+              ref="searchInputRef"
+              v-model="searchQuery"
+              type="text"
+              placeholder="Tìm kiếm sản phẩm"
+              class="flex-1 border-none bg-transparent text-base text-gray-900 outline-none placeholder:text-gray-400"
+              @input="onSearchInput"
+              @keydown.enter.prevent="handleSearchEnter"
+              @keydown.escape.prevent="closeSearchPalette"
+            >
+            <button
+              v-if="searchQuery.length"
+              type="button"
+              class="text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition"
+              @click="clearSearch"
+            >
+              <Icon
+                icon="mdi:close"
+                class="h-5 w-5"
+              />
+            </button>
+          </div>
+
+          <div class="max-h-[70vh] overflow-y-auto">
+            <div
+              v-if="searchError"
+              class="px-6 py-10 text-center text-sm text-red-500"
+            >
+              {{ searchError }}
+            </div>
+
+            <div
+              v-else-if="searchQuery && searchLoading"
+              class="flex items-center gap-3 px-6 py-8 text-sm text-gray-500"
+            >
+              <span
+                class="h-4 w-4 animate-spin rounded-full border border-gray-300 border-t-transparent"
+              />
+              Đang tìm kiếm sản phẩm...
+            </div>
+
+            <template v-else-if="searchQuery && searchResults.length">
+              <p class="px-6 pt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Kết quả phù hợp
+              </p>
+              <ul class="divide-y divide-gray-100 px-2 pb-4">
+                <li
+                  v-for="item in searchResults"
+                  :key="item.id"
+                >
+                  <NuxtLink
+                    :to="{ name: 'product-slug', params: { slug: item.slug } }"
+                    class="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-gray-50"
+                    @click="handleResultClick"
+                  >
+                    <div
+                      class="h-14 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50"
+                    >
+                      <img
+                        :src="formatImage(item, { width: 160, height: 120 })"
+                        :alt="item.name"
+                        class="h-full w-full object-cover"
+                      >
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900 line-clamp-2">
+                        {{ item.name }}
+                      </p>
+                      <p class="text-sm text-gray-500 line-clamp-1">
+                        {{ item.description || 'Sản phẩm nổi bật của Haisan Lagi' }}
+                      </p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm font-semibold text-gray-900">
+                        {{ formatPrice(item?.variants?.[0]?.price || 0) }}
+                      </p>
+                      <p class="text-xs text-gray-400">
+                        {{ item?.variants?.[0]?.label || 'Đơn vị' }}
+                      </p>
+                    </div>
+                  </NuxtLink>
+                </li>
+              </ul>
+            </template>
+
+            <div
+              v-else-if="searchQuery && !searchResults.length"
+              class="px-6 py-10 text-center text-sm text-gray-500"
+            >
+              Không tìm thấy sản phẩm nào phù hợp với từ khóa "{{ searchQuery }}".
+            </div>
+
+            <div
+              v-else
+              class="space-y-8 px-6 py-6"
+            >
+              <section>
+                <div class="flex items-center justify-between">
+                  <p class="text-sm font-semibold text-gray-700">
+                    Tìm kiếm gần đây
+                  </p>
+                  <button
+                    v-if="recentSearches.length"
+                    type="button"
+                    class="text-xs font-medium text-blue-600 hover:underline"
+                    @click="clearRecentSearches"
+                  >
+                    Xóa lịch sử
+                  </button>
+                </div>
+                <div
+                  v-if="recentSearches.length"
+                  class="mt-3 flex flex-wrap gap-2"
+                >
+                  <button
+                    v-for="recent in recentSearches"
+                    :key="recent"
+                    type="button"
+                    class="rounded-full border border-gray-200 px-3 py-1 text-sm text-gray-600 transition hover:border-primary hover:text-primary"
+                    @click="applySavedQuery(recent)"
+                  >
+                    {{ recent }}
+                  </button>
+                </div>
+                <p
+                  v-else
+                  class="mt-3 text-sm text-gray-400"
+                >
+                  Khi bạn tìm kiếm, các từ khóa sẽ được hiển thị ở đây để truy cập lại nhanh chóng.
+                </p>
+              </section>
+
+              <section class="space-y-3 rounded-2xl bg-gray-50 p-4">
+                <p class="text-sm font-semibold text-gray-700">
+                  Gợi ý phổ biến
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="suggest in popularSearches"
+                    :key="suggest"
+                    type="button"
+                    class="rounded-full bg-white px-3 py-1 text-sm text-gray-700 shadow-sm transition hover:bg-primary/5"
+                    @click="applySavedQuery(suggest)"
+                  >
+                    {{ suggest }}
+                  </button>
+                </div>
+                <div class="rounded-2xl bg-white p-4 shadow-sm">
+                  <p class="text-sm font-semibold text-gray-800">
+                    Mẹo
+                  </p>
+                  <ul class="mt-2 list-disc space-y-1 pl-5 text-xs text-gray-500">
+                    <li>Nhập tên sản phẩm hoặc nguyên liệu bạn quan tâm.</li>
+                    <li>Dùng dấu "/" hoặc Ctrl + K để mở ô tìm kiếm từ bất cứ đâu.</li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -90,12 +277,31 @@
   import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
   import { useCart } from '~/composables/useCart'
+  import { useHotProducts } from '~/composables/useHotProducts'
+  import type { ProductItem } from '~/types/Product'
+  import { formatImage } from '~/utils/formatImage'
+  import { formatPrice } from '~/utils/formatPrice'
+
+  const { hotProducts, ensureHotProducts } = useHotProducts()
 
   const { items } = useCart()
   const cartCount = computed(() => items.value.reduce((acc, i) => acc + i.quantity, 0))
 
   // Search functionality
   const searchQuery = ref('')
+  const searchOpen = ref(false)
+  const searchResults = ref<ProductItem[]>([])
+  const searchLoading = ref(false)
+  const searchError = ref('')
+  const searchInputRef = ref<HTMLInputElement | null>(null)
+  const recentSearches = ref<string[]>([])
+  const popularSearches = computed(() => {
+    return hotProducts.value.slice(0, 10).map((p) => p.name)
+  })
+  const previousBodyOverflow = ref('')
+  const RECENT_KEY = 'haisanlagi_recent_searches'
+  let searchDebounce: ReturnType<typeof setTimeout> | null = null
+  let searchController: AbortController | null = null
 
   // Categories dropdown state
   const categoryBtnRef = ref<HTMLElement | null>(null)
@@ -112,31 +318,31 @@
   const showHeader = ref(true)
   const atTop = ref(true)
   const hovering = ref(false)
-  const activeSection = ref<string>('')
-  const menuItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'best-selling', label: 'Best Selling' },
-    { id: 'products', label: 'Products' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'how-we-ship', label: 'How We Ship' },
-  ]
+
   const navRef = ref<HTMLElement | null>(null)
   const menuRefs = ref<HTMLElement[]>([])
   const indicatorLeft = ref(0)
   const indicatorWidth = ref(0)
-
-  function updateIndicator() {
-    let idx = menuItems.findIndex((m) => m.id === activeSection.value)
-    if (idx < 0) idx = 0
-    const el = menuRefs.value[idx]
-    const nav = navRef.value
-    if (el && nav) {
-      const rect = el.getBoundingClientRect()
-      const navRect = nav.getBoundingClientRect()
-      indicatorLeft.value = rect.left - navRect.left
-      indicatorWidth.value = rect.width
+  const shortcutHandler = (event: KeyboardEvent) => {
+    const tag = (event.target as HTMLElement | null)?.tagName?.toLowerCase()
+    const isEditable =
+      (event.target as HTMLElement | null)?.isContentEditable ||
+      ['input', 'textarea', 'select'].includes(tag || '')
+    if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (isEditable) return
+      event.preventDefault()
+      openSearchPalette()
+    }
+    if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
+      event.preventDefault()
+      openSearchPalette()
+    }
+    if (event.key === 'Escape' && searchOpen.value) {
+      event.preventDefault()
+      closeSearchPalette()
     }
   }
+
   let lastY = 0
   let idleTimer: any = null
   let threshold = 56 // default, will be updated after mount
@@ -163,32 +369,10 @@
     }, 800)
 
     lastY = y
-
-    // Update active section based on viewport
-    try {
-      const offset = (headerRef.value?.offsetHeight || 0) + 12
-      let current: string | null = null
-      for (const item of menuItems) {
-        const el = document.getElementById(item.id)
-        if (!el) continue
-        const top = el.offsetTop
-        const height = el.offsetHeight
-        if (y >= top - offset && y < top + height - offset) {
-          current = item.id
-          break
-        }
-      }
-      if (current) activeSection.value = current
-      // Update category visibility based on hero section, with fallback near top on first load
-      const nearTop = y <= (headerRef.value?.offsetHeight || 0) + 12
-      // Chỉ coi là đang ở trong hero khi đang ở trang Home
-      heroInView.value = isHomeRoute.value && (activeSection.value === 'home' || nearTop)
-      // Show header categories while hero is visible; hide outside hero until clicked
-      showCategoryPanel.value = heroInView.value ? true : manualCategoryOpen.value
-    } catch {}
   }
 
   onMounted(() => {
+    ensureHotProducts()
     // Measure header height for threshold
     const h = headerRef.value?.offsetHeight || 0
     threshold = Math.max(56, h)
@@ -197,7 +381,6 @@
     window.addEventListener('scroll', onScroll, { passive: true })
     nextTick(() => {
       onScroll()
-      updateIndicator()
       // Ensure categories loaded and measure button width
       const w = categoryBtnRef.value?.offsetWidth || 0
       if (w > 0) {
@@ -206,19 +389,32 @@
       }
     })
     window.addEventListener('resize', () => {
-      updateIndicator()
       const w = categoryBtnRef.value?.offsetWidth || 0
       if (w > 0) {
         catPanelWidth.value = w
         catBtnWidthState.value = w
       }
     })
+    if (process.client) {
+      try {
+        const stored = localStorage.getItem(RECENT_KEY)
+        if (stored) {
+          recentSearches.value = JSON.parse(stored) || []
+        }
+      } catch {
+        recentSearches.value = []
+      }
+      document.addEventListener('keydown', shortcutHandler)
+    }
   })
 
   onUnmounted(() => {
     window.removeEventListener('scroll', onScroll)
-    window.removeEventListener('resize', updateIndicator)
     if (idleTimer) clearTimeout(idleTimer)
+    if (process.client) {
+      document.removeEventListener('keydown', shortcutHandler)
+      document.body.style.overflow = previousBodyOverflow.value || ''
+    }
   })
 
   function onMouseEnter() {
@@ -238,20 +434,143 @@
     }
   }
 
-  watch(activeSection, () => {
-    updateIndicator()
-  })
+  function openSearchPalette() {
+    searchOpen.value = true
+    nextTick(() => {
+      searchInputRef.value?.focus()
+      if (searchQuery.value.trim()) scheduleSearch(true)
+    })
+  }
 
-  function toggleCategoryPanel() {
-    // In hero, keep categories open by default and ignore toggle
-    if (heroInView.value) {
-      showCategoryPanel.value = true
-      manualCategoryOpen.value = false
+  function closeSearchPalette() {
+    searchOpen.value = false
+    console.log('🚀 ~ HeaderBar.vue:448 ~ closeSearchPalette ~ searchOpen.value:', searchOpen.value)
+    searchLoading.value = false
+    searchError.value = ''
+    if (searchController) {
+      searchController.abort()
+      searchController = null
+    }
+  }
+
+  function onSearchInput() {
+    if (!searchOpen.value) return
+    scheduleSearch()
+  }
+
+  function scheduleSearch(immediate = false) {
+    if (searchDebounce) clearTimeout(searchDebounce)
+    if (immediate) {
+      fetchSearchResults()
       return
     }
-    manualCategoryOpen.value = !manualCategoryOpen.value
-    showCategoryPanel.value = manualCategoryOpen.value
+    searchDebounce = setTimeout(fetchSearchResults, 350)
   }
+
+  async function fetchSearchResults() {
+    const term = searchQuery.value.trim()
+    if (!term) {
+      if (searchController) {
+        searchController.abort()
+        searchController = null
+      }
+      searchResults.value = []
+      searchLoading.value = false
+      searchError.value = ''
+      return
+    }
+    if (searchController) {
+      searchController.abort()
+    }
+    const controller = new AbortController()
+    searchController = controller
+    searchLoading.value = true
+    searchError.value = ''
+
+    try {
+      const qs = new URLSearchParams()
+      qs.set('search', term)
+      qs.set('limit', '8')
+      const res = await fetch(`/api/products?${qs.toString()}`, {
+        signal: controller.signal,
+      })
+      const json = await res.json()
+      const list = Array.isArray(json?.data) ? (json.data as ProductItem[]) : []
+      searchResults.value = list
+    } catch (err: any) {
+      if (err?.name === 'AbortError') return
+      searchError.value = 'Không thể tải kết quả. Vui lòng thử lại.'
+      searchResults.value = []
+    } finally {
+      if (searchController === controller) {
+        searchController = null
+      }
+      searchLoading.value = false
+    }
+  }
+
+  function rememberSearch(term: string) {
+    const clean = term.trim()
+    if (!clean) return
+    const next = [clean, ...recentSearches.value.filter((item) => item !== clean)].slice(0, 6)
+    recentSearches.value = next
+  }
+
+  function applySavedQuery(term: string) {
+    searchQuery.value = term
+    rememberSearch(term)
+    scheduleSearch(true)
+    nextTick(() => searchInputRef.value?.focus())
+  }
+
+  function clearRecentSearches() {
+    recentSearches.value = []
+  }
+
+  function clearSearch() {
+    searchQuery.value = ''
+    searchResults.value = []
+    searchError.value = ''
+    searchLoading.value = false
+    if (searchController) {
+      searchController.abort()
+      searchController = null
+    }
+    nextTick(() => searchInputRef.value?.focus())
+  }
+
+  function handleSearchEnter() {
+    const term = searchQuery.value.trim()
+    if (!term) return
+    rememberSearch(term)
+    scheduleSearch(true)
+  }
+
+  function handleResultClick() {
+    rememberSearch(searchQuery.value || '')
+    closeSearchPalette()
+  }
+
+  watch(
+    recentSearches,
+    (val) => {
+      if (!process.client) return
+      try {
+        localStorage.setItem(RECENT_KEY, JSON.stringify(val))
+      } catch {}
+    },
+    { deep: true }
+  )
+
+  watch(searchOpen, (open) => {
+    if (!process.client) return
+    if (open) {
+      previousBodyOverflow.value = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = previousBodyOverflow.value || ''
+    }
+  })
 </script>
 
 <style scoped>

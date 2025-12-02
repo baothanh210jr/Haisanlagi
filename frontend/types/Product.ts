@@ -4,7 +4,13 @@ export interface Variants {
   price: number
   original_price?: number
 }
-;[]
+
+export interface CategoryProduct {
+  id: number
+  name: string
+  slug: string
+}
+
 export interface ProductItem {
   id: number | string
   name: string
@@ -12,6 +18,6 @@ export interface ProductItem {
   price: number
   image?: any
   description?: string
-  category?: number | string
+  category?: CategoryProduct
   variants: Variants[]
 }

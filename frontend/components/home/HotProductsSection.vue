@@ -27,7 +27,7 @@
             </svg>
           </button>
           <button
-            class="products-next w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center transition-colors"
+            class="products-next w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center transition-colors"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

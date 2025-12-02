@@ -3,6 +3,7 @@ type Feedback = {
   name: string
   job: string
   content: string
+  avatar: string
 }
 
 export function useFeedback(limit = 12, ttlMs = 300_000) {

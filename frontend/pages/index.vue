@@ -1,7 +1,7 @@
 <template>
   <div>
     <HomeHeroSection />
-    <HomeCategories />
+    <HomeCategories class="mt-14" />
     <HomeHotProductsSection />
     <HomeTestimonialsSection />
     <HomeContactSection />

@@ -1,18 +1,19 @@
 <template>
-  <div class="container py-6 space-y-6">
-    <Breadcrumb
-      :items="[
-        { label: 'Trang chủ', to: '/' },
-        { label: 'Danh mục' },
-        { label: category?.name || slug },
-      ]"
-    />
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-      <ProductCard v-for="p in products" :key="p.id" :product="p" />
+  <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: category?.name || slug }]" />
+  <div class="container py-10">
+    <div class="grid grid-cols-5 gap-4">
+      <ProductCard
+        v-for="p in products"
+        :key="p.id"
+        :product="p"
+      />
     </div>
     <div class="flex justify-center">
-      <Pagination :page="page" :page-count="pageCount" @update:page="(val) => (page = val)" />
+      <Pagination
+        :page="page"
+        :page-count="pageCount"
+        @update:page="(val) => (page = val)"
+      />
     </div>
   </div>
 </template>

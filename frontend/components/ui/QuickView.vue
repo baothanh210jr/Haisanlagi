@@ -24,49 +24,39 @@
             <h3 class="text-xl font-semibold text-gray-900">
               {{ p.name }}
             </h3>
-            <div class="mt-3 text-blue-700 font-bold">
-              {{ formatPrice(priceForCapacity) }}
-            </div>
+            <p class="">
+              <span class="text-2xl font-bold text-secondary">{{ formatPrice(totalPrice) }}</span>
+              <span
+                v-if="selectVariant?.original_price"
+                class="text-lg font-medium text-gray-500 line-through ml-3"
+                >{{ formatPrice(selectVariant?.original_price) }}</span
+              >
+            </p>
             <p v-if="desc" class="mt-4 text-gray-600 text-sm leading-relaxed">
               {{ desc }}
             </p>
             <div class="mt-2 space-y-4">
               <div>
                 <div class="text-sm text-gray-700 mb-2">Chọn trọng lượng (kg)</div>
-                <div class="flex flex-wrap gap-2 font-medium">
-                  <button
-                    v-for="w in capacities"
-                    :key="w"
-                    class="px-3 py-2 rounded-md border transition-colors"
-                    :class="
-                      w === capacity
-                        ? 'bg-blue-600 text-white border-blue-700'
-                        : 'bg-white text-gray-800 hover:bg-gray-50 border-gray-300'
-                    "
-                    @click="capacity = w"
-                  >
-                    {{ w }} kg
-                  </button>
+                <div class="capacity gap-5">
+                  <label class="font-bold text-sm">Chọn:</label>
+                  <div class="options mt-2 flex-wrap">
+                    <label v-for="opt in product.variants" :key="opt.id" class="opt text-sm">
+                      <input v-model="selectVariant" type="radio" name="capacity" :value="opt" />
+                      <span>{{ opt.label }}</span>
+                    </label>
+                  </div>
                 </div>
               </div>
               <div>
                 <div class="text-sm text-gray-700 mb-2">Số lượng</div>
                 <Counter :model-value="quantity" @update:model-value="(val) => (quantity = val)" />
               </div>
-              <div class="text-sm text-gray-500">
-                Tổng:
-                <span class="text-blue-500 font-medium">{{ formatPrice(totalPrice) }}</span> ({{
-                  quantity
-                }}
-                x {{ capacity }}kg)
-              </div>
               <div class="flex gap-3">
-                <button
-                  class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700/90"
-                  @click="add"
-                >
-                  Thêm vào giỏ
-                </button>
+                <Button @click="add(product)">
+                  <Icon icon="mdi:cart-plus" class="w-6 h-6" />
+                  <span>Thêm giỏ hàng</span>
+                </Button>
                 <NuxtLink
                   v-if="p.slug"
                   :to="`/product/${p.slug}`"
@@ -90,19 +80,12 @@
   import { useCart } from '~/composables/useCart'
   import { useProductDetail } from '~/composables/useProductDetail'
   import { useToast } from '~/composables/useToast'
+  import type { ProductItem, Variants } from '~/types/Product'
   import { formatImage } from '~/utils/formatImage'
+  import Button from './Button.vue'
   import Counter from './Counter.vue'
 
-  type Product = {
-    id: number | string
-    name: string
-    slug?: string
-    price: number
-    image?: any
-    image_default?: any
-    description?: string
-  }
-  const props = defineProps<{ product: Product }>()
+  const props = defineProps<{ product: ProductItem }>()
   defineEmits(['close'])
 
   const { product: detail, ensureProduct } = useProductDetail(props.product.slug || '')
@@ -110,46 +93,42 @@
     if (props.product.slug) ensureProduct()
   })
 
-  const p = computed<Product>(() => (detail.value || props.product) as Product)
+  const p = computed<ProductItem>(() => (detail.value || props.product) as ProductItem)
   const img = computed(() => formatImage(p.value, { width: 1200, height: 900 }))
   const desc = computed(() => (p.value?.description || '').toString())
 
   const { addToCart } = useCart()
   const { success } = useToast()
-  const capacities = [0.5, 1, 2, 3, 5]
-  const capacity = ref<number>(1)
+  const selectVariant = ref<Variants | null>(null)
   const quantity = ref<number>(1)
-  const unitPrice = computed(() => Number(p.value?.price ?? 0))
+  const capacity = ref<number>(1)
+  const unitPrice = computed(() => Number(selectVariant.value?.price ?? 0))
   const priceForCapacity = computed(() => unitPrice.value * capacity.value)
   const totalPrice = computed(() => priceForCapacity.value * quantity.value)
 
-  function add() {
-    addToCart(
-      {
-        id: p.value.id,
-        name: p.value.name,
-        price: priceForCapacity.value,
-        image: p.value.image || p.value.image_default,
-        capacity: capacity.value,
-      },
-      quantity.value
-    )
-    success(`Đã thêm ${quantity.value} x ${capacity.value}kg "${p.value.name}" vào giỏ hàng`, {
+  watch(
+    () => props.product,
+    (val) => {
+      if (val && val.variants && val.variants.length > 0) {
+        selectVariant.value = val.variants[0] || null
+      }
+    },
+    { immediate: true }
+  )
+
+  function add(p: ProductItem) {
+    addToCart({
+      id: p.id,
+      name: p.name,
+      price: selectVariant.value?.price || p.price,
+      image: p.image,
+      capacity: selectVariant.value?.label || '',
+    })
+    success(`Đã thêm ${selectVariant.value?.label} \"${p.name}\" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
-      image: formatImage(p.value, { width: 120, height: 120 }),
+      image: formatImage(p as any, { width: 120, height: 120 }),
     })
-  }
-
-  function formatPrice(n: number) {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n)
-  }
-
-  function incQty() {
-    quantity.value = Math.min(99, quantity.value + 1)
-  }
-  function decQty() {
-    quantity.value = Math.max(1, quantity.value - 1)
   }
 </script>
 

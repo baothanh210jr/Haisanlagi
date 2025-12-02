@@ -33,8 +33,10 @@ module.exports = {
         lg: 'var(--radius)',
       },
       colors: {
-        primary: '#1B98E0',
-        secondary: '#FF7A45',
+        primary: '#004E89',
+        'primary-100': '#053C5E',
+        secondary: '#1B98E0',
+        accent: '#F2C14E',
       },
     },
   },

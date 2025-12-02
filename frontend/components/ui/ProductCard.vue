@@ -7,7 +7,7 @@
       >
         Có {{ product?.variants.length }} lựa chọn
       </div>
-      <NuxtLink :to="`/product/${product.slug}`" class="block">
+      <NuxtLink :to="`/product/${product.slug}`" class="block wrapper-card-index relative">
         <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
           <img
             v-if="img"
@@ -18,13 +18,6 @@
           <div v-else class="h-full w-full flex items-center justify-center text-gray-400">
             Không có ảnh
           </div>
-          <button
-            class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors opacity-0 group-hover:opacity-100"
-            aria-label="Xem nhanh"
-            @click.stop.prevent="openQuickView"
-          >
-            <Icon icon="mdi:magnify" class="w-10 h-10 text-white" />
-          </button>
         </div>
       </NuxtLink>
     </div>
@@ -53,13 +46,10 @@
       </div>
     </div>
   </Card>
-  <QuickView v-if="showQuick" :product="product" @close="showQuick = false" />
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue'
   import Card from '~/components/ui/Card.vue'
-  import QuickView from '~/components/ui/QuickView.vue'
   import { useCart } from '~/composables/useCart'
   import { useToast } from '~/composables/useToast'
   import type { ProductItem } from '~/types/Product'
