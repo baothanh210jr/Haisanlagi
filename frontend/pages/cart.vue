@@ -1,17 +1,16 @@
 <template>
-  <div class="container relative">
+  <div class="container relative py-6 space-y-6">
     <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Giỏ hàng' }]" />
-    <div class="text-center">
+    <div class="text-center space-y-1">
       <h1 class="text-2xl font-semibold">Giỏ hàng của bạn</h1>
       <h4 class="text-sm font-medium">Có {{ items.length }} sản phẩm trong giỏ hàng</h4>
       <div class="w-14 h-1 bg-black mx-auto mt-3 mb-5" />
     </div>
-    <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-8">
         <div v-if="items.length === 0" class="empty">Chưa có sản phẩm nào trong giỏ.</div>
-        <div v-else>
+        <div v-else class="space-y-2">
           <div v-for="i in items" :key="i.id + ':' + (i.capacity ?? 'base')" class="row">
-            <!-- <img v-if="i.image" :src="i.image" :alt="i.name" /> -->
             <div class="overflow-hidden">
               <img
                 :src="formatImage(i, { width: 1200, height: 800 })"
@@ -20,14 +19,11 @@
               />
             </div>
             <div class="info">
-              <strong>{{ i.name }}</strong>
+              <strong class="block">{{ i.name }}</strong>
               <div>Giá: {{ formatPrice(i.price) }}</div>
-              <div v-if="i.capacity" class="text-sm text-gray-500">
-                Khối lượng: {{ i.capacity }}
-              </div>
+              <div v-if="i.capacity" class="text-sm text-gray-500">Khối lượng: {{ i.capacity }}</div>
             </div>
             <div class="qty">
-              <!-- Replace plain input with Counter component -->
               <Counter
                 :model-value="i.quantity"
                 @update:model-value="(val) => updateQuantity(i.id, val, i.capacity)"
@@ -38,13 +34,13 @@
             </div>
             <button class="remove" @click="remove(i.id, i.capacity)">Xóa</button>
           </div>
-          <div class="summary">
+          <div class="summary text-right">
             Tổng tiền: <strong>{{ formatPrice(totalPrice) }}</strong>
           </div>
         </div>
       </div>
-      <div class="col-span-4">
-        <div class="bg-white p-6 rounded-lg shadow-md sticky top-6">
+      <div class="lg:col-span-4">
+        <div class="bg-white p-6 rounded-lg shadow-md lg:sticky top-6">
           <h2 class="text-2xl font-bold mb-4">Tổng cộng</h2>
           <div class="flex justify-between items-center">
             <span>Tổng tiền</span>
@@ -67,6 +63,7 @@
   import Breadcrumb from '~/components/ui/Breadcrumb.vue'
   import Counter from '~/components/ui/Counter.vue'
   import { useCart } from '~/composables/useCart'
+  import { formatImage } from '~/utils/formatImage'
 
   const { items, totalPrice, updateQuantity, removeFromCart } = useCart()
 
@@ -80,7 +77,6 @@
 </script>
 
 <style scoped>
-  /* Dùng Tailwind container, bỏ CSS container cứng */
   .empty {
     padding: 24px;
     text-align: center;
@@ -107,11 +103,6 @@
     text-align: right;
     padding: 12px 0;
   }
-  .actions {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-end;
-  }
   .checkout.disabled {
     pointer-events: none;
     opacity: 0.6;
@@ -123,5 +114,37 @@
     padding: 8px;
     border-radius: 6px;
     cursor: pointer;
+  }
+  @media (max-width: 1023px) {
+    .row {
+      grid-template-columns: 80px 1fr;
+      grid-template-areas:
+        'image info'
+        'image qty'
+        'image subtotal'
+        'image remove';
+      align-items: start;
+    }
+    .row > div:nth-child(1) {
+      grid-area: image;
+    }
+    .row > div:nth-child(2) {
+      grid-area: info;
+    }
+    .row > div:nth-child(3) {
+      grid-area: qty;
+    }
+    .row > div:nth-child(4) {
+      grid-area: subtotal;
+      justify-self: end;
+    }
+    .row > button {
+      grid-area: remove;
+      width: fit-content;
+      justify-self: end;
+    }
+    .qty {
+      justify-self: start;
+    }
   }
 </style>

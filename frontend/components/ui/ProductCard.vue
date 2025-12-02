@@ -27,22 +27,15 @@
           </button>
         </div>
       </NuxtLink>
-      <!-- Hiển thị thông tin trên ảnh -->
-      <!-- <div class="absolute top-3 left-3">
-        <span class="inline-flex items-center rounded-md bg-primary/90 px-3 py-1 text-white text-xs shadow-md">
-          {{ formatPrice(product.price) }}
-        </span>
-      </div> -->
     </div>
-    <div class="p-4">
+    <div class="p-4 space-y-2">
       <h3 class="name font-semibold text-gray-900">
         {{ product.name }}
       </h3>
       <div class="flex items-center justify-between gap-4">
         <div>
           <div class="mt-3 flex items-center justify-between">
-            <!-- Price -->
-            <div class="">
+            <div>
               <span class="text-lg font-semibold text-gray-900">{{
                 formatPrice(product?.variants[0]?.price || 0)
               }}</span>
@@ -51,9 +44,8 @@
               >
             </div>
           </div>
-          <!-- Price Original -->
           <div class="mb-2">
-            <span class="font-medium text-gray-900 text-red-500 line-through">{{
+            <span class="font-medium text-red-500 line-through text-sm">{{
               formatPrice(product?.variants[0]?.original_price || 0)
             }}</span>
           </div>
@@ -88,7 +80,7 @@
       image: p.image,
       capacity: p.variants[0]?.label || '',
     })
-    success(`Đã thêm ${p.variants[0]?.label || ''}kg \"${p.name}\" vào giỏ hàng`, {
+    success(`Đã thêm ${p.variants[0]?.label || ''} \"${p.name}\" vào giỏ hàng`, {
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
       image: formatImage(p, { width: 120, height: 120 }),

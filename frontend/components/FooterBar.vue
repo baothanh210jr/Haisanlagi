@@ -1,6 +1,8 @@
 <template>
   <footer class="bg-gray-100">
-    <div class="container py-6 text-sm text-gray-600 flex items-center justify-between">
+    <div
+      class="container py-6 text-sm text-gray-600 flex flex-col sm:flex-row items-center justify-between gap-3"
+    >
       <div>© 2024 Hải Sản Lagi</div>
       <div class="flex items-center gap-3">
         <NuxtLink
@@ -21,5 +23,5 @@
 </template>
 
 <script setup lang="ts">
-// Footer đơn giản với địa chỉ và liên kết nhanh
+  // Footer đơn giản với đường dẫn nhanh
 </script>

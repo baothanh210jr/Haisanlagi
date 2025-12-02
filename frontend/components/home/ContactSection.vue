@@ -1,7 +1,7 @@
 <template>
   <section id="contact">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
         <div>
           <h2 class="text-3xl font-bold text-gray-900 mb-4">
             {{ contact?.title }}
@@ -11,7 +11,7 @@
           </p>
 
           <div class="space-y-6">
-            <div class="flex items-center">
+            <div class="flex items-start gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
@@ -19,14 +19,14 @@
                   <Icon icon="mdi:map-marker-outline" class="h-6 w-6" />
                 </div>
               </div>
-              <div class="ml-4">
+              <div>
                 <h3 class="text-lg font-bold text-gray-900">Địa chỉ cửa hàng</h3>
                 <p class="text-gray-600">
                   {{ contact?.address }}
                 </p>
               </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-start gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
@@ -34,14 +34,14 @@
                   <Icon icon="ic:baseline-phone" class="h-6 w-6" />
                 </div>
               </div>
-              <div class="ml-4">
+              <div>
                 <h3 class="text-lg font-bold text-gray-900">Hotline tư vấn</h3>
                 <p class="text-gray-600">
                   {{ contact?.hotline }}
                 </p>
               </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-start gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
@@ -49,7 +49,7 @@
                   <Icon icon="material-symbols:mail-outline" class="h-6 w-6" />
                 </div>
               </div>
-              <div class="ml-4">
+              <div>
                 <h3 class="text-lg font-bold text-gray-900">Email</h3>
                 <p class="text-gray-600">
                   {{ contact?.email }}
@@ -59,10 +59,10 @@
           </div>
         </div>
 
-        <div class="bg-gray-50 p-8 rounded-2xl shadow-lg">
-          <form @submit.prevent="handleSubmitContact">
-            <div class="mb-6">
-              <label class="block text-gray-700 font-bold mb-2" for="name"> Họ và tên </label>
+        <div class="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-lg">
+          <form class="space-y-6" @submit.prevent="handleSubmitContact">
+            <div class="space-y-2">
+              <label class="block text-gray-700 font-bold" for="name"> Họ và tên </label>
               <input
                 id="name"
                 v-model="formContact.name"
@@ -72,8 +72,8 @@
                 required
               />
             </div>
-            <div class="mb-6">
-              <label class="block text-gray-700 font-bold mb-2" for="phone"> Số điện thoại </label>
+            <div class="space-y-2">
+              <label class="block text-gray-700 font-bold" for="phone"> Số điện thoại </label>
               <input
                 id="phone"
                 v-model="formContact.phone"
@@ -83,8 +83,8 @@
                 required
               />
             </div>
-            <div class="mb-6">
-              <label class="block text-gray-700 font-bold mb-2" for="message">
+            <div class="space-y-2">
+              <label class="block text-gray-700 font-bold" for="message">
                 Nội dung cần tư vấn
               </label>
               <textarea

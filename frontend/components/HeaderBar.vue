@@ -1,15 +1,22 @@
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 bg-white backdrop-blur-sm shadow-sm"
+    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-3 md:py-4 bg-white backdrop-blur-sm shadow-sm"
     :class="[showHeader ? 'translate-y-0 ' : '-translate-y-full']"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
     <div class="container flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0">
+      <NuxtLink
+        to="/"
+        class="flex items-center gap-3 flex-shrink-0"
+      >
         <div class="w-auto h-10">
-          <img src="/logo-01.png" alt="Haisan Lagi" class="h-10 w-full object-cover scale-150" />
+          <img
+            src="/logo-01.png"
+            alt="Haisan Lagi"
+            class="h-10 w-full object-cover scale-150"
+          >
         </div>
       </NuxtLink>
 
@@ -21,29 +28,35 @@
             type="text"
             placeholder="Tìm kiếm..."
             class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-          <button
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-1 rounded"
           >
-            <Icon icon="mdi:magnify" width="18" height="18" />
+          <button
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-1 rounded"
+          >
+            <Icon
+              icon="mdi:magnify"
+              width="18"
+              height="18"
+            />
           </button>
         </div>
       </div>
       <div class="flex items-center gap-8">
         <!-- Hotline -->
-        <div class="flex items-center gap-4">
+        <div class="hidden sm:flex items-center gap-3">
           <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white">
-            <Icon icon="mdi-light:phone" width="20" height="20" />
+            <Icon
+              icon="mdi-light:phone"
+              width="20"
+              height="20"
+            />
           </div>
-          <div :class="[atTop ? 'text-black font-medium' : 'text-black font-medium']">
-            <span class="text-sm font-medium">Hỗ trợ khách hàng</span>
-            <div class="">
-              <span class="text-sm font-medium">0367497642</span>
-            </div>
+          <div class="text-black font-medium">
+            <span class="block text-xs text-gray-600">Hỗ trợ khách hàng</span>
+            <span class="text-sm font-semibold">0367 497 642</span>
           </div>
         </div>
         <!-- Cart -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 sm:gap-4">
           <NuxtLink
             :to="{
               name: 'cart',
@@ -53,15 +66,18 @@
             <div
               class="w-10 h-10 relative rounded-full bg-blue-600 text-white flex items-center justify-center"
             >
-              <Icon icon="famicons:cart-outline" width="25" height="25" />
+              <Icon
+                icon="famicons:cart-outline"
+                width="25"
+                height="25"
+              />
               <span
                 v-if="cartCount > 0"
                 class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
-                >{{ cartCount }}</span
-              >
+              >{{ cartCount }}</span>
             </div>
           </NuxtLink>
-          <span class="text-sm font-medium">Giỏ hàng</span>
+          <span class="text-sm font-medium hidden sm:inline">Giỏ hàng</span>
         </div>
       </div>
     </div>
@@ -165,7 +181,7 @@
       if (current) activeSection.value = current
       // Update category visibility based on hero section, with fallback near top on first load
       const nearTop = y <= (headerRef.value?.offsetHeight || 0) + 12
-      // Chỉ coi là đang trong hero khi đang ở trang Home
+      // Chỉ coi là đang ở trong hero khi đang ở trang Home
       heroInView.value = isHomeRoute.value && (activeSection.value === 'home' || nearTop)
       // Show header categories while hero is visible; hide outside hero until clicked
       showCategoryPanel.value = heroInView.value ? true : manualCategoryOpen.value

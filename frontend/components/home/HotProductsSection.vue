@@ -1,14 +1,14 @@
 <template>
   <section id="products">
-    <div class="container mx-auto px-6 md:px-12 lg:px-24 py-12">
-      <div class="flex items-center justify-between mb-2">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-2">
         <div>
           <h2 class="text-3xl font-bold">Sản phẩm bán chạy</h2>
           <h4 class="text-gray-600 pt-2">
             Tuyển chọn những loại hải sản được khách hàng yêu thích nhất trong tuần qua.
           </h4>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 justify-end">
           <button
             class="products-prev w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center transition-colors"
           >
@@ -43,11 +43,11 @@
       <ClientOnly>
         <Swiper
           :modules="[Navigation, Grid]"
-          :slides-per-view="2"
-          :slides-per-group="2"
-          :space-between="16"
+          :slides-per-view="1"
+          :slides-per-group="1"
+          :space-between="12"
           :loop="false"
-          :grid="{ rows: 2, fill: 'row' }"
+          :grid="{ rows: 1, fill: 'row' }"
           :navigation="{ nextEl: '.products-next', prevEl: '.products-prev' }"
           :breakpoints="breakpoints"
           class="products-swiper !py-10"

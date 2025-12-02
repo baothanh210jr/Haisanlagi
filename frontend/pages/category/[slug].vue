@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container py-6 space-y-6">
     <Breadcrumb
       :items="[
         { label: 'Trang chủ', to: '/' },
@@ -8,10 +8,12 @@
       ]"
     />
 
-    <div class="grid grid-cols-5 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
       <ProductCard v-for="p in products" :key="p.id" :product="p" />
     </div>
-    <Pagination :page="page" :page-count="pageCount" @update:page="(val) => (page = val)" />
+    <div class="flex justify-center">
+      <Pagination :page="page" :page-count="pageCount" @update:page="(val) => (page = val)" />
+    </div>
   </div>
 </template>
 
