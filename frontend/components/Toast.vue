@@ -1,22 +1,50 @@
 <template>
-  <div class="toast-container" aria-live="polite" aria-atomic="true">
-    <div v-for="t in toasts" :key="t.id" class="toast" :class="t.type">
-      <div class="content">
-        <img v-if="t.image" :src="t.image" alt="" class="thumb" />
-        <span class="message">{{ t.text }}</span>
-        <div class="flex items-center gap-8">
-          <NuxtLink
-            v-if="t.actionTo && t.actionText"
-            :to="t.actionTo"
-            class="bg-blue-600 text-white rounded text-sm px-2 py-1 hover:bg-blue-600 transition-colors text-center"
-          >
-            {{ t.actionText }}
-          </NuxtLink>
-          <button class="close" @click="remove(t.id)">
-            <Icon icon="mdi:close" width="20" height="20" />
-          </button>
+  <div
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <div
+      v-for="t in toasts"
+      :key="t.id"
+      class="toast shadow-lg"
+      :class="t.type"
+    >
+      <NuxtLink
+        :to="t.actionTo"
+      >
+        <div class="flex items-center gap-2 mb-2">
+          <Icon 
+            icon="lets-icons:check-fill"
+            width="30"
+            height="30"
+            class="text-green-600"
+          />
+          <span class="text-sm">Đã thêm vào giỏ hàng thành công!</span>
         </div>
-      </div>
+        <div class="content">
+          <img
+            v-if="t.image"
+            :src="t.image"
+            alt=""
+            class="thumb"
+          >
+        
+          <span class="message">{{ t.text }}</span>
+          <div class="flex items-center gap-8">
+            <button
+              class="close"
+              @click="remove(t.id)"
+            >
+              <Icon
+                icon="mdi:close"
+                width="20"
+                height="20"
+              />
+            </button>
+          </div>
+        </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -40,11 +68,11 @@
   .toast {
     position: relative;
     min-width: 280px;
-    max-width: 700px;
+    max-width: 400px;
     overflow: hidden;
-    border: 1px solid transparent;
-    padding: 18px 18px 18px 20px;
-    backdrop-filter: blur(12px);
+    padding: 12px 12px 12px 15px;
+    background-color: white;
+    border-radius: 4px;
   }
   .toast::before {
     content: '';
@@ -57,7 +85,6 @@
     border-color: rgba(30, 64, 175, 0.45);
   }
   .toast.success::before {
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 35%, #bfdbfe 100%);
   }
   .toast.error {
     border-color: rgba(239, 68, 68, 0.45);

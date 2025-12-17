@@ -16,12 +16,6 @@
         <div
           class="relative w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mb-2"
         >
-          <div class="text-xs absolute top-1 right-2">
-            🫧
-          </div>
-          <div class="text-xs absolute top-1/2 left-2">
-            🫧
-          </div>
           <span class="text-xl">{{ cat.icon }}</span>
         </div>
         <span class="text-sm font-medium line-clamp-2">

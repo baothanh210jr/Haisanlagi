@@ -1,10 +1,10 @@
 <template>
-  <div class="">
+  <div class="min-h-screen flex flex-col">
     <HeaderBar />
     <NuxtLayout>
       <NuxtPage :key="$route.fullPath" />
     </NuxtLayout>
-    <FooterBar />
+    <FooterBar class="mt-auto" />
   </div>
   <Toast />
 </template>

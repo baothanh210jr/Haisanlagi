@@ -1,27 +1,48 @@
 <template>
+  <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Giỏ hàng' }]" />
   <div class="container relative py-6 space-y-6">
-    <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Giỏ hàng' }]" />
-    <div class="text-center space-y-1">
-      <h1 class="text-2xl font-semibold">Giỏ hàng của bạn</h1>
-      <h4 class="text-sm font-medium">Có {{ items.length }} sản phẩm trong giỏ hàng</h4>
-      <div class="w-14 h-1 bg-black mx-auto mt-3 mb-5" />
+    <div class="text-center">
+      <h1 class="text-2xl font-semibold">
+        Giỏ hàng của bạn
+      </h1>
+      <h4 class="text-sm font-medium mt-1">
+        Có {{ items.length }} sản phẩm trong giỏ hàng
+      </h4>
+      <div class="w-14 h-1 bg-black mx-auto my-5" />
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-20">
       <div class="lg:col-span-8">
-        <div v-if="items.length === 0" class="empty">Chưa có sản phẩm nào trong giỏ.</div>
-        <div v-else class="space-y-2">
-          <div v-for="i in items" :key="i.id + ':' + (i.capacity ?? 'base')" class="row">
+        <div
+          v-if="items.length === 0"
+          class="empty"
+        >
+          Chưa có sản phẩm nào trong giỏ.
+        </div>
+        <div
+          v-else
+          class="space-y-2"
+        >
+          <div
+            v-for="i in items"
+            :key="i.id + ':' + (i.capacity ?? 'base')"
+            class="row"
+          >
             <div class="overflow-hidden">
               <img
                 :src="formatImage(i, { width: 1200, height: 800 })"
                 :alt="i.name"
                 class="transition-transform duration-200 ease-out hover:scale-105"
-              />
+              >
             </div>
             <div class="info">
               <strong class="block">{{ i.name }}</strong>
               <div>Giá: {{ formatPrice(i.price) }}</div>
-              <div v-if="i.capacity" class="text-sm text-gray-500">Khối lượng: {{ i.capacity }}</div>
+              <div
+                v-if="i.capacity"
+                class="text-sm text-gray-500"
+              >
+                Khối lượng: {{ i.capacity }}
+              </div>
             </div>
             <div class="qty">
               <Counter
@@ -32,7 +53,12 @@
             <div class="subtotal">
               {{ formatPrice(i.price * i.quantity) }}
             </div>
-            <button class="remove" @click="remove(i.id, i.capacity)">Xóa</button>
+            <button
+              class="remove"
+              @click="remove(i.id, i.capacity)"
+            >
+              Xóa
+            </button>
           </div>
           <div class="summary text-right">
             Tổng tiền: <strong>{{ formatPrice(totalPrice) }}</strong>
@@ -40,8 +66,13 @@
         </div>
       </div>
       <div class="lg:col-span-4">
-        <div class="bg-white p-6 rounded-lg shadow-md lg:sticky top-6">
-          <h2 class="text-2xl font-bold mb-4">Tổng cộng</h2>
+        <div
+          style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.12)"
+          class="bg-white p-6 rounded-lg lg:sticky top-6"
+        >
+          <h2 class="text-2xl font-bold mb-4">
+            Tổng cộng
+          </h2>
           <div class="flex justify-between items-center">
             <span>Tổng tiền</span>
             <span class="font-bold">{{ formatPrice(totalPrice) }}</span>

@@ -9,7 +9,7 @@
           <span
             class="inline-block py-1 px-3 xl:py-3 xl:px-5 rounded-full bg-yellow-500 text-white text-sm font-bold tracking-wide uppercase"
           >Tươi ngon - Sạch sẽ - An toàn</span>
-          <h1 class="text-4xl md:text-6xl 2xl:text-8xl font-bold text-white leading-tight">
+          <h1 class="text-2xl md:text-4xl 2xl:text-6xl font-bold text-white leading-tight">
             Hải Sản Tươi Sống <br>
             <span class="">Tươi Ngon Từ Nguồn</span>
           </h1>

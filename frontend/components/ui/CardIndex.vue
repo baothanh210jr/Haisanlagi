@@ -4,9 +4,9 @@
       name: 'product-slug',
       params: { slug: product.slug },
     }"
-    class="wrapper-card-index group flex h-full flex-col overflow-hidden border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+    class="wrapper-card-index group flex h-full flex-col overflow-hidden border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden rounded-t-lg"
   >
-    <div class="relative aspect-[4/3] max-h-[200px] overflow-hidden bg-gray-50">
+    <div class="relative aspect-[4/3] max-h-[200px] overflow-hidden bg-gray-50 ">
       <img
         :src="formatImage(product, { width: 640, height: 480 })"
         :alt="product.name"
@@ -14,7 +14,7 @@
       >
       <div
         v-if="product?.variants.length > 1"
-        class="absolute right-2 top-2 rounded-full bg-yellow-500 px-3 py-1 text-xs font-semibold text-white shadow"
+        class="absolute right-2 top-2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white shadow"
       >
         {{ product?.variants.length }} lựa chọn
       </div>
@@ -29,7 +29,7 @@
       </p>
 
       <h3
-        class="text-base font-semibold text-gray-900 transition-colors line-clamp-2 group-hover:text-primary"
+        class="text-lg font-bold text-gray-900 transition-colors line-clamp-2 "
       >
         {{ product.name }}
       </h3>
@@ -57,34 +57,29 @@
 
       <div class="mt-auto flex items-end justify-between border-t border-gray-100 pt-4">
         <div>
-          <div class="text-xs uppercase tracking-wide text-gray-400">
-            Giá từ
-          </div>
           <div class="flex items-baseline gap-2">
-            <span class="text-2xl font-bold text-gray-900">{{
+            <span class="text-2xl font-bold text-red-500 ">{{
               formatPrice(product?.variants[0]?.price || 0)
             }}</span>
             <span
               v-if="product?.variants[0]?.original_price"
-              class="text-sm font-semibold text-gray-400 line-through"
+              class="text-sm font-semibold text-gray-600 line-through"
             >
               {{ formatPrice(product?.variants[0]?.original_price || 0) }}
             </span>
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          class="border-blue-200 text-sm font-semibold text-blue-600 hover:bg-blue-50 gap-2"
+        <div
+          class="w-10 h-10 flex flex-col justify-center items-center rounded-full font-semibold text-white bg-yellow-500 gap-2"
           @click.stop.prevent="add(product)"
         >
           <Icon
             icon="mdi:cart-plus"
             class="h-4 w-4"
           />
-          <span>Thêm giỏ</span>
-        </Button>
+          <span class="block 2xl:hidden">Thêm giỏ</span>
+        </div>
       </div>
     </div>
   </NuxtLink>

@@ -11,46 +11,61 @@
           </p>
 
           <div class="space-y-6">
-            <div class="flex items-start gap-4">
+            <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
                 >
-                  <Icon icon="mdi:map-marker-outline" class="h-6 w-6" />
+                  <Icon
+                    icon="mdi:map-marker-outline"
+                    class="h-6 w-6"
+                  />
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-gray-900">Địa chỉ cửa hàng</h3>
+                <h3 class="text-lg font-bold text-gray-900">
+                  Địa chỉ cửa hàng
+                </h3>
                 <p class="text-gray-600">
                   {{ contact?.address }}
                 </p>
               </div>
             </div>
-            <div class="flex items-start gap-4">
+            <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
                 >
-                  <Icon icon="ic:baseline-phone" class="h-6 w-6" />
+                  <Icon
+                    icon="ic:baseline-phone"
+                    class="h-6 w-6"
+                  />
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-gray-900">Hotline tư vấn</h3>
+                <h3 class="text-lg font-bold text-gray-900">
+                  Hotline tư vấn
+                </h3>
                 <p class="text-gray-600">
                   {{ contact?.hotline }}
                 </p>
               </div>
             </div>
-            <div class="flex items-start gap-4">
+            <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
                   class="w-10 h-10 bg-blue-100 rounded-full text-blue-600 flex items-center justify-center"
                 >
-                  <Icon icon="material-symbols:mail-outline" class="h-6 w-6" />
+                  <Icon
+                    icon="material-symbols:mail-outline"
+                    class="h-6 w-6"
+                  />
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-gray-900">Email</h3>
+                <h3 class="text-lg font-bold text-gray-900">
+                  Email
+                </h3>
                 <p class="text-gray-600">
                   {{ contact?.email }}
                 </p>
@@ -60,9 +75,15 @@
         </div>
 
         <div class="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-lg">
-          <form class="space-y-6" @submit.prevent="handleSubmitContact">
+          <form
+            class="space-y-6"
+            @submit.prevent="handleSubmitContact"
+          >
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="name"> Họ và tên </label>
+              <label
+                class="block text-gray-700 font-bold"
+                for="name"
+              > Họ và tên </label>
               <input
                 id="name"
                 v-model="formContact.name"
@@ -70,10 +91,13 @@
                 type="text"
                 placeholder="Nhập họ và tên"
                 required
-              />
+              >
             </div>
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="phone"> Số điện thoại </label>
+              <label
+                class="block text-gray-700 font-bold"
+                for="phone"
+              > Số điện thoại </label>
               <input
                 id="phone"
                 v-model="formContact.phone"
@@ -81,10 +105,13 @@
                 type="tel"
                 placeholder="Nhập số điện thoại"
                 required
-              />
+              >
             </div>
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="message">
+              <label
+                class="block text-gray-700 font-bold"
+                for="message"
+              >
                 Nội dung cần tư vấn
               </label>
               <textarea
@@ -100,7 +127,11 @@
               :class="submitting ? '' : 'hover:bg-blue-700 hover:-translate-y-1'"
               :disabled="submitting"
             >
-              <Icon v-if="submitting" icon="line-md:loading-loop" class="h-5 w-5" />
+              <Icon
+                v-if="submitting"
+                icon="line-md:loading-loop"
+                class="h-5 w-5"
+              />
               <span>{{ submitting ? 'Đang gửi...' : 'Gửi Thông Tin' }}</span>
             </button>
           </form>
