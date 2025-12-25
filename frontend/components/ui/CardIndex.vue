@@ -2,11 +2,13 @@
   <NuxtLink
     :to="{
       name: 'product-slug',
-      params: { slug: product.slug },
+      params: { slug: product.slug || ' ' }
     }"
-    class="wrapper-card-index group flex h-full flex-col overflow-hidden border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden rounded-t-lg"
+    class="group flex h-full flex-col overflow-hidden border-2 border-gray-800 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden ring-default"
   >
-    <div class="relative aspect-[4/3] max-h-[200px] overflow-hidden bg-gray-50">
+    <div
+      class="wrapper-card-index-image relative aspect-[4/3] max-h-[200px] overflow-hidden bg-gray-50"
+    >
       <img
         :src="formatImage(product, { width: 640, height: 480 })"
         :alt="product.name"
@@ -20,121 +22,121 @@
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-3 px-4 pb-4 pt-3">
+    <div class="flex flex-1 flex-col gap-1 px-4 pb-4 pt-3">
       <p
         v-if="product?.category?.name"
-        class="text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-400"
+        class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white"
       >
         {{ product?.category?.name }}
       </p>
 
-      <h3 class="text-lg font-bold text-gray-900 transition-colors line-clamp-2">
+      <h3 class="text-lg font-bold text-white transition-colors line-clamp-2">
         {{ product.name }}
       </h3>
 
-      <p class="text-sm text-gray-500 line-clamp-2">
+      <p class="text-sm text-white line-clamp-2">
         {{ product.description }}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, odit ex quibusdam ea
+        culpa totam expedita fugit aliquam eum adipisci libero aperiam consectetur? Doloribus esse
+        odio earum in! Dicta, quisquam.
       </p>
 
-      <div class="flex items-center justify-between text-xs text-gray-500">
-        <div class="flex items-center gap-1 text-amber-500">
-          <Icon v-for="i in 5" :key="i" icon="mdi:star" class="h-3.5 w-3.5" />
-        </div>
-        <span v-if="product?.variants[0]?.label" class="font-medium text-gray-600">
-          {{ product?.variants[0]?.label }}
-        </span>
-      </div>
+      <div class="flex items-center justify-between text-xs text-gray-500" />
 
-      <div class="mt-auto flex items-end justify-between border-t border-gray-100 pt-4">
+      <div class="mt-auto flex items-end justify-between pt-4">
         <div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-2xl font-bold text-red-500">{{
-              formatPrice(product?.variants[0]?.price || 0)
-            }}</span>
-            <span
+          <div class="space-y-1">
+            <p class="text-2xl font-bold color-price">
+              {{ formatPrice(product?.variants[0]?.price || 0) }}
+            </p>
+            <p
               v-if="product?.variants[0]?.original_price"
-              class="text-sm font-semibold text-gray-600 line-through"
+              class="text-sm font-semibold text-[#64748b] line-through"
             >
               {{ formatPrice(product?.variants[0]?.original_price || 0) }}
-            </span>
+            </p>
           </div>
         </div>
-
-        <div
-          class="w-10 h-10 flex flex-col justify-center items-center rounded-full font-semibold text-white bg-yellow-500 gap-2"
-          @click.stop.prevent="add(product)"
-        >
-          <Icon icon="mdi:cart-plus" class="h-4 w-4" />
-        </div>
+      </div>
+      <div
+        class="w-full py-3 bg-gray-800 border rounded-lg text-white flex items-center justify-center gap-2 mt-4 cursor-pointer hover:bg-gray-800/70 transition hover:shadow-lg"
+        @click.stop.prevent="add(product)"
+      >
+        <Icon icon="mdi:cart-plus" class="h-6 w-6" />
+        <span class="font-semibold text-lg">Thêm vào giỏ</span>
       </div>
     </div>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue'
-  import type { ProductItem } from '~/types/Product'
-  import { formatImage } from '~/utils/formatImage'
-  import { formatPrice } from '~/utils/formatPrice'
-  const { addToCart } = useCart()
-  const { success } = useToast()
+import { Icon } from '@iconify/vue';
+import type { ProductItem } from '~/types/Product';
+import { formatImage } from '~/utils/formatImage';
+import { formatPrice } from '~/utils/formatPrice';
+const { addToCart } = useCart();
+const { success } = useToast();
 
-  defineProps({
-    product: {
-      type: Object as PropType<ProductItem>,
-      default: () => ({}),
-    },
-  })
-
-  function add(p: ProductItem) {
-    addToCart({
-      id: p.id,
-      name: p.name,
-      price: p.variants[0]?.price || 0,
-      image: p.image,
-      capacity: p.variants[0]?.label || '',
-    })
-    success(`Đã thêm ${p.variants[0]?.label || ''} \"${p.name}\" vào giỏ hàng`, {
-      actionText: 'Xem giỏ hàng',
-      actionTo: '/gio-hang',
-      image: formatImage(p, { width: 120, height: 120 }),
-    })
+defineProps({
+  product: {
+    type: Object as PropType<ProductItem>,
+    default: () => ({})
   }
+});
+
+function add(p: ProductItem) {
+  addToCart({
+    id: p.id,
+    name: p.name,
+    price: p.variants[0]?.price || 0,
+    image: p.image,
+    capacity: p.variants[0]?.label || ''
+  });
+  success(`${p.variants[0]?.label || ''} \"${p.name}\"`, {
+    actionText: 'Xem giỏ hàng',
+    actionTo: '/gio-hang',
+    image: formatImage(p, { width: 120, height: 120 }),
+    layout: 'drawer',
+    timeout: 0
+  });
+}
 </script>
 
 <style lang="scss">
-  .wrapper-card-index {
-    position: relative;
-    overflow: hidden;
-
+.wrapper-card-index-image {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-40deg);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+  }
+  &:hover {
     &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 30%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transform: skewX(-40deg);
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    &:hover {
-      &::before {
-        opacity: 1;
-        animation: shimmer 0.7s ease-out forwards;
-      }
+      opacity: 1;
+      animation: shimmer 0.7s ease-out forwards;
     }
   }
+}
 
-  @keyframes shimmer {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 120%;
-    }
+@keyframes shimmer {
+  0% {
+    left: -100%;
   }
+  100% {
+    left: 150%;
+  }
+}
+.color-price {
+  text-shadow: 0 0 12px rgba(255, 115, 0, 0.35);
+  background: linear-gradient(180deg, #ffd166, #ff7a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 </style>

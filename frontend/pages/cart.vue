@@ -2,45 +2,26 @@
   <Breadcrumb :items="[{ label: 'Trang chủ', to: '/' }, { label: 'Giỏ hàng' }]" />
   <div class="container relative py-6 space-y-6">
     <div class="text-center">
-      <h1 class="text-2xl font-semibold">
-        Giỏ hàng của bạn
-      </h1>
-      <h4 class="text-sm font-medium mt-1">
-        Có {{ items.length }} sản phẩm trong giỏ hàng
-      </h4>
+      <h1 class="text-2xl font-semibold">Giỏ hàng của bạn</h1>
+      <h4 class="text-sm font-medium mt-1">Có {{ items.length }} sản phẩm trong giỏ hàng</h4>
       <div class="w-14 h-1 bg-black mx-auto my-5" />
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-20">
       <div class="lg:col-span-8">
-        <div
-          v-if="items.length === 0"
-          class="empty"
-        >
-          Chưa có sản phẩm nào trong giỏ.
-        </div>
-        <div
-          v-else
-          class="space-y-2"
-        >
-          <div
-            v-for="i in items"
-            :key="i.id + ':' + (i.capacity ?? 'base')"
-            class="row"
-          >
+        <div v-if="items.length === 0" class="empty">Chưa có sản phẩm nào trong giỏ.</div>
+        <div v-else class="space-y-2 divide-y">
+          <div v-for="i in items" :key="i.id + ':' + (i.capacity ?? 'base')" class="row">
             <div class="overflow-hidden">
               <img
                 :src="formatImage(i, { width: 1200, height: 800 })"
                 :alt="i.name"
                 class="transition-transform duration-200 ease-out hover:scale-105"
-              >
+              />
             </div>
             <div class="info">
               <strong class="block">{{ i.name }}</strong>
               <div>Giá: {{ formatPrice(i.price) }}</div>
-              <div
-                v-if="i.capacity"
-                class="text-sm text-gray-500"
-              >
+              <div v-if="i.capacity" class="text-sm text-gray-500">
                 Khối lượng: {{ i.capacity }}
               </div>
             </div>
@@ -53,12 +34,11 @@
             <div class="subtotal">
               {{ formatPrice(i.price * i.quantity) }}
             </div>
-            <button
-              class="remove"
+            <Icon
+              icon="ion:trash-outline"
+              class="w-5 h-5 cursor-pointer"
               @click="remove(i.id, i.capacity)"
-            >
-              Xóa
-            </button>
+            />
           </div>
           <div class="summary text-right">
             Tổng tiền: <strong>{{ formatPrice(totalPrice) }}</strong>
@@ -70,9 +50,7 @@
           style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.12)"
           class="bg-white p-6 rounded-lg lg:sticky top-6"
         >
-          <h2 class="text-2xl font-bold mb-4">
-            Tổng cộng
-          </h2>
+          <h2 class="text-2xl font-bold mb-4">Tổng cộng</h2>
           <div class="flex justify-between items-center">
             <span>Tổng tiền</span>
             <span class="font-bold">{{ formatPrice(totalPrice) }}</span>
@@ -91,91 +69,91 @@
 </template>
 
 <script setup lang="ts">
-  import Breadcrumb from '~/components/ui/Breadcrumb.vue'
-  import Counter from '~/components/ui/Counter.vue'
-  import { useCart } from '~/composables/useCart'
-  import { formatImage } from '~/utils/formatImage'
+import { Icon } from '@iconify/vue';
+import Breadcrumb from '~/components/ui/Breadcrumb.vue';
+import Counter from '~/components/ui/Counter.vue';
+import { useCart } from '~/composables/useCart';
+import { formatImage } from '~/utils/formatImage';
 
-  const { items, totalPrice, updateQuantity, removeFromCart } = useCart()
+const { items, totalPrice, updateQuantity, removeFromCart } = useCart();
 
-  function remove(id: string | number, capacity?: string) {
-    removeFromCart(id, capacity)
-  }
+function remove(id: string | number, capacity?: string) {
+  removeFromCart(id, capacity);
+}
 
-  function formatPrice(n: number) {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n)
-  }
+function formatPrice(n: number) {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n);
+}
 </script>
 
 <style scoped>
-  .empty {
-    padding: 24px;
-    text-align: center;
-  }
+.empty {
+  padding: 24px;
+  text-align: center;
+}
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr 160px 140px 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.row img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.qty :deep(.inline-flex) {
+  width: 100%;
+  justify-content: center;
+}
+.summary {
+  text-align: right;
+  padding: 12px 0;
+}
+.checkout.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.remove {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+@media (max-width: 1023px) {
   .row {
-    display: grid;
-    grid-template-columns: 80px 1fr 160px 140px 80px;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    grid-template-columns: 80px 1fr;
+    grid-template-areas:
+      'image info'
+      'image qty'
+      'image subtotal'
+      'image remove';
+    align-items: start;
   }
-  .row img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
+  .row > div:nth-child(1) {
+    grid-area: image;
   }
-  .qty :deep(.inline-flex) {
-    width: 100%;
-    justify-content: center;
+  .row > div:nth-child(2) {
+    grid-area: info;
   }
-  .summary {
-    text-align: right;
-    padding: 12px 0;
+  .row > div:nth-child(3) {
+    grid-area: qty;
   }
-  .checkout.disabled {
-    pointer-events: none;
-    opacity: 0.6;
+  .row > div:nth-child(4) {
+    grid-area: subtotal;
+    justify-self: end;
   }
-  .remove {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
+  .row > button {
+    grid-area: remove;
+    width: fit-content;
+    justify-self: end;
   }
-  @media (max-width: 1023px) {
-    .row {
-      grid-template-columns: 80px 1fr;
-      grid-template-areas:
-        'image info'
-        'image qty'
-        'image subtotal'
-        'image remove';
-      align-items: start;
-    }
-    .row > div:nth-child(1) {
-      grid-area: image;
-    }
-    .row > div:nth-child(2) {
-      grid-area: info;
-    }
-    .row > div:nth-child(3) {
-      grid-area: qty;
-    }
-    .row > div:nth-child(4) {
-      grid-area: subtotal;
-      justify-self: end;
-    }
-    .row > button {
-      grid-area: remove;
-      width: fit-content;
-      justify-self: end;
-    }
-    .qty {
-      justify-self: start;
-    }
+  .qty {
+    justify-self: start;
   }
+}
 </style>

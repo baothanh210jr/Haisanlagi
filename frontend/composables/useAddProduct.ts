@@ -15,5 +15,7 @@ export function useAddProduct(p: ProductItem) {
   success(`Đã thêm ${selectedCapacity.value}kg \"${p.name}\" vào giỏ hàng`, {
     actionText: 'Xem giỏ hàng',
     actionTo: '/gio-hang',
+    layout: 'drawer',
+    timeout: 0,
   })
 }

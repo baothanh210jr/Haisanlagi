@@ -1,36 +1,38 @@
 <template>
   <section
     id="home"
-    class="bg-gradient-to-br from-[#053C5E] via-[#1B98E0] to-[#F2C14E33] relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-center overflow-hidden hero-screen"
+    class="bg-gradient-to-br from-[#053C5E] via-[#1B98E0] to-[#F2C14E33] relative pt-10 pb-12 md:pt-20 md:pb-24 flex items-start md:items-center overflow-hidden hero-screen relative"
   >
-    <div class="container relative z-10 ">
+    <div class="container relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-        <div class="space-y-5 md:space-y-6 text-center lg:text-left">
+        <div
+          class="flex flex-col gap-5 md:gap-0 items-center md:items-start space-y-5 md:space-y-6 lg:text-left"
+        >
           <span
-            class="inline-block py-1 px-3 xl:py-3 xl:px-5 rounded-full bg-yellow-500 text-white text-sm font-bold tracking-wide uppercase"
-          >Tươi ngon - Sạch sẽ - An toàn</span>
-          <h1 class="text-2xl md:text-4xl 2xl:text-6xl font-bold text-white leading-tight">
-            Hải Sản Tươi Sống <br>
+            class="inline-block p-2 rounded-full bg-primary text-secondary text-[10px] font-bold tracking-wide uppercase border border-secondary order-2 md:order-1 w-fit"
+            >Nhập từ cảng mỗi sáng – Không hàng đông lạnh</span
+          >
+          <h1
+            style="text-shadow: 0 0 12px rgba(248, 117, 10, 0.952)"
+            class="text-3xl md:text-5xl font-bold text-white !leading-[1.4] order-1 md:order-2"
+          >
+            Hải Sản Tươi Sống <br />
             <span class="">Tươi Ngon Từ Nguồn</span>
           </h1>
-          <p class="text-base sm:text-lg 2xl:text-2xl text-white/80 md:pr-10">
-            Chúng tôi cung cấp các loại hải sản cao cấp được đánh bắt trực tiếp từ biển, đảm bảo tươi
-            ngon và chất lượng tuyệt hảo cho bữa ăn gia đình bạn.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+
+          <div
+            class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-10 order-3"
+          >
             <a
               href="#products"
-              class="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-blue-600 text-white font-bold text-lg shadow-lg hover:bg-blue-700 transition transform group hover-move-down flex items-center justify-center"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-secondary text-white font-semibold text-lg shadow-lg hover:bg-secondary/90 transition transform group hover-move-down flex items-center justify-center rounded-lg"
             >
               Đặt Hàng Ngay
-              <Icon
-                icon="el:hand-down"
-                class="ml-2 h-5 w-5 move-down-icon"
-              />
+              <Icon icon="el:hand-down" class="ml-2 h-5 w-5 move-down-icon" />
             </a>
             <a
               href="#contact"
-              class="px-6 sm:px-8 py-3 sm:py-4 rounded-full bg-white text-blue-600 border-2 border-blue-600 font-bold text-lg hover:bg-blue-50 transition flex items-center justify-center"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-transparent text-white border-2 border-white font-semibold text-lg hover:bg-black/90 hover:text-white transition flex items-center justify-center rounded-lg"
             >
               Liên Hệ Tư Vấn
             </a>
@@ -38,48 +40,56 @@
         </div>
       </div>
     </div>
-    <div class="w-1/2 hidden lg:flex absolute right-0 top-0 h-full ">
+    <div class="flex absolute inset-0 h-full">
       <div class="flex-1 w-full h-full">
-        <img
-          src="/section-04.png"
-          alt="Seafood Platter"
-          class="relative w-full h-full object-center"
-        >
+        <picture>
+          <!-- Mobile -->
+          <source media="(max-width: 768px)" srcset="/assets/images/bg-hero-mobile.png" />
+
+          <!-- Desktop -->
+          <source media="(min-width: 769px)" srcset="/assets/images/bg-hero.png" />
+
+          <!-- Fallback -->
+          <img
+            src=""
+            alt="Hải sản tươi sống Làng Chài 86"
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </picture>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-  import { Icon } from '@iconify/vue'
+import { Icon } from '@iconify/vue';
 </script>
 
 <style>
+.hero-screen {
+  height: calc(85vh - var(--header-h));
+}
+
+.hover-move-down:hover .move-down-icon {
+  animation: move-down-return 0.7s ease-in infinite;
+}
+
+@keyframes move-down-return {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 2600px) {
   .hero-screen {
-    height: calc(85vh - var(--header-h));
+    height: auto;
   }
-
-  .hover-move-down:hover .move-down-icon {
-    animation: move-down-return 0.7s ease-in infinite;
-  }
-
-  @keyframes move-down-return {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(1rem);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  
-  @media (min-width: 2600px) {
-    .hero-screen {
-      height: auto
-    }
-  }
-
-  
+}
 </style>

@@ -74,6 +74,8 @@
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
       image: formatImage(p, { width: 120, height: 120 }),
+      layout: 'drawer',
+      timeout: 0,
     })
   }
 

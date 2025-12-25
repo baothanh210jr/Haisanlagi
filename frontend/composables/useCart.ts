@@ -39,7 +39,7 @@ export function useCart() {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(val))
         } catch {}
       },
-      { deep: true }
+      { deep: true },
     )
   }
 
@@ -48,7 +48,7 @@ export function useCart() {
 
   function addToCart(item: Omit<CartItem, 'quantity'>, quantity = 1) {
     const existing = items.value.find(
-      (i) => String(i.id) === String(item.id) && i.capacity === item.capacity
+      (i) => String(i.id) === String(item.id) && i.capacity === item.capacity,
     )
     if (existing) {
       existing.quantity += quantity
@@ -60,7 +60,7 @@ export function useCart() {
   function removeFromCart(id: CartItem['id'], capacity?: string) {
     const targetId = String(id)
     items.value = items.value.filter(
-      (i) => !(String(i.id) === targetId && (capacity === undefined || i.capacity === capacity))
+      (i) => !(String(i.id) === targetId && (capacity === undefined || i.capacity === capacity)),
     )
   }
 
@@ -68,7 +68,7 @@ export function useCart() {
     const q = Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1
     const targetId = String(id)
     const item = items.value.find(
-      (i) => String(i.id) === targetId && (capacity === undefined || i.capacity === capacity)
+      (i) => String(i.id) === targetId && (capacity === undefined || i.capacity === capacity),
     )
     if (item) item.quantity = q
   }

@@ -8,6 +8,7 @@ export type ToastItem = {
   actionTo?: string
   timeout?: number
   image?: string
+  layout?: 'toast' | 'drawer'
 }
 
 export function useToast() {
@@ -20,12 +21,17 @@ export function useToast() {
 
   function show(payload: Omit<ToastItem, 'id'>) {
     const id = Date.now() + Math.floor(Math.random() * 1000)
-    const item: ToastItem = { id, timeout: 3000, type: 'success', ...payload }
-    toasts.value.push(item)
-    const ms = item.timeout || 3000
-    if (ms > 0) {
-      setTimeout(() => remove(id), ms)
+    const item: ToastItem = {
+      id,
+      type: 'success',
+      layout: 'toast',
+      ...payload,
     }
+    if (item.layout && item.layout !== 'toast') {
+      toasts.value = toasts.value.filter((t) => t.layout !== item.layout)
+    }
+    toasts.value.push(item)
+
     return id
   }
 

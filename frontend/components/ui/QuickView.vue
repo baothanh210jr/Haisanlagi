@@ -128,6 +128,8 @@
       actionText: 'Xem giỏ hàng',
       actionTo: '/gio-hang',
       image: formatImage(p as any, { width: 120, height: 120 }),
+      layout: 'drawer',
+      timeout: 0,
     })
   }
 </script>

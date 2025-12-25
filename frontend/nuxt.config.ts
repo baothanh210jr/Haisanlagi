@@ -10,18 +10,18 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap',
-        },
-      ],
-    },
+          href: 'https://fonts.googleapis.com/css2?family=Questrial:wght@400;500;600;700&display=swap'
+        }
+      ]
+    }
   },
   shadcn: {
     prefix: '',
-    componentDir: './components/ui',
+    componentDir: './components/ui'
   },
   runtimeConfig: {
     public: {
-      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055',
-    },
-  },
-})
+      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055'
+    }
+  }
+});

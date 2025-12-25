@@ -5,6 +5,13 @@
 /* Theme tokens (simple palette). Replace with shadcn theme later */
 :root {
   --radius: 0.5rem;
+  --ui-color-neutral-400: oklch(70.4% 0.04 256.788);
+  --ui-color-neutral-800: oklch(27.9% 0.041 260.031);
+  --ui-text-dimmed: oklch(55.4% 0.046 257.417);
+  --ui-border: var(--ui-color-neutral-800);
+  --color-slate-950: oklch(12.9% 0.042 264.695);
+  --ui-color-neutral-500: var(--color-slate-500, oklch(70.4% 0.04 256.788));
+  --ui-color-neutral-900: var(--color-slate-950, oklch(12.9% 0.042 264.695));
 }
 html {
   scroll-behavior: smooth;
@@ -14,6 +21,10 @@ html {
   body {
     @apply font-sans antialiased;
   }
+}
+
+.background-primary {
+  background: linear-gradient(180deg, #071024, #071726);
 }
 
 .wrapper-card-index {
@@ -53,4 +64,8 @@ html {
   100% {
     left: 120%;
   }
+}
+
+.ring-default {
+  --tw-ring-color: var(--ui-border);
 }
