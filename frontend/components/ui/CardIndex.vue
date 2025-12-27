@@ -4,10 +4,10 @@
       name: 'product-slug',
       params: { slug: product.slug || ' ' }
     }"
-    class="group flex h-full flex-col overflow-hidden border border-theme bg-theme-surface shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden ring-default dark:border-gray-800 dark:bg-[rgba(9,16,31,0.9)]"
+    class="group !flex h-full flex-col overflow-hidden border border-theme bg-theme-surface shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden ring-default dark:border-gray-800 dark:bg-[rgba(9,16,31,0.9)]"
   >
     <div
-      class="wrapper-card-index-image relative aspect-[4/3] max-h-[200px] overflow-hidden bg-theme-subtle dark:bg-gray-900"
+      class="wrapper-card-index-image relative max-h-[200px] overflow-hidden bg-theme-subtle dark:bg-gray-900 w-full"
     >
       <img
         :src="formatImage(product, { width: 640, height: 480 })"
@@ -30,7 +30,9 @@
         {{ product?.category?.name }}
       </p>
 
-      <h3 class="text-lg font-bold text-theme-primary dark:text-white transition-colors line-clamp-2">
+      <h3
+        class="text-lg font-bold text-theme-primary dark:text-white transition-colors line-clamp-2"
+      >
         {{ product.name }}
       </h3>
 

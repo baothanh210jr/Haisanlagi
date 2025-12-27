@@ -54,9 +54,13 @@
           :breakpoints="breakpoints"
           class="products-swiper !py-10"
         >
-          <SwiperSlide v-for="(product, index) in hotProducts" :key="index" class="!h-auto">
-            <div class="h-full flex">
-              <ProductCard :product="product as any" class="flex-1" />
+          <SwiperSlide
+            v-for="(product, index) in hotProducts"
+            :key="index"
+            class="!h-auto justify-center"
+          >
+            <div class="h-full flex max-w-sm">
+              <ProductCard :product="product as any" />
             </div>
           </SwiperSlide>
         </Swiper>

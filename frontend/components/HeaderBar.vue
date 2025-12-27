@@ -8,8 +8,8 @@
   >
     <div class="container flex items-center justify-between gap-5">
       <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0">
-        <div class="w-auto h-10">
-          <img src="/logo-1.png" alt="Haisan Lagi" class="h-10 w-full object-cover" />
+        <div class="w-auto max-w-[150px] h-10">
+          <img src="/logo-1.png" alt="Haisan Lagi" class="h-10 w-full object-contain" />
         </div>
       </NuxtLink>
 
