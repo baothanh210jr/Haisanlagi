@@ -1,49 +1,53 @@
 <template>
   <header
     ref="headerRef"
-    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center py-4 text-white backdrop-blur shadow-md"
-    :class="[showHeader ? 'translate-y-0 ' : '-translate-y-full']"
+    class="sticky top-0 z-50 transition-all duration-300 ease-out will-change-transform flex items-center backdrop-blur shadow-md text-theme-primary dark:text-white border-b py-2"
+    :class="[showHeader ? 'translate-y-0' : '-translate-y-full', headerTone]"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <div class="container flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0 w-1/3">
+    <div class="container flex items-center justify-between gap-5">
+      <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0">
         <div class="w-auto h-10">
-          <img src="/logo.png" alt="Haisan Lagi" class="h-10 w-full object-cover scale-150" />
+          <img src="/logo-1.png" alt="Haisan Lagi" class="h-10 w-full object-cover" />
         </div>
       </NuxtLink>
 
       <!-- Search bar -->
-      <div class="flex-1 mx-4">
+      <div class="hidden lg:flex-1 mx-4">
         <button
           type="button"
-          class="w-full flex items-center gap-3 rounded-xl px-4 py-2 text-left shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary bg-white"
+          class="w-full flex items-center gap-3 rounded-xl px-4 py-2 text-left shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white/50 bg-theme-surface dark:bg-[rgba(9,16,31,0.9)] border border-primary dark:border-white/10 dark:border-theme"
           @click="openSearchPalette"
         >
-          <span class="flex h-8 w-8 items-center justify-center rounded-full text-primary">
+          <span
+            class="flex h-8 w-8 items-center justify-center rounded-full dark:bg-white/10 bg-black/50 text-white"
+          >
             <Icon icon="mdi:magnify" class="h-4 w-4" />
           </span>
           <div class="hidden lg:flex flex-1 flex-col">
-            <span class="text-sm text-primary">Tìm kiếm sản phẩm</span>
+            <span class="text-sm dark:text-white">Tìm kiếm sản phẩm</span>
             <span class="text-xs text-primary-200">Nhấn / hoặc Ctrl + K để mở nhanh</span>
           </div>
         </button>
       </div>
-      <div class="flex items-center justify-end gap-8 w-1/3">
+      <div
+        class="flex items-center justify-end gap-5 md:gap-8 w-fit px-5 py-1 md:py-2 border-2 border-secondary dark:bg-transparent rounded-[40px] dark:border-none"
+      >
         <!-- Hotline -->
-        <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-4">
           <div
-            class="w-8 h-8 flex items-center justify-center rounded-full bg-secondary text-white"
+            class="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-secondary dark:bg-white text-white dark:text-black"
           >
-            <Icon icon="mdi-light:phone" width="20" height="20" />
+            <Icon icon="material-symbols:call" class="text-sm md:text-xl" />
           </div>
           <div>
-            <span class="text-white text-md font-semibold">Hỗ trợ khách hàng</span>
-            <div class="">
-              <span class="text-white text-md font-semibold">0367497642</span>
-            </div>
+            <span class="text-primary dark:text-white text-sm md:text-md font-medium"
+              >0367497642</span
+            >
           </div>
         </div>
+
         <!-- Cart -->
         <div class="flex items-center gap-2 sm:gap-4">
           <NuxtLink
@@ -53,18 +57,19 @@
             class="relative"
           >
             <div
-              class="w-10 h-10 relative rounded-full bg-secondary text-white flex items-center justify-center"
+              class="w-8 h-8 relative rounded-full bg-primary text-white bg-secondary dark:bg-white dark:text-primary flex items-center justify-center"
             >
-              <Icon icon="famicons:cart-outline" width="25" height="25" />
+              <Icon icon="famicons:cart-outline" class="text-xl" />
               <span
                 v-if="cartCount > 0"
-                class="absolute -top-1 -right-1 bg-red-500 black text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center"
+                class="absolute -top-1.5 md:-top-1 -right-2.5 md:-right-1.5 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center text-white"
                 >{{ cartCount }}</span
               >
             </div>
           </NuxtLink>
-          <span class="text-md font-semibold hidden sm:inline">Giỏ hàng</span>
+          <span class="text-md font-medium hidden sm:inline">Giỏ hàng</span>
         </div>
+        <ThemeSwitch />
       </div>
     </div>
   </header>
@@ -73,14 +78,15 @@
     <transition name="fade">
       <div
         v-if="searchOpen"
-        class="fixed inset-0 z-[70] flex items-start justify-center px-4 pb-10 pt-24"
+        class="fixed inset-0 z-[70] bg-black/65 flex items-start justify-center px-4 pb-10 pt-24"
+        @click.self="closeSearchPalette"
       >
         <div
-          class="bg-black/65 w-full inset-0 absolute flex items-center justify-center"
+          class="w-full inset-0 transform translate-y-40 absolute flex items-start justify-center"
           @click.self="closeSearchPalette"
         >
           <div
-            class="w-full max-w-4xl overflow-hidden rounded-lg bg-primary shadow-2xl ring-1 ring-black/10"
+            class="w-full max-w-xl lg:max-w-4xl overflow-hidden rounded-lg bg-white text-primary shadow-2xl ring-1 ring-black/10"
           >
             <div class="flex items-center gap-3 border-b border-primary-200 px-6 py-4">
               <Icon icon="mdi:magnify" class="h-5 w-5 text-gray-400" />
@@ -89,7 +95,7 @@
                 v-model="searchQuery"
                 type="text"
                 placeholder="Tìm kiếm sản phẩm"
-                class="flex-1 border-none bg-transparent text-base text-white outline-none placeholder:text-gray-400"
+                class="flex-1 border-none bg-transparent text-base outline-none placeholder:text-gray-300"
                 @input="onSearchInput"
                 @keydown.enter.prevent="handleSearchEnter"
                 @keydown.escape.prevent="closeSearchPalette"
@@ -123,11 +129,11 @@
                 <p class="px-6 pt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">
                   Kết quả phù hợp
                 </p>
-                <ul class="divide-y px-2 pb-4 text-white">
+                <ul class="divide-y px-2 pb-4">
                   <li v-for="item in searchResults" :key="item.id">
                     <NuxtLink
                       :to="{ name: 'product-slug', params: { slug: item.slug || ' ' } }"
-                      class="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-white/5 text-white"
+                      class="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-white/5"
                       @click="handleResultClick"
                     >
                       <div class="h-14 w-20 flex-shrink-0 overflow-hidden">
@@ -138,7 +144,7 @@
                       </div>
 
                       <div class="flex-1">
-                        <p class="font-semibold text-white line-clamp-2">
+                        <p class="font-semibold line-clamp-2">
                           {{ item.name }}
                         </p>
                         <p class="text-sm text-gray-400 line-clamp-1">
@@ -147,7 +153,7 @@
                       </div>
 
                       <div class="text-right">
-                        <p class="text-sm font-semibold text-white">
+                        <p class="text-sm font-semibold">
                           {{ formatPrice(item?.variants?.[0]?.price || 0) }}
                         </p>
                       </div>
@@ -184,7 +190,7 @@
                       </div>
 
                       <div class="flex-1">
-                        <p class="font-semibold text-white line-clamp-2">
+                        <p class="font-semibold line-clamp-2">
                           {{ item.name }}
                         </p>
                         <p class="text-sm text-gray-400 line-clamp-1">
@@ -193,7 +199,7 @@
                       </div>
 
                       <div class="text-right">
-                        <p class="text-sm font-semibold text-white">
+                        <p class="text-sm font-semibold">
                           {{ formatPrice(item?.variants?.[0]?.price || 0) }}
                         </p>
                       </div>
@@ -215,6 +221,7 @@ import { Icon } from '@iconify/vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useCart } from '~/composables/useCart';
 import { useHotProducts } from '~/composables/useHotProducts';
+import { useTheme } from '~/composables/useTheme';
 import type { ProductItem } from '~/types/Product';
 
 const { hotProducts, ensureHotProducts } = useHotProducts();
@@ -230,9 +237,7 @@ const searchLoading = ref(false);
 const searchError = ref('');
 const searchInputRef = ref<HTMLInputElement | null>(null);
 const recentSearches = ref<string[]>([]);
-const popularSearches = computed(() => {
-  return hotProducts.value.slice(0, 10).map((p) => p.name);
-});
+
 const defaultProducts = computed<ProductItem[]>(() => {
   console.log('🚀 ~ HeaderBar.vue:240 ~ hotProducts:', hotProducts.value);
   return hotProducts.value.slice(0, 5);
@@ -247,6 +252,12 @@ const categoryBtnRef = ref<HTMLElement | null>(null);
 const catPanelWidth = ref<number>(280);
 
 const catBtnWidthState = useState<number>('category_btn_width', () => 280);
+const { theme } = useTheme();
+const headerTone = computed(() =>
+  theme.value === 'light'
+    ? 'bg-theme-surface border-theme'
+    : 'bg-[rgba(7,16,36,0.82)] border-white/10'
+);
 
 // Scroll-based header behavior
 const headerRef = ref<HTMLElement | null>(null);

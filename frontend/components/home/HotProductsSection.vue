@@ -3,8 +3,10 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-2">
         <div>
-          <h2 class="text-white text-3xl font-bold">Sản phẩm bán chạy</h2>
-          <h4 class="text-primary-200 pt-2">
+          <h2 class="text-theme-primary dark:text-white text-2xl md:text-4xl font-bold">
+            Sản phẩm bán chạy
+          </h2>
+          <h4 class="text-sm md:text-base text-theme-muted dark:text-primary-200 pt-2">
             Tuyển chọn những loại hải sản được khách hàng yêu thích nhất trong tuần qua.
           </h4>
         </div>

@@ -1,13 +1,21 @@
 <template>
   <section id="testimonials">
-    <div class="py-8 bg-white/90">
+    <div class="py-8 bg-theme-subtle dark:bg-white/5">
       <div class="container mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-primary mb-12">Ý kiến của khách hàng</h2>
+        <h2
+          class="text-2xl md:text-4xl font-bold text-center text-theme-primary dark:text-white mb-12"
+        >
+          Ý kiến của khách hàng
+        </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div v-for="item in feedback" :key="item.id" class="bg-secondary p-8 rounded-xl shadow">
+          <div
+            v-for="item in feedback"
+            :key="item.id"
+            class="bg-theme-surface p-8 rounded-xl shadow text-theme-primary"
+          >
             <div class="flex items-center mb-4">
               <div
-                class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold bg-primary rounded-full"
+                class="w-12 h-12 rounded-full flex items-center justify-center font-bold bg-primary rounded-full"
               >
                 <img
                   :src="
@@ -20,15 +28,15 @@
                 />
               </div>
               <div class="ml-4">
-                <h4 class="font-bold text-white text-lg">
+                <h4 class="font-bold text-lg">
                   {{ item.name }}
                 </h4>
-                <p class="text-white text-md">
+                <p class="text-md">
                   {{ item.job }}
                 </p>
               </div>
             </div>
-            <p class="text-white italic">
+            <p class="italic">
               {{ item.content }}
             </p>
           </div>

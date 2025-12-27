@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
         <div>
-          <h2 class="text-3xl font-bold text-white mb-4">
+          <h2 class="text-3xl font-bold text-theme-primary dark:text-white mb-4">
             {{ contact?.title }}
           </h2>
-          <p class="text-primary-200 mb-8">
+          <p class="text-theme-muted dark:text-primary-200 mb-8">
             {{ contact?.description }}
           </p>
 
@@ -20,8 +20,8 @@
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-white">Địa chỉ cửa hàng</h3>
-                <p class="text-primary-200">
+                <h3 class="text-lg font-bold text-theme-primary dark:text-white">Địa chỉ cửa hàng</h3>
+                <p class="text-theme-muted dark:text-primary-200">
                   {{ contact?.address }}
                 </p>
               </div>
@@ -35,8 +35,8 @@
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-white">Hotline tư vấn</h3>
-                <p class="text-primary-200">
+                <h3 class="text-lg font-bold text-theme-primary dark:text-white">Hotline tư vấn</h3>
+                <p class="text-theme-muted dark:text-primary-200">
                   {{ contact?.hotline }}
                 </p>
               </div>
@@ -50,8 +50,8 @@
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-white">Email</h3>
-                <p class="text-primary-200">
+                <h3 class="text-lg font-bold text-theme-primary dark:text-white">Email</h3>
+                <p class="text-theme-muted dark:text-primary-200">
                   {{ contact?.email }}
                 </p>
               </div>
@@ -59,38 +59,42 @@
           </div>
         </div>
 
-        <div class="bg-white/90 p-6 sm:p-8 rounded-2xl shadow-lg">
+        <div class="bg-theme-surface dark:bg-white/5 p-6 sm:p-8 rounded-2xl shadow-lg text-theme-primary dark:text-white border border-theme dark:border-white/10 backdrop-blur">
           <form class="space-y-6" @submit.prevent="handleSubmitContact">
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="name"> Họ và tên </label>
+              <label class="block text-theme-primary dark:text-white font-bold" for="name">
+                Họ và tên
+              </label>
               <input
                 id="name"
                 v-model="formContact.name"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary-500 focus:outline-none focus:ring-2 focus:ring-secondary transition"
+                class="w-full px-4 py-3 rounded-lg border border-theme bg-theme-surface text-theme-primary focus:border-secondary-500 focus:outline-none focus:ring-2 focus:ring-secondary transition dark:border-white/20 dark:bg-white/5 dark:text-white"
                 type="text"
                 placeholder="Nhập họ và tên"
                 required
               />
             </div>
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="phone"> Số điện thoại </label>
+              <label class="block text-theme-primary dark:text-white font-bold" for="phone">
+                Số điện thoại
+              </label>
               <input
                 id="phone"
                 v-model="formContact.phone"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary-500 focus:outline-none focus:ring-2 focus:ring-secondary transition"
+                class="w-full px-4 py-3 rounded-lg border border-theme bg-theme-surface text-theme-primary focus:border-secondary-500 focus:outline-none focus:ring-2 focus:ring-secondary transition dark:border-white/20 dark:bg-white/5 dark:text-white"
                 type="tel"
                 placeholder="Nhập số điện thoại"
                 required
               />
             </div>
             <div class="space-y-2">
-              <label class="block text-gray-700 font-bold" for="message">
+              <label class="block text-theme-primary dark:text-white font-bold" for="message">
                 Nội dung cần tư vấn
               </label>
               <textarea
                 id="message"
                 v-model="formContact.message"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary transition h-32"
+                class="w-full px-4 py-3 rounded-lg border border-theme bg-theme-surface text-theme-primary focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary transition h-32 dark:border-white/20 dark:bg-white/5 dark:text-white"
                 placeholder="Tôi muốn tư vấn về sản phẩm..."
               />
             </div>

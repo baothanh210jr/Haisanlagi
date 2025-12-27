@@ -2,7 +2,7 @@
   <div>
     <HomeHeroSection />
     <HomeCategories />
-    <HomeHotProductsSection class="mt-14" />
+    <HomeHotProductsSection class="mt-10 md:mt-14" />
     <HomeTestimonialsSection />
     <HomeContactSection />
   </div>
@@ -26,6 +26,5 @@ onMounted(() => {
   const headerEl = document.querySelector('header');
   const h =
     headerEl && headerEl instanceof HTMLElement ? headerEl.getBoundingClientRect().height : 0;
-  document.documentElement.style.setProperty('--header-h', `${h}px`);
 });
 </script>

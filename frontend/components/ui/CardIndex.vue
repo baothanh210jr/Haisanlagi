@@ -4,10 +4,10 @@
       name: 'product-slug',
       params: { slug: product.slug || ' ' }
     }"
-    class="group flex h-full flex-col overflow-hidden border-2 border-gray-800 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden ring-default"
+    class="group flex h-full flex-col overflow-hidden border border-theme bg-theme-surface shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl overflow-hidden ring-default dark:border-gray-800 dark:bg-[rgba(9,16,31,0.9)]"
   >
     <div
-      class="wrapper-card-index-image relative aspect-[4/3] max-h-[200px] overflow-hidden bg-gray-50"
+      class="wrapper-card-index-image relative aspect-[4/3] max-h-[200px] overflow-hidden bg-theme-subtle dark:bg-gray-900"
     >
       <img
         :src="formatImage(product, { width: 640, height: 480 })"
@@ -25,16 +25,16 @@
     <div class="flex flex-1 flex-col gap-1 px-4 pb-4 pt-3">
       <p
         v-if="product?.category?.name"
-        class="text-[10px] font-semibold uppercase tracking-[0.2em] text-white"
+        class="text-[10px] font-semibold uppercase tracking-[0.2em] text-theme-muted dark:text-white/70"
       >
         {{ product?.category?.name }}
       </p>
 
-      <h3 class="text-lg font-bold text-white transition-colors line-clamp-2">
+      <h3 class="text-lg font-bold text-theme-primary dark:text-white transition-colors line-clamp-2">
         {{ product.name }}
       </h3>
 
-      <p class="text-sm text-white line-clamp-2">
+      <p class="text-sm text-theme-muted dark:text-white line-clamp-2">
         {{ product.description }}
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, odit ex quibusdam ea
         culpa totam expedita fugit aliquam eum adipisci libero aperiam consectetur? Doloribus esse
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div
-        class="w-full py-3 bg-gray-800 border rounded-lg text-white flex items-center justify-center gap-2 mt-4 cursor-pointer hover:bg-gray-800/70 transition hover:shadow-lg"
+        class="w-full py-3 bg-primary text-white border border-theme rounded-lg flex items-center justify-center gap-2 mt-4 cursor-pointer transition hover:opacity-90 hover:shadow-lg dark:bg-gray-800"
         @click.stop.prevent="add(product)"
       >
         <Icon icon="mdi:cart-plus" class="h-6 w-6" />

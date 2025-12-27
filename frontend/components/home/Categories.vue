@@ -1,22 +1,23 @@
 <template>
   <section class="w-full">
-    <div class="panel px-10 pt-20 pb-28">
-      <div class="flex flex-col items-center justify-center mb-10">
-        <h1 class="text-4xl text-white px-3 py-1 font-semibold my-4 text-center">
-          Danh mục nổi bật
-        </h1>
-      </div>
+    <div class="bg-theme-subtle pt-5 md:pt-10">
+      <h1 class="text-2xl md:text-4xl text-theme-primary px-3 py-1 font-semibold mt-4 text-center">
+        Danh mục nổi bật
+      </h1>
 
-      <div ref="panelEl" class="relative overflow-hidden">
+      <div ref="panelEl" class="relative overflow-hidden pb-5 md:pb-20">
         <!-- Floating shared background -->
-        <div ref="hoverBg" class="hover-bg absolute top-0 left-0 pointer-events-none" />
+        <div
+          ref="hoverBg"
+          class="hidden md:block hover-bg absolute top-0 left-0 pointer-events-none"
+        />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 grid-sponsor relative z-10">
+        <div class="grid grid-cols-4 grid-sponsor relative z-10 gap-4 pt-10 px-5 md:px-10">
           <NuxtLink
             v-for="(cat, index) in categories"
             :key="cat.id"
             :to="{ name: 'category-slug', params: { slug: cat.slug } }"
-            class="card flex items-center gap-4 p-6 text-white transition-colors"
+            class="card flex flex-col md:flex-row items-center gap-2 md:gap-4 md:p-6 text-white transition-colors"
           >
             <div class="icon-frame">
               <div class="icon-grid" />
@@ -26,11 +27,11 @@
               </div>
             </div>
 
-            <div class="text-left text-lg">
+            <div class="text-center md:text-left text-xs md:text-lg text-theme-primary">
               <p class="font-medium">
                 {{ cat.name }}
               </p>
-              <div class="text-xs text-slate-400 mt-1">
+              <div class="hidden md:block text-xs text-slate-400 mt-1 text-theme-muted">
                 Tôm thẻ, tôm sú tươi sống, thịt chắc ngọt tự nhiên, đảm bảo chất lượng
               </div>
             </div>
@@ -43,7 +44,6 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue';
-import { formatImage } from '~/utils/formatImage';
 const { categories, ensureCategories } = useCategories(8);
 onMounted(() => {
   ensureCategories();
@@ -86,10 +86,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.panel {
-  background: linear-gradient(180deg, #071024, #071726);
-}
-
 .grid-sponsor > a {
   border-bottom: 1px solid rgba(148, 163, 184, 0.04);
   border-right: 1px solid rgba(148, 163, 184, 0.04);
