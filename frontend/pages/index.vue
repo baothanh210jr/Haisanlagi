@@ -31,7 +31,7 @@ useHead({
       property: 'og:description',
       content: 'Tôm, cá, mực, cua ghẹ tươi ngon từ nguồn. Giao nhanh trong ngày, chất lượng cao.'
     },
-    { property: 'og:image', content: 'code-space.site/thumbnail-social.jpg' },
+    { property: 'og:image', content: 'https://code-space.site/thumbnail-social.jpg' },
     { property: 'og:type', content: 'website' },
     { property: 'og:locale', content: 'vi_VN' },
     { property: 'og:url', content: 'https://code-space.site' }
