@@ -14,13 +14,15 @@
             <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
-                  class="w-10 h-10 bg-white/90 rounded-full text-secondary flex items-center justify-center"
+                  class="w-10 h-10 dark:bg-white/90 bg-secondary rounded-full dark:text-secondary text-white flex items-center justify-center"
                 >
                   <Icon icon="mdi:map-marker-outline" class="h-6 w-6" />
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-bold text-theme-primary dark:text-white">Địa chỉ cửa hàng</h3>
+                <h3 class="text-lg font-bold text-theme-primary dark:text-white">
+                  Địa chỉ cửa hàng
+                </h3>
                 <p class="text-theme-muted dark:text-primary-200">
                   {{ contact?.address }}
                 </p>
@@ -29,7 +31,7 @@
             <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
-                  class="w-10 h-10 bg-white/90 rounded-full text-secondary flex items-center justify-center"
+                  class="w-10 h-10 dark:bg-white/90 bg-secondary rounded-full dark:text-secondary text-white flex items-center justify-center"
                 >
                   <Icon icon="ic:baseline-phone" class="h-6 w-6" />
                 </div>
@@ -44,7 +46,7 @@
             <div class="flex items-center gap-4">
               <div class="flex-shrink-0">
                 <div
-                  class="w-10 h-10 bg-white/90 rounded-full text-secondary flex items-center justify-center"
+                  class="w-10 h-10 dark:bg-white/90 bg-secondary rounded-full dark:text-secondary text-white flex items-center justify-center"
                 >
                   <Icon icon="material-symbols:mail-outline" class="h-6 w-6" />
                 </div>
@@ -59,7 +61,9 @@
           </div>
         </div>
 
-        <div class="bg-theme-surface dark:bg-white/5 p-6 sm:p-8 rounded-2xl shadow-lg text-theme-primary dark:text-white border border-theme dark:border-white/10 backdrop-blur">
+        <div
+          class="bg-theme-surface dark:bg-white/5 p-6 sm:p-8 rounded-2xl shadow-lg text-theme-primary dark:text-white border border-theme dark:border-white/10 backdrop-blur"
+        >
           <form class="space-y-6" @submit.prevent="handleSubmitContact">
             <div class="space-y-2">
               <label class="block text-theme-primary dark:text-white font-bold" for="name">

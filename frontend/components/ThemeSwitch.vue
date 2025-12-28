@@ -146,7 +146,7 @@ const onToggleTheme = async () => {
 }
 
 .thumb-icon.sun {
-  color: #111827;
+  color: #f2c14e;
   transform: rotate(-8deg);
 }
 

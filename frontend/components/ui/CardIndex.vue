@@ -16,7 +16,7 @@
       />
       <div
         v-if="product?.variants.length > 1"
-        class="absolute right-2 top-2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white shadow"
+        class="absolute right-2 top-2 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow"
       >
         {{ product?.variants.length }} lựa chọn
       </div>
@@ -53,7 +53,7 @@
             </p>
             <p
               v-if="product?.variants[0]?.original_price"
-              class="text-sm font-semibold text-[#64748b] line-through"
+              class="text-sm font-semibold discount-price line-through"
             >
               {{ formatPrice(product?.variants[0]?.original_price || 0) }}
             </p>
@@ -134,11 +134,5 @@ function add(p: ProductItem) {
   100% {
     left: 150%;
   }
-}
-.color-price {
-  text-shadow: 0 0 12px rgba(255, 115, 0, 0.35);
-  background: linear-gradient(180deg, #ffd166, #ff7a00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 </style>

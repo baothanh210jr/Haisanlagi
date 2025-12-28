@@ -108,6 +108,7 @@ function closeDrawer() {
   flex-direction: column;
   gap: 10px;
   z-index: 1000;
+  align-items: flex-end;
 }
 
 .toast {
@@ -117,7 +118,8 @@ function closeDrawer() {
   overflow: hidden;
   padding: 15px;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
 }
 
 .toast::before {
@@ -129,11 +131,11 @@ function closeDrawer() {
 }
 
 .toast.success {
-  border-color: rgba(30, 64, 175, 0.45);
+  border-color: rgba(30, 64, 175, 0.15);
 }
 
 .toast.error {
-  border-color: rgba(239, 68, 68, 0.45);
+  border-color: rgba(239, 68, 68, 0.15);
 }
 
 .toast.error::before {
@@ -159,11 +161,9 @@ function closeDrawer() {
   position: absolute;
   top: 4px;
   right: 8px;
-  color: #dc2626;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
 }
 
 .drawer-root {
@@ -185,7 +185,7 @@ function closeDrawer() {
   z-index: 1;
   width: min(420px, 100%);
   height: 100%;
-  background: #fff;
+  background: var(--background-primary);
   padding: 32px 32px 40px;
   display: flex;
   flex-direction: column;
@@ -205,10 +205,10 @@ function closeDrawer() {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: var(--theme-text);
 }
 
 .drawer-desc {
-  color: #4b5563;
   font-size: 0.9rem;
 }
 
@@ -216,8 +216,8 @@ function closeDrawer() {
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
   display: flex;
   align-items: center;
@@ -234,7 +234,6 @@ function closeDrawer() {
 .drawer-item {
   display: flex;
   gap: 12px;
-  align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #e4e5e6;
 }
@@ -254,7 +253,7 @@ function closeDrawer() {
 
 .drawer-product {
   font-weight: 600;
-  color: #111827;
+  color: var(--theme-text);
 }
 
 .drawer-meta {
@@ -280,7 +279,7 @@ function closeDrawer() {
   width: 100%;
   text-align: center;
   padding: 14px;
-  border: 1px solid #0f172a;
+  border: 1px solid var(--theme-text);
   border-radius: 999px;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -317,5 +316,59 @@ function closeDrawer() {
 .drawer-fade-leave-to .drawer-panel {
   transform: translateX(100%);
   opacity: 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .toast-container {
+    top: auto;
+    bottom: 16px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .toast {
+    min-width: auto;
+    width: calc(100% - 32px);
+    max-width: 720px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+
+  .message {
+    font-size: 13px;
+  }
+
+  .drawer-root {
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .drawer-panel {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 12px 12px 0 0;
+    padding: 18px 18px 24px;
+    box-shadow: 0 -8px 24px rgba(2, 6, 23, 0.12);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: var(--background-primary);
+  }
+
+  .drawer-overlay {
+    backdrop-filter: blur(2px);
+  }
 }
 </style>

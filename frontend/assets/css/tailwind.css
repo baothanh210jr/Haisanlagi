@@ -10,6 +10,7 @@
   --theme-border: #e2e8f0;
   --theme-surface: #ffffff;
   --theme-subtle: #f8fafc;
+  --theme-secondary: #ff7700;
   --background-primary: linear-gradient(180deg, #f8fafc, #e8f0ff);
 
   --ui-color-neutral-400: #94a3b8;
@@ -19,6 +20,11 @@
   --color-slate-950: #0f172a;
   --ui-color-neutral-500: #475569;
   --ui-color-neutral-900: #0f172a;
+
+  /* shadow colors */
+  --shadow-glow: rgba(227, 72, 0, 0.2); /* slate-950 nhẹ */
+  --shadow-soft: rgba(227, 72, 0, 0.15);
+  --shadow-border: rgba(227, 72, 0, 0.05);
 }
 
 :root.dark {
@@ -36,6 +42,10 @@
   --color-slate-950: oklch(12.9% 0.042 264.695);
   --ui-color-neutral-500: var(--color-slate-500, oklch(70.4% 0.04 256.788));
   --ui-color-neutral-900: var(--color-slate-950);
+
+  --shadow-glow: rgba(148, 163, 184, 0.18); /* slate-400 */
+  --shadow-soft: rgba(148, 163, 184, 0.25);
+  --shadow-border: rgba(255, 255, 255, 0.06);
 }
 html {
   scroll-behavior: smooth;
@@ -114,4 +124,14 @@ html {
 
 .ring-default {
   --tw-ring-color: var(--ui-border);
+}
+
+.color-price {
+  text-shadow: 0 0 12px rgba(255, 115, 0, 0.35);
+  background: linear-gradient(180deg, #ffd166, #ff7a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.discount-price {
+  color: #64748b;
 }

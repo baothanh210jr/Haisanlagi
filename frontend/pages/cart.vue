@@ -4,7 +4,7 @@
     <div class="text-center">
       <h1 class="text-2xl font-semibold">Giỏ hàng của bạn</h1>
       <h4 class="text-sm font-medium mt-1">Có {{ items.length }} sản phẩm trong giỏ hàng</h4>
-      <div class="w-14 h-1 bg-black mx-auto my-5" />
+      <div style="background: var(--theme-text)" class="w-14 h-1 bg-black mx-auto my-5" />
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-20">
       <div class="lg:col-span-8">
@@ -18,10 +18,10 @@
                 class="transition-transform duration-200 ease-out hover:scale-105"
               />
             </div>
-            <div class="info">
-              <strong class="block">{{ i.name }}</strong>
+            <div class="info text-left">
+              <strong class="line-clamp-2">{{ i.name }}</strong>
               <div>Giá: {{ formatPrice(i.price) }}</div>
-              <div v-if="i.capacity" class="text-sm text-gray-500">
+              <div v-if="i.capacity" class="text-xs text-theme-muted">
                 Khối lượng: {{ i.capacity }}
               </div>
             </div>
@@ -34,11 +34,13 @@
             <div class="subtotal">
               {{ formatPrice(i.price * i.quantity) }}
             </div>
-            <Icon
-              icon="ion:trash-outline"
-              class="w-5 h-5 cursor-pointer"
-              @click="remove(i.id, i.capacity)"
-            />
+            <div class="ml-auto">
+              <Icon
+                icon="ion:trash-outline"
+                class="w-5 h-5 cursor-pointer"
+                @click="remove(i.id, i.capacity)"
+              />
+            </div>
           </div>
           <div class="summary text-right">
             Tổng tiền: <strong>{{ formatPrice(totalPrice) }}</strong>
@@ -105,7 +107,6 @@ function formatPrice(n: number) {
   border-radius: 8px;
 }
 .qty :deep(.inline-flex) {
-  width: 100%;
   justify-content: center;
 }
 .summary {

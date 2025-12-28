@@ -86,18 +86,19 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.grid-sponsor > a {
-  border-bottom: 1px solid rgba(148, 163, 184, 0.04);
-  border-right: 1px solid rgba(148, 163, 184, 0.04);
-}
-
 .hover-bg {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   backdrop-filter: blur(6px);
 
-  box-shadow:
+  /* box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 12px 30px rgba(0, 0, 0, 0.6);
+    0 12px 30px rgba(252, 252, 252, 0.2);
+  border-radius: 16px; */
+  box-shadow:
+    inset 0 0 0 1px var(--shadow-border),
+    0 12px 30px var(--shadow-soft),
+    0 0 40px var(--shadow-glow);
+  border-radius: 16px;
 
   transition:
     transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -161,6 +162,8 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   z-index: 2;
+  border-radius: 14px;
+  border: 1px solid #ff7700;
 }
 
 .icon-inner img {

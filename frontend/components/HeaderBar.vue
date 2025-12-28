@@ -49,26 +49,24 @@
         </div>
 
         <!-- Cart -->
-        <div class="flex items-center gap-2 sm:gap-4">
-          <NuxtLink
-            :to="{
-              name: 'cart'
-            }"
-            class="relative"
+        <NuxtLink
+          :to="{
+            name: 'cart'
+          }"
+          class="relative flex items-center gap-2 sm:gap-4"
+        >
+          <div
+            class="w-8 h-8 relative rounded-full bg-primary text-white bg-secondary dark:bg-white dark:text-primary flex items-center justify-center"
           >
-            <div
-              class="w-8 h-8 relative rounded-full bg-primary text-white bg-secondary dark:bg-white dark:text-primary flex items-center justify-center"
+            <Icon icon="famicons:cart-outline" class="text-xl" />
+            <span
+              v-if="cartCount > 0"
+              class="absolute -top-1.5 md:-top-1 -right-2.5 md:-right-1.5 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center text-white"
+              >{{ cartCount }}</span
             >
-              <Icon icon="famicons:cart-outline" class="text-xl" />
-              <span
-                v-if="cartCount > 0"
-                class="absolute -top-1.5 md:-top-1 -right-2.5 md:-right-1.5 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center text-white"
-                >{{ cartCount }}</span
-              >
-            </div>
-          </NuxtLink>
+          </div>
           <span class="text-md font-medium hidden sm:inline">Giỏ hàng</span>
-        </div>
+        </NuxtLink>
         <ThemeSwitch />
       </div>
     </div>
