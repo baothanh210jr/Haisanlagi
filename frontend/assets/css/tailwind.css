@@ -5,47 +5,47 @@
 /* Theme tokens (simple palette). Replace with shadcn theme later */
 :root {
   --radius: 0.5rem;
-  --theme-text: #0f172a;
-  --theme-muted: #475569;
-  --theme-border: #e2e8f0;
+  --theme-text: #0b1f33;
+  --theme-muted: #4b6b88;
+  --theme-border: #c7d7e5;
   --theme-surface: #ffffff;
-  --theme-subtle: #f8fafc;
-  --theme-secondary: #ff7700;
-  --background-primary: linear-gradient(180deg, #f8fafc, #e8f0ff);
+  --theme-subtle: #f2f8fc;
+  --theme-secondary: #ff7a59;
+  --background-primary: linear-gradient(180deg, #f2f8fc 0%, #d9f0ff 50%, #c3e3ff 100%);
 
-  --ui-color-neutral-400: #94a3b8;
-  --ui-color-neutral-800: #e2e8f0;
+  --ui-color-neutral-400: #8ca7c0;
+  --ui-color-neutral-800: #d6e4f0;
   --ui-text-dimmed: var(--theme-muted);
   --ui-border: var(--theme-border);
   --color-slate-950: #0f172a;
-  --ui-color-neutral-500: #475569;
-  --ui-color-neutral-900: #0f172a;
+  --ui-color-neutral-500: #4b6b88;
+  --ui-color-neutral-900: #0b1f33;
 
   /* shadow colors */
-  --shadow-glow: rgba(227, 72, 0, 0.2); /* slate-950 nhẹ */
-  --shadow-soft: rgba(227, 72, 0, 0.15);
-  --shadow-border: rgba(227, 72, 0, 0.05);
+  --shadow-glow: rgba(31, 166, 184, 0.2); /* sắc nước biển nhẹ */
+  --shadow-soft: rgba(31, 166, 184, 0.15);
+  --shadow-border: rgba(31, 166, 184, 0.06);
 }
 
 :root.dark {
-  --theme-text: #e2e8f0;
-  --theme-muted: #cbd5e1;
-  --theme-border: #1e293b;
-  --theme-surface: #0f172a;
-  --theme-subtle: #0b1224;
-  --background-primary: linear-gradient(180deg, #071024, #071726);
+  --theme-text: #dce9f5;
+  --theme-muted: #9fb6cd;
+  --theme-border: #12324b;
+  --theme-surface: #0a1c2d;
+  --theme-subtle: #071622;
+  --background-primary: linear-gradient(180deg, #03101d 0%, #0a1c2d 100%);
 
-  --ui-color-neutral-400: oklch(70.4% 0.04 256.788);
-  --ui-color-neutral-800: oklch(27.9% 0.041 260.031);
-  --ui-text-dimmed: oklch(55.4% 0.046 257.417);
-  --ui-border: var(--ui-color-neutral-800);
-  --color-slate-950: oklch(12.9% 0.042 264.695);
-  --ui-color-neutral-500: var(--color-slate-500, oklch(70.4% 0.04 256.788));
-  --ui-color-neutral-900: var(--color-slate-950);
+  --ui-color-neutral-400: #9fb6cd;
+  --ui-color-neutral-800: #16344c;
+  --ui-text-dimmed: #8aa5c0;
+  --ui-border: var(--theme-border);
+  --color-slate-950: #0b1f33;
+  --ui-color-neutral-500: #7da0bf;
+  --ui-color-neutral-900: #dce9f5;
 
-  --shadow-glow: rgba(148, 163, 184, 0.18); /* slate-400 */
-  --shadow-soft: rgba(148, 163, 184, 0.25);
-  --shadow-border: rgba(255, 255, 255, 0.06);
+  --shadow-glow: rgba(59, 201, 219, 0.2); /* ánh nước biển trong đêm */
+  --shadow-soft: rgba(59, 201, 219, 0.25);
+  --shadow-border: rgba(255, 255, 255, 0.08);
 }
 html {
   scroll-behavior: smooth;

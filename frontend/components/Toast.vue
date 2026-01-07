@@ -1,60 +1,103 @@
 <template>
   <Teleport to="body">
     <transition name="drawer-fade">
-      <div v-if="drawerToast" class="drawer-root">
-        <div class="drawer-overlay" @click="closeDrawer" />
+      <div
+        v-if="drawerToast"
+        class="drawer-root"
+      >
+        <div
+          class="drawer-overlay"
+          @click="closeDrawer"
+        />
 
         <div class="drawer-panel">
           <div class="drawer-header">
-            <div>
-              <p class="drawer-title">Đã thêm vào giỏ hàng của bạn</p>
-              <p class="drawer-desc">
-                {{ drawerToast.text }}
+            <div class="drawer-header-content">
+              <p class="drawer-title">
+                ĐÃ THÊM VÀO GIỎ HÀNG CỦA BẠN
               </p>
+              <Icon
+                icon="lets-icons:check-fill"
+                class="check-icon"
+              />
             </div>
-            <button class="close-btn" @click="closeDrawer">
-              <Icon icon="mdi:close" class="w-5 h-5" />
-            </button>
           </div>
-          <div v-if="cartItems.length" class="drawer-items">
-            <div v-for="item in cartItems" :key="`${item.id}-${item.capacity}`" class="drawer-item">
+          <div
+            v-if="cartItems.length"
+            class="drawer-items"
+          >
+            <div
+              v-for="item in cartItems"
+              :key="`${item.id}-${item.capacity}`"
+              class="drawer-item"
+            >
               <img
-                :src="formatImage(item, { width: 60, height: 60 }) || fallbackImage"
+                :src="formatImage(item, { width: 80, height: 80 }) || fallbackImage"
                 alt=""
                 class="drawer-thumb"
-              />
+              >
               <div class="drawer-info">
                 <p class="drawer-product">
                   {{ item.name }}
                 </p>
                 <p class="drawer-meta">
                   <span v-if="item.capacity">{{ item.capacity }}</span>
-                  <span v-if="item.capacity">·</span>
-                  x{{ item.quantity }}
+                  <span v-if="item.capacity"> x</span>
+                  <span v-if="!item.capacity">x</span>{{ item.quantity }}
                 </p>
               </div>
               <span class="drawer-price">{{ formatPrice(item.price * item.quantity) }}</span>
             </div>
           </div>
-          <div v-else class="drawer-empty">Chưa có sản phẩm nào trong giỏ hàng.</div>
+          <div
+            v-else
+            class="drawer-empty"
+          >
+            Chưa có sản phẩm nào trong giỏ hàng.
+          </div>
           <NuxtLink
             v-if="drawerToast.actionTo"
             :to="drawerToast.actionTo"
             class="drawer-link"
             @click="closeDrawer"
           >
-            {{ drawerToast.actionText || 'Đi tới giỏ hàng' }}
+            <Icon
+              icon="mdi:cart-plus"
+              class="cart-icon"
+            />
+            <span>{{ drawerToast.actionText || 'Xem giỏ hàng' }}</span>
+            <Icon
+              icon="mdi:sparkles"
+              class="sparkle-icon"
+            />
           </NuxtLink>
         </div>
       </div>
     </transition>
   </Teleport>
 
-  <div class="toast-container" aria-live="polite" aria-atomic="true">
-    <div v-for="t in regularToasts" :key="t.id" class="toast shadow-lg" :class="t.type">
-      <NuxtLink :to="t.actionTo" class="p-2">
+  <div
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <div
+      v-for="t in regularToasts"
+      :key="t.id"
+      class="toast shadow-lg"
+      :class="t.type"
+    >
+      <NuxtLink
+        :to="t.actionTo"
+        class="p-2"
+      >
         <div class="flex items-center gap-2 mb-2">
-          <Icon icon="lets-icons:check-fill" width="30" height="30" class="text-green-600" />
+          <Icon
+            icon="lets-icons:check-fill"
+            width="30"
+            height="30"
+            class="text-green-600"
+          />
           <span class="text-sm">Đã thêm vào giỏ hàng thành công!</span>
         </div>
         <div class="flex items-center gap-4 relative">
@@ -63,12 +106,19 @@
             :src="formatImage(t, { width: 48, height: 48 })"
             alt=""
             class="thumb"
-          />
+          >
           <span class="message">{{ t.text }}</span>
         </div>
       </NuxtLink>
-      <button class="cancel" @click="remove(t.id)">
-        <Icon icon="mdi:close" width="20" height="20" />
+      <button
+        class="cancel"
+        @click="remove(t.id)"
+      >
+        <Icon
+          icon="mdi:close"
+          width="20"
+          height="20"
+        />
       </button>
     </div>
   </div>
@@ -82,6 +132,7 @@ import { useCart } from '~/composables/useCart';
 
 import { useToast } from '~/composables/useToast';
 import { formatPrice } from '~/utils/formatPrice';
+import { formatImage } from '~/utils/formatImage';
 
 const fallbackImage = '/placeholder/fish.svg';
 const { toasts, remove } = useToast();
@@ -192,12 +243,26 @@ function closeDrawer() {
   gap: 24px;
   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
   transform: translateX(0);
+  border: 1px solid var(--theme-border);
+}
+
+:root.dark .drawer-panel {
+  background: linear-gradient(180deg, #0a1c2d 0%, #0f2a3f 50%, #0a1c2d 100%);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
 }
 
 .drawer-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  position: relative;
+}
+
+.drawer-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
 .drawer-title {
@@ -206,23 +271,42 @@ function closeDrawer() {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--theme-text);
+  margin: 0;
 }
 
-.drawer-desc {
-  font-size: 0.9rem;
+.check-icon {
+  width: 24px;
+  height: 24px;
+  color: #22c55e;
+  flex-shrink: 0;
 }
 
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #dc2626;
+  color: var(--theme-text);
+  background: rgba(0, 0, 0, 0.05);
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+:root.dark .close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+:root.dark .close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .drawer-items {
@@ -233,17 +317,19 @@ function closeDrawer() {
 
 .drawer-item {
   display: flex;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e4e5e6;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--theme-border);
+  align-items: center;
 }
 
 .drawer-thumb {
   width: 80px;
   height: 80px;
-  border-radius: 8px;
+  border-radius: 12px;
   object-fit: cover;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--theme-border);
+  flex-shrink: 0;
 }
 
 .drawer-info {
@@ -254,35 +340,78 @@ function closeDrawer() {
 .drawer-product {
   font-weight: 600;
   color: var(--theme-text);
+  font-size: 0.95rem;
+  margin-bottom: 4px;
 }
 
 .drawer-meta {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--theme-muted);
 }
 
 .drawer-price {
-  font-weight: 600;
-  color: #0f172a;
+  font-weight: 700;
+  font-size: 1rem;
+  background: linear-gradient(180deg, #ffd166, #ffb347);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 12px rgba(255, 179, 71, 0.3);
+  white-space: nowrap;
 }
 
 .drawer-empty {
   padding: 24px;
   text-align: center;
-  color: #94a3b8;
-  background: #f8fafc;
+  color: var(--theme-muted);
+  background: var(--theme-subtle);
   border-radius: 8px;
 }
 
 .drawer-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
   text-align: center;
-  padding: 14px;
-  border: 1px solid var(--theme-text);
-  border-radius: 999px;
+  padding: 16px;
+  background: linear-gradient(180deg, #ffd166, #ffb347);
+  border-radius: 12px;
   font-weight: 600;
   letter-spacing: 0.05em;
+  color: #0a1c2d;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(255, 179, 71, 0.3);
+}
+
+.drawer-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 179, 71, 0.4);
+}
+
+.cart-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sparkle-icon {
+  width: 18px;
+  height: 18px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
 }
 
 .drawer-fade-enter-active,
@@ -358,13 +487,25 @@ function closeDrawer() {
     max-width: 100%;
     height: auto;
     max-height: 80vh;
-    border-radius: 12px 12px 0 0;
-    padding: 18px 18px 24px;
-    box-shadow: 0 -8px 24px rgba(2, 6, 23, 0.12);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 20px 28px;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
     position: absolute;
     right: 0;
     bottom: 0;
-    background: var(--background-primary);
+  }
+
+  :root.dark .drawer-panel {
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .drawer-title {
+    font-size: 0.95rem;
+  }
+
+  .drawer-thumb {
+    width: 60px;
+    height: 60px;
   }
 
   .drawer-overlay {

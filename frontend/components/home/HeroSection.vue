@@ -9,16 +9,16 @@
         <div
           class="flex flex-col items-start justify-center space-y-5 md:space-y-6 lg:text-left h-full"
         >
-          <span
-            class="inline-block p-2 rounded-full bg-primary text-secondary text-[8px] md:text-[10px] font-bold tracking-wide uppercase border border-secondary w-fit"
-            >Nhập từ cảng mỗi sáng – Không hàng đông lạnh</span
-          >
           <h1
             style="text-shadow: 0 0 12px rgba(248, 117, 10, 0.952)"
             class="text-4xl md:text-5xl font-bold text-white !leading-[1.4] text-left md:text-left"
           >
             Hải Sản Tươi Sống <br />
-            <span class="">Tươi Ngon Từ Nguồn</span>
+
+            <span class="typing-text">
+              {{ displayText }}
+              <span class="typing-cursor" />
+            </span>
           </h1>
 
           <div class="flex gap-5 sm:gap-4 justify-center lg:justify-start pt-10 order-3">
@@ -63,6 +63,45 @@
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
+import { onMounted, ref } from 'vue';
+
+const texts = ['Tươi ngon từ nguồn', 'Cập bến mỗi ngày'];
+
+const displayText = ref('');
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+const typingSpeed = 70;
+const deletingSpeed = 40;
+const holdAfterType = 3000;
+
+function loop() {
+  const current = texts[textIndex] ?? '';
+
+  if (!isDeleting) {
+    displayText.value = current.slice(0, charIndex + 1);
+    charIndex++;
+
+    if (charIndex === current.length) {
+      setTimeout(() => {
+        isDeleting = true;
+      }, holdAfterType);
+    }
+  } else {
+    displayText.value = current.slice(0, charIndex - 1);
+    charIndex--;
+
+    if (charIndex === 0) {
+      isDeleting = false;
+      textIndex = (textIndex + 1) % texts.length;
+    }
+  }
+
+  setTimeout(loop, isDeleting ? deletingSpeed : typingSpeed);
+}
+
+onMounted(loop);
 </script>
 
 <style>
@@ -85,6 +124,27 @@ import { Icon } from '@iconify/vue';
 @media (min-width: 2200px) {
   .hero-screen {
     height: auto;
+  }
+}
+.typing-text {
+  display: inline;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #fff;
+  margin-left: 4px;
+  vertical-align: -0.1em; /* KEY: kéo cursor xuống dòng cuối */
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }
 </style>
