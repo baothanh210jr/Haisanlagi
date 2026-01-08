@@ -11,10 +11,10 @@
           </p>
 
           <div class="space-y-6">
-            <div class="flex items-center gap-4">
+            <div class="flex items-start gap-4">
               <div class="flex-shrink-0">
                 <div
-                  class="w-10 h-10 dark:bg-white/90 bg-secondary rounded-full dark:text-secondary text-white flex items-center justify-center"
+                  class="w-10 h-10 dark:bg-white/90 bg-secondary rounded-full dark:text-secondary text-white flex items-center justify-center mt-1"
                 >
                   <Icon icon="mdi:map-marker-outline" class="h-6 w-6" />
                 </div>
