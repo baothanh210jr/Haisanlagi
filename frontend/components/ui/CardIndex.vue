@@ -10,13 +10,15 @@
       class="wrapper-card-index-image relative max-h-[200px] overflow-hidden bg-theme-subtle dark:bg-gray-900 w-full rounded-t-xl"
     >
       <!-- Image với overlay gradient -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-      
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+      />
+
       <img
         :src="formatImage(product, { width: 640, height: 480 })"
         :alt="product.name"
         class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-      >
+      />
 
       <!-- Badge giảm giá -->
       <div
@@ -40,8 +42,8 @@
         :class="{ 'opacity-100 bg-red-500': isFavorite }"
         @click.stop.prevent="toggleFavorite"
       >
-        <Icon 
-          :icon="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'" 
+        <Icon
+          :icon="isFavorite ? 'mdi:heart' : 'mdi:heart-outline'"
           class="h-5 w-5 transition-colors"
           :class="isFavorite ? 'text-white' : 'text-gray-700'"
         />
@@ -59,7 +61,7 @@
 
       <!-- Product name -->
       <h3
-        class="text-lg font-bold text-theme-primary dark:text-white transition-colors line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400"
+        class="text-sm md:text-lg font-bold text-theme-primary dark:text-white transition-colors line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400"
       >
         {{ product.name }}
       </h3>
@@ -73,19 +75,19 @@
       <div class="mt-auto flex items-end justify-between pt-2">
         <div class="flex flex-col">
           <div class="flex items-baseline gap-2">
-            <p class="price-gradient text-2xl font-bold">
+            <p class="text-xs price-gradient md:text-2xl font-bold">
               {{ formatPrice(product?.variants[0]?.price || 0) }}
             </p>
-            <span 
-              v-if="product?.variants[0]?.label" 
-              class="text-xs text-gray-500 dark:text-gray-400"
+            <span
+              v-if="product?.variants[0]?.label"
+              class="text-[8px] sm:text-sm text-gray-500 dark:text-gray-400"
             >
               / {{ product?.variants[0]?.label }}
             </span>
           </div>
           <p
             v-if="product?.variants[0]?.original_price"
-            class="text-sm font-medium text-gray-400 dark:text-gray-500 line-through mt-0.5"
+            class="text-xs sm:text-sm font-medium text-gray-400 dark:text-gray-500 line-through mt-0.5"
           >
             {{ formatPrice(product?.variants[0]?.original_price || 0) }}
           </p>
@@ -94,14 +96,17 @@
 
       <!-- Add to cart button với style giống Toast -->
       <button
-        class="add-to-cart-btn w-full py-4 rounded-xl flex items-center justify-center gap-2 mt-4 cursor-pointer relative overflow-hidden"
+        class="add-to-cart-btn w-full py-4 rounded-xl mt-4 cursor-pointer relative overflow-hidden"
         @click.stop.prevent="add(product)"
       >
-        <Icon
-          icon="mdi:cart-plus"
-          class="cart-icon-btn"
-        />
-        <span class="font-semibold text-base relative z-10">Thêm vào giỏ</span>
+        <div class="hidden sm:flex items-center justify-center gap-2">
+          <Icon icon="mdi:cart-plus" class="cart-icon-btn" />
+          <span class="font-semibold relative z-10">Thêm vào giỏ</span>
+        </div>
+        <div class="flex sm:hidden items-center justify-center gap-2">
+          <Icon icon="mdi:cart-plus" class="" />
+          <span class="text-[10px] font-semibold relative z-10 uppercase">Chọn mua</span>
+        </div>
       </button>
     </div>
   </NuxtLink>
@@ -126,7 +131,7 @@ const props = defineProps({
 const discountPercentage = computed(() => {
   const originalPrice = props.product?.variants[0]?.original_price || 0;
   const currentPrice = props.product?.variants[0]?.price || 0;
-  
+
   if (originalPrice > 0 && originalPrice > currentPrice) {
     return Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
   }
@@ -235,7 +240,8 @@ function add(p: ProductItem) {
 }
 
 @keyframes sparkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }

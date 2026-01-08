@@ -45,8 +45,8 @@
       <ClientOnly>
         <Swiper
           :modules="[Navigation, Grid]"
-          :slides-per-view="1"
-          :slides-per-group="1"
+          :slides-per-view="2"
+          :slides-per-group="2"
           :space-between="12"
           :loop="false"
           :grid="{ rows: 1, fill: 'row' }"
