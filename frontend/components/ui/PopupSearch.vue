@@ -5,7 +5,7 @@
     @click.self="closeSearchPalette"
   >
     <div
-      class="w-full inset-0 transform translate-y-40 absolute flex items-start justify-center"
+      class="w-full inset-0 transform translate-y-40 absolute flex items-start justify-center container"
       @click.self="closeSearchPalette"
     >
       <div

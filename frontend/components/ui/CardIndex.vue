@@ -102,10 +102,6 @@
           class="cart-icon-btn"
         />
         <span class="font-semibold text-base relative z-10">Thêm vào giỏ</span>
-        <Icon
-          icon="mdi:sparkles"
-          class="sparkle-icon-btn"
-        />
       </button>
     </div>
   </NuxtLink>

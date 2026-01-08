@@ -20,8 +20,8 @@
         </div>
       </NuxtLink>
 
-      <!-- Search bar -->
-      <div class="flex flex-1 mx-4">
+      <!-- Search bar - chỉ hiển thị trên desktop -->
+      <div class="hidden lg:flex flex-1 mx-4">
         <button
           type="button"
           class="w-full flex items-center gap-3 rounded-xl px-4 py-2 text-left shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white/50 bg-theme-surface dark:bg-[rgba(9,16,31,0.9)] border border-primary dark:border-white/10 dark:border-theme"
@@ -35,7 +35,7 @@
               class="h-4 w-4"
             />
           </span>
-          <div class="hidden lg:flex flex-1 flex-col">
+          <div class="flex flex-1 flex-col">
             <span class="text-sm dark:text-white">Tìm kiếm sản phẩm</span>
             <span class="text-xs text-primary-200">Nhấn / hoặc Ctrl + K để mở nhanh</span>
           </div>
@@ -44,6 +44,18 @@
       <div
         class="flex items-center justify-end gap-5 md:gap-8 w-fit px-5 py-1 md:py-2 border-2 border-secondary dark:bg-transparent rounded-[40px] dark:border-none"
       >
+        <!-- Search icon - chỉ hiển thị trên mobile -->
+        <button
+          type="button"
+          class="lg:hidden flex items-center justify-center rounded-full bg-secondary dark:bg-white text-white dark:text-black w-8 h-8 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white/50"
+          @click="openSearchPalette"
+        >
+          <Icon
+            icon="mdi:magnify"
+            class="text-xl"
+          />
+        </button>
+
         <!-- Hotline -->
         <div class="hidden md:flex items-center gap-4">
           <div

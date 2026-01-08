@@ -5,7 +5,10 @@
         Danh mục nổi bật
       </h1>
 
-      <div ref="panelEl" class="relative overflow-hidden pb-5 md:pb-20">
+      <div
+        ref="panelEl"
+        class="relative overflow-hidden pb-5 md:pb-20"
+      >
         <!-- Floating shared background -->
         <div
           ref="hoverBg"
@@ -14,7 +17,7 @@
 
         <div class="grid grid-cols-4 grid-sponsor relative z-10 gap-4 pt-10 px-5 md:px-10">
           <NuxtLink
-            v-for="(cat, index) in categories"
+            v-for="cat in categories"
             :key="cat.id"
             :to="{ name: 'category-slug', params: { slug: cat.slug } }"
             class="card flex flex-col md:flex-row items-center gap-2 md:gap-4 md:p-6 text-white transition-colors"
@@ -23,7 +26,7 @@
               <div class="icon-grid" />
 
               <div class="icon-inner">
-                <img :src="formatImage(cat, { width: 200, height: 200 })" />
+                <img :src="formatImage(cat, { width: 200, height: 200 })">
               </div>
             </div>
 
@@ -55,10 +58,10 @@ const hoverBg = ref<HTMLElement | null>(null);
 onMounted(async () => {
   await ensureCategories();
   await nextTick();
-  if (!panelEl.value) return;
+  if (!panelEl.value || !hoverBg.value) return;
 
-  const panel = panelEl.value!;
-  const bg = hoverBg.value!;
+  const panel = panelEl.value;
+  const bg = hoverBg.value;
   const cards = panel.querySelectorAll<HTMLElement>('.card');
 
   if (!cards.length) return;
@@ -77,7 +80,9 @@ onMounted(async () => {
   };
 
   // Card đầu tiên active sẵn
-  moveTo(cards[0]);
+  if (cards[0]) {
+    moveTo(cards[0]);
+  }
 
   cards.forEach((card) => {
     card.addEventListener('mouseenter', () => moveTo(card));
@@ -89,21 +94,20 @@ onMounted(async () => {
 .hover-bg {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   backdrop-filter: blur(6px);
-
-  /* box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 12px 30px rgba(252, 252, 252, 0.2);
-  border-radius: 16px; */
-  box-shadow:
-    inset 0 0 0 1px var(--shadow-border),
-    0 12px 30px var(--shadow-soft),
-    0 0 40px var(--shadow-glow);
   border-radius: 16px;
 
   transition:
     transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
     width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
     height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Shadow chỉ hiển thị trên dark theme */
+:root.dark .hover-bg {
+  box-shadow:
+    inset 0 0 0 1px var(--shadow-border),
+    0 12px 30px var(--shadow-soft),
+    0 0 40px var(--shadow-glow);
 }
 
 .icon-frame {
@@ -115,7 +119,10 @@ onMounted(async () => {
   flex-shrink: 0;
 
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+}
 
+/* Shadow chỉ hiển thị trên dark theme */
+:root.dark .icon-frame {
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     0 10px 25px rgba(0, 0, 0, 0.5);
@@ -174,16 +181,21 @@ onMounted(async () => {
 }
 
 .card:hover .icon-frame {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+}
+
+/* Hover shadow chỉ hiển thị trên dark theme và nhẹ hơn */
+:root.dark .card:hover .icon-frame {
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
-    0 12px 35px rgba(0, 0, 0, 0.8);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .card:hover .icon-grid {
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
 .card:hover .icon-inner img {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 </style>

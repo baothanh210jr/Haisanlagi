@@ -104,7 +104,7 @@
             </div>
             <button
               type="submit"
-              class="w-full bg-primary text-white font-bold py-3 rounded-lg transition duration-300 shadow-lg transform flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              class="w-full bg-secondary dark:bg-white dark:text-black text-white font-bold py-3 rounded-lg transition duration-300 shadow-lg transform flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               :class="submitting ? '' : 'hover:bg-secondary-700 hover:-translate-y-1'"
               :disabled="submitting"
             >
