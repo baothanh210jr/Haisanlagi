@@ -11,7 +11,7 @@
           <div
             v-for="item in feedback"
             :key="item.id"
-            class="bg-theme-surface p-8 rounded-xl shadow text-theme-primary"
+            class="bg-theme-surface p-8 rounded-xl shadow text-theme-primary border border-theme-border dark:border-gray-800"
           >
             <div class="flex items-center mb-4">
               <div

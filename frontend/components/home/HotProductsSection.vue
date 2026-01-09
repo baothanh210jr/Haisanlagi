@@ -98,13 +98,13 @@ const breakpoints = {
     slidesPerView: 4,
     slidesPerGroup: 3,
     grid: { rows: 2, fill: 'row' as const },
-    spaceBetween: 16
+    spaceBetween: 24
   },
   2000: {
     slidesPerView: 4,
     slidesPerGroup: 4,
     grid: { rows: 2, fill: 'row' as const },
-    spaceBetween: 20
+    spaceBetween: 24
   }
 };
 

@@ -17,16 +17,16 @@ export function useHotProducts(limit = 12, ttlMs = 300_000) {
       const json = (await res.json()) as { data?: any[] };
 
       const list = json?.data?.[0]?.products || [];
-      console.log('🚀 ~ useHotProducts.ts:20 ~ ensureHotProducts ~ list:', list);
       const items = (list || []).map((item: { products_id: ProductItem }) => {
+        console.log('🚀 ~ useHotProducts.ts:20 ~ ensureHotProducts ~ list:', list);
         const product = item?.products_id || {};
         const name = product?.name;
         const slug = product?.slug;
         const price = Number(product?.price ?? 0) || 0;
-        const salePrice = Number(product?.variants[0]?.original_price ?? price) || price;
+        const salePrice = Number(product?.variants?.[0]?.original_price ?? price) || price;
         const categoryId = product?.category;
         const image = product.image;
-        const variants = product.variants || [];
+        const variants = product?.variants || [];
 
         return {
           id: product?.id ?? slug ?? name,

@@ -7,16 +7,9 @@
     @mouseleave="onMouseLeave"
   >
     <div class="container flex items-center justify-between gap-5">
-      <NuxtLink
-        to="/"
-        class="flex items-center gap-3 flex-shrink-0"
-      >
+      <NuxtLink to="/" class="flex items-center gap-3 flex-shrink-0">
         <div class="w-auto max-w-[150px] h-10">
-          <img
-            src="/logo-1.png"
-            alt="Haisan Lagi"
-            class="h-10 w-full object-contain"
-          >
+          <img src="/logo-1.png" alt="Haisan Lagi" class="h-10 w-full object-contain" />
         </div>
       </NuxtLink>
 
@@ -30,10 +23,7 @@
           <span
             class="flex h-8 w-8 items-center justify-center rounded-full dark:bg-white/10 bg-black/50 text-white"
           >
-            <Icon
-              icon="mdi:magnify"
-              class="h-4 w-4"
-            />
+            <Icon icon="mdi:magnify" class="h-4 w-4" />
           </span>
           <div class="flex flex-1 flex-col">
             <span class="text-sm dark:text-white">Tìm kiếm sản phẩm</span>
@@ -42,7 +32,7 @@
         </button>
       </div>
       <div
-        class="flex items-center justify-end gap-5 md:gap-8 w-fit px-5 py-1 md:py-2 border-2 border-secondary dark:bg-transparent rounded-[40px] dark:border-none"
+        class="flex items-center justify-end gap-5 md:gap-8 w-fit px-5 py-1 md:py-2 border-2 border-secondary dark:bg-transparent rounded-[40px]"
       >
         <!-- Search icon - chỉ hiển thị trên mobile -->
         <button
@@ -50,10 +40,7 @@
           class="lg:hidden flex items-center justify-center rounded-full bg-secondary dark:bg-white text-white dark:text-black w-8 h-8 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white/50"
           @click="openSearchPalette"
         >
-          <Icon
-            icon="mdi:magnify"
-            class="text-xl"
-          />
+          <Icon icon="mdi:magnify" class="text-xl" />
         </button>
 
         <!-- Hotline -->
@@ -61,13 +48,12 @@
           <div
             class="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-full bg-secondary dark:bg-white text-white dark:text-black"
           >
-            <Icon
-              icon="material-symbols:call"
-              class="text-sm md:text-xl"
-            />
+            <Icon icon="material-symbols:call" class="text-sm md:text-xl" />
           </div>
           <div>
-            <span class="text-primary dark:text-white text-sm md:text-md font-medium">0367497642</span>
+            <span class="text-primary dark:text-white text-sm md:text-md font-medium"
+              >0367497642</span
+            >
           </div>
         </div>
 
@@ -79,16 +65,14 @@
           class="relative flex items-center gap-2 sm:gap-4"
         >
           <div
-            class="w-8 h-8 relative rounded-full bg-secondary dark:bg-white text-white dark:text-black flex items-center justify-center"
+            class="w-8 h-8 relative rounded-full bg-secondary dark:bg-primary text-white dark:text-black flex items-center justify-center"
           >
-            <Icon
-              icon="famicons:cart-outline"
-              class="text-xl"
-            />
+            <Icon icon="famicons:cart-outline" class="text-xl" />
             <span
               v-if="cartCount > 0"
               class="absolute -top-1.5 md:-top-1 -right-2.5 md:-right-1.5 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center text-white"
-            >{{ cartCount }}</span>
+              >{{ cartCount }}</span
+            >
           </div>
           <span class="text-md font-medium hidden sm:inline">Giỏ hàng</span>
         </NuxtLink>

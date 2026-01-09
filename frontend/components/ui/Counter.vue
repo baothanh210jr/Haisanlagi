@@ -6,7 +6,7 @@
   >
     <button
       type="button"
-      class="w-9 h-9 inline-flex items-center justify-center rounded-md border border-gray-400 bg-theme-surface hover:opacity-80 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+      class="w-7 h-7 sm:w-9 sm:h-9 inline-flex items-center justify-center rounded-md border border-gray-400 bg-theme-surface hover:opacity-80 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
       :aria-label="ariaMinus"
       :disabled="disabled || current <= min"
       @click="decrease"
@@ -15,14 +15,14 @@
     </button>
     <input
       :value="current"
-      class="w-14 text-center appearance-none outline-none border border-transparent focus:border-gray-300 rounded-md py-2 bg-theme-surface"
+      class="w-10 sm:w-14 text-center appearance-none outline-none border border-transparent focus:border-gray-300 rounded-md py-2 bg-theme-surface"
       @input="onInput"
       @keydown.up.prevent="increase"
       @keydown.down.prevent="decrease"
     />
     <button
       type="button"
-      class="w-9 h-9 inline-flex items-center justify-center rounded-md border border-gray-400 bg-theme-surface hover:opacity-80 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+      class="w-7 h-7 sm:w-9 sm:h-9 inline-flex items-center justify-center rounded-md border border-gray-400 bg-theme-surface hover:opacity-80 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
       :aria-label="ariaPlus"
       :disabled="disabled || (max !== null && max !== undefined && current >= max)"
       @click="increase"

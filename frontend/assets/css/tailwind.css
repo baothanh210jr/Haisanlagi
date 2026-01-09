@@ -135,3 +135,29 @@ html {
 .discount-price {
   color: #64748b;
 }
+
+.add-to-cart-btn {
+  background: linear-gradient(180deg, #ffd166, #ffb347);
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #0a1c2d;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 179, 71, 0.3);
+}
+
+.add-to-cart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 179, 71, 0.4);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+}
+
+.cart-icon-btn {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  z-index: 10;
+}
